@@ -29,8 +29,8 @@ export declare const ElTabs: import("element-plus/es/utils").SFCWithInstall<impo
         }>;
         props: {
             readonly closable: boolean;
-            readonly label: string;
             readonly disabled: boolean;
+            readonly label: string;
             readonly lazy: boolean;
             readonly name?: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
         };
@@ -74,8 +74,8 @@ export declare const ElTabs: import("element-plus/es/utils").SFCWithInstall<impo
         }>;
         props: {
             readonly closable: boolean;
-            readonly label: string;
             readonly disabled: boolean;
+            readonly label: string;
             readonly lazy: boolean;
             readonly name?: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
         };
@@ -161,9 +161,9 @@ export declare const ElTabs: import("element-plus/es/utils").SFCWithInstall<impo
             props: {
                 [x: string & `on${string}`]: ((...args: any[]) => any) | ((...args: unknown[]) => any) | undefined;
                 readonly closable: boolean;
-                readonly label: string;
                 readonly disabled: boolean;
                 readonly name: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
+                readonly label: string;
                 readonly lazy: boolean;
             };
             paneName: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
@@ -184,8 +184,8 @@ export declare const ElTabs: import("element-plus/es/utils").SFCWithInstall<impo
         readonly lazy: BooleanConstructor;
     }>>, {
         readonly closable: boolean;
-        readonly label: string;
         readonly disabled: boolean;
+        readonly label: string;
         readonly lazy: boolean;
     }>;
 };
@@ -253,9 +253,9 @@ export declare const ElTabPane: import("element-plus/es/utils").SFCWithInstall<i
         props: {
             [x: string & `on${string}`]: ((...args: any[]) => any) | ((...args: unknown[]) => any) | undefined;
             readonly closable: boolean;
-            readonly label: string;
             readonly disabled: boolean;
             readonly name: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
+            readonly label: string;
             readonly lazy: boolean;
         };
         paneName: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
@@ -276,8 +276,8 @@ export declare const ElTabPane: import("element-plus/es/utils").SFCWithInstall<i
     readonly lazy: BooleanConstructor;
 }>>, {
     readonly closable: boolean;
-    readonly label: string;
     readonly disabled: boolean;
+    readonly label: string;
     readonly lazy: boolean;
 }>>;
 export default ElTabs;

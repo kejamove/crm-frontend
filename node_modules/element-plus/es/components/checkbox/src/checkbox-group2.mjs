@@ -10,6 +10,7 @@ import _export_sfc from '../../../_virtual/plugin-vue_export-helper.mjs';
 import { useNamespace } from '../../../hooks/use-namespace/index.mjs';
 import { useFormItem, useFormItemInputId } from '../../form/src/hooks/use-form-item.mjs';
 import { UPDATE_MODEL_EVENT } from '../../../constants/event.mjs';
+import { useDeprecated } from '../../../hooks/use-deprecated/index.mjs';
 import { debugWarn } from '../../../utils/error.mjs';
 
 const __default__ = defineComponent({
@@ -52,6 +53,13 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       modelValue,
       changeEvent
     });
+    useDeprecated({
+      from: "label",
+      replacement: "aria-label",
+      version: "2.8.0",
+      scope: "el-checkbox-group",
+      ref: "https://element-plus.org/en-US/component/checkbox.html"
+    }, computed(() => !!props.label));
     watch(() => props.modelValue, () => {
       if (props.validateEvent) {
         formItem == null ? void 0 : formItem.validate("change").catch((err) => debugWarn(err));
@@ -63,7 +71,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         id: unref(groupId),
         class: normalizeClass(unref(ns).b("group")),
         role: "group",
-        "aria-label": !unref(isLabeledByFormItem) ? _ctx.label || "checkbox-group" : void 0,
+        "aria-label": !unref(isLabeledByFormItem) ? _ctx.label || _ctx.ariaLabel || "checkbox-group" : void 0,
         "aria-labelledby": unref(isLabeledByFormItem) ? (_a = unref(formItem)) == null ? void 0 : _a.labelId : void 0
       }, {
         default: withCtx(() => [

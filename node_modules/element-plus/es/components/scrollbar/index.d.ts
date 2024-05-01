@@ -1,4 +1,11 @@
 export declare const ElScrollbar: import("element-plus/es/utils").SFCWithInstall<import("vue").DefineComponent<{
+    readonly ariaLabel: StringConstructor;
+    readonly ariaOrientation: {
+        readonly type: import("vue").PropType<string>;
+        readonly required: false;
+        readonly validator: ((val: unknown) => boolean) | undefined;
+        __epPropKey: true;
+    };
     readonly height: import("element-plus/es/utils").EpPropFinalized<readonly [StringConstructor, NumberConstructor], unknown, unknown, "", boolean>;
     readonly maxHeight: import("element-plus/es/utils").EpPropFinalized<readonly [StringConstructor, NumberConstructor], unknown, unknown, "", boolean>;
     readonly native: import("element-plus/es/utils").EpPropFinalized<BooleanConstructor, unknown, unknown, false, boolean>;
@@ -12,16 +19,16 @@ export declare const ElScrollbar: import("element-plus/es/utils").SFCWithInstall
     readonly minSize: import("element-plus/es/utils").EpPropFinalized<NumberConstructor, unknown, unknown, 20, boolean>;
     readonly id: StringConstructor;
     readonly role: StringConstructor;
-    readonly ariaLabel: StringConstructor;
-    readonly ariaOrientation: {
-        readonly type: import("vue").PropType<import("element-plus/es/utils").EpPropMergeType<StringConstructor, "vertical" | "horizontal", unknown>>;
-        readonly required: false;
-        readonly validator: ((val: unknown) => boolean) | undefined;
-        __epPropKey: true;
-    };
 }, {
     COMPONENT_NAME: string;
     props: Readonly<import("@vue/shared").LooseRequired<Readonly<import("vue").ExtractPropTypes<{
+        readonly ariaLabel: StringConstructor;
+        readonly ariaOrientation: {
+            readonly type: import("vue").PropType<string>;
+            readonly required: false;
+            readonly validator: ((val: unknown) => boolean) | undefined;
+            __epPropKey: true;
+        };
         readonly height: import("element-plus/es/utils").EpPropFinalized<readonly [StringConstructor, NumberConstructor], unknown, unknown, "", boolean>;
         readonly maxHeight: import("element-plus/es/utils").EpPropFinalized<readonly [StringConstructor, NumberConstructor], unknown, unknown, "", boolean>;
         readonly native: import("element-plus/es/utils").EpPropFinalized<BooleanConstructor, unknown, unknown, false, boolean>;
@@ -35,13 +42,6 @@ export declare const ElScrollbar: import("element-plus/es/utils").SFCWithInstall
         readonly minSize: import("element-plus/es/utils").EpPropFinalized<NumberConstructor, unknown, unknown, 20, boolean>;
         readonly id: StringConstructor;
         readonly role: StringConstructor;
-        readonly ariaLabel: StringConstructor;
-        readonly ariaOrientation: {
-            readonly type: import("vue").PropType<import("element-plus/es/utils").EpPropMergeType<StringConstructor, "vertical" | "horizontal", unknown>>;
-            readonly required: false;
-            readonly validator: ((val: unknown) => boolean) | undefined;
-            __epPropKey: true;
-        };
     }>> & {
         onScroll?: ((args_0: {
             scrollTop: number;
@@ -539,6 +539,13 @@ export declare const ElScrollbar: import("element-plus/es/utils").SFCWithInstall
         scrollLeft: number;
     }) => boolean;
 }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+    readonly ariaLabel: StringConstructor;
+    readonly ariaOrientation: {
+        readonly type: import("vue").PropType<string>;
+        readonly required: false;
+        readonly validator: ((val: unknown) => boolean) | undefined;
+        __epPropKey: true;
+    };
     readonly height: import("element-plus/es/utils").EpPropFinalized<readonly [StringConstructor, NumberConstructor], unknown, unknown, "", boolean>;
     readonly maxHeight: import("element-plus/es/utils").EpPropFinalized<readonly [StringConstructor, NumberConstructor], unknown, unknown, "", boolean>;
     readonly native: import("element-plus/es/utils").EpPropFinalized<BooleanConstructor, unknown, unknown, false, boolean>;
@@ -552,13 +559,6 @@ export declare const ElScrollbar: import("element-plus/es/utils").SFCWithInstall
     readonly minSize: import("element-plus/es/utils").EpPropFinalized<NumberConstructor, unknown, unknown, 20, boolean>;
     readonly id: StringConstructor;
     readonly role: StringConstructor;
-    readonly ariaLabel: StringConstructor;
-    readonly ariaOrientation: {
-        readonly type: import("vue").PropType<import("element-plus/es/utils").EpPropMergeType<StringConstructor, "vertical" | "horizontal", unknown>>;
-        readonly required: false;
-        readonly validator: ((val: unknown) => boolean) | undefined;
-        __epPropKey: true;
-    };
 }>> & {
     onScroll?: ((args_0: {
         scrollTop: number;

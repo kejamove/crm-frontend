@@ -1,5 +1,6 @@
 import type { CheckboxGroupValueType } from './checkbox-group';
 declare const _default: import("vue").DefineComponent<{
+    readonly ariaLabel: StringConstructor;
     readonly modelValue: import("element-plus/es/utils").EpPropFinalized<(new (...args: any[]) => CheckboxGroupValueType) | (() => CheckboxGroupValueType) | ((new (...args: any[]) => CheckboxGroupValueType) | (() => CheckboxGroupValueType))[], unknown, unknown, () => never[], boolean>;
     readonly disabled: BooleanConstructor;
     readonly min: NumberConstructor;
@@ -17,6 +18,7 @@ declare const _default: import("vue").DefineComponent<{
     readonly validateEvent: import("element-plus/es/utils").EpPropFinalized<BooleanConstructor, unknown, unknown, true, boolean>;
 }, {
     props: Readonly<import("@vue/shared").LooseRequired<Readonly<import("vue").ExtractPropTypes<{
+        readonly ariaLabel: StringConstructor;
         readonly modelValue: import("element-plus/es/utils").EpPropFinalized<(new (...args: any[]) => CheckboxGroupValueType) | (() => CheckboxGroupValueType) | ((new (...args: any[]) => CheckboxGroupValueType) | (() => CheckboxGroupValueType))[], unknown, unknown, () => never[], boolean>;
         readonly disabled: BooleanConstructor;
         readonly min: NumberConstructor;
@@ -64,6 +66,7 @@ declare const _default: import("vue").DefineComponent<{
     "update:modelValue": (val: CheckboxGroupValueType) => boolean;
     change: (val: import("./checkbox").CheckboxValueType[]) => boolean;
 }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+    readonly ariaLabel: StringConstructor;
     readonly modelValue: import("element-plus/es/utils").EpPropFinalized<(new (...args: any[]) => CheckboxGroupValueType) | (() => CheckboxGroupValueType) | ((new (...args: any[]) => CheckboxGroupValueType) | (() => CheckboxGroupValueType))[], unknown, unknown, () => never[], boolean>;
     readonly disabled: BooleanConstructor;
     readonly min: NumberConstructor;

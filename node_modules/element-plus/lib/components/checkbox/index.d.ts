@@ -1,4 +1,5 @@
 export declare const ElCheckbox: import("element-plus/es/utils").SFCWithInstall<import("vue").DefineComponent<{
+    ariaControls: StringConstructor;
     modelValue: {
         type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
         default: undefined;
@@ -56,6 +57,7 @@ export declare const ElCheckbox: import("element-plus/es/utils").SFCWithInstall<
     };
 }, {
     props: Readonly<import("@vue/shared").LooseRequired<Readonly<import("vue").ExtractPropTypes<{
+        ariaControls: StringConstructor;
         modelValue: {
             type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
             default: undefined;
@@ -153,6 +155,7 @@ export declare const ElCheckbox: import("element-plus/es/utils").SFCWithInstall<
     "update:modelValue": (val: import("./src/checkbox").CheckboxValueType) => boolean;
     change: (val: import("./src/checkbox").CheckboxValueType) => boolean;
 }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+    ariaControls: StringConstructor;
     modelValue: {
         type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
         default: undefined;
@@ -214,10 +217,10 @@ export declare const ElCheckbox: import("element-plus/es/utils").SFCWithInstall<
 }, {
     value: string | number | boolean | Record<string, any>;
     modelValue: string | number | boolean;
-    label: string | number | boolean | Record<string, any>;
     id: string;
     disabled: boolean;
     name: string;
+    label: string | number | boolean | Record<string, any>;
     validateEvent: boolean;
     border: boolean;
     indeterminate: boolean;
@@ -229,6 +232,7 @@ export declare const ElCheckbox: import("element-plus/es/utils").SFCWithInstall<
     controls: string;
 }>> & {
     CheckboxButton: import("vue").DefineComponent<{
+        ariaControls: StringConstructor;
         modelValue: {
             type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
             default: undefined;
@@ -286,6 +290,7 @@ export declare const ElCheckbox: import("element-plus/es/utils").SFCWithInstall<
         };
     }, {
         props: Readonly<import("@vue/shared").LooseRequired<Readonly<import("vue").ExtractPropTypes<{
+            ariaControls: StringConstructor;
             modelValue: {
                 type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
                 default: undefined;
@@ -383,6 +388,7 @@ export declare const ElCheckbox: import("element-plus/es/utils").SFCWithInstall<
         "update:modelValue": (val: import("./src/checkbox").CheckboxValueType) => boolean;
         change: (val: import("./src/checkbox").CheckboxValueType) => boolean;
     }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+        ariaControls: StringConstructor;
         modelValue: {
             type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
             default: undefined;
@@ -444,10 +450,10 @@ export declare const ElCheckbox: import("element-plus/es/utils").SFCWithInstall<
     }, {
         value: string | number | boolean | Record<string, any>;
         modelValue: string | number | boolean;
-        label: string | number | boolean | Record<string, any>;
         id: string;
         disabled: boolean;
         name: string;
+        label: string | number | boolean | Record<string, any>;
         validateEvent: boolean;
         border: boolean;
         indeterminate: boolean;
@@ -459,6 +465,7 @@ export declare const ElCheckbox: import("element-plus/es/utils").SFCWithInstall<
         controls: string;
     }>;
     CheckboxGroup: import("vue").DefineComponent<{
+        readonly ariaLabel: StringConstructor;
         readonly modelValue: import("element-plus/es/utils").EpPropFinalized<(new (...args: any[]) => import("./src/checkbox-group").CheckboxGroupValueType) | (() => import("./src/checkbox-group").CheckboxGroupValueType) | ((new (...args: any[]) => import("./src/checkbox-group").CheckboxGroupValueType) | (() => import("./src/checkbox-group").CheckboxGroupValueType))[], unknown, unknown, () => never[], boolean>;
         readonly disabled: BooleanConstructor;
         readonly min: NumberConstructor;
@@ -476,6 +483,7 @@ export declare const ElCheckbox: import("element-plus/es/utils").SFCWithInstall<
         readonly validateEvent: import("element-plus/es/utils").EpPropFinalized<BooleanConstructor, unknown, unknown, true, boolean>;
     }, {
         props: Readonly<import("@vue/shared").LooseRequired<Readonly<import("vue").ExtractPropTypes<{
+            readonly ariaLabel: StringConstructor;
             readonly modelValue: import("element-plus/es/utils").EpPropFinalized<(new (...args: any[]) => import("./src/checkbox-group").CheckboxGroupValueType) | (() => import("./src/checkbox-group").CheckboxGroupValueType) | ((new (...args: any[]) => import("./src/checkbox-group").CheckboxGroupValueType) | (() => import("./src/checkbox-group").CheckboxGroupValueType))[], unknown, unknown, () => never[], boolean>;
             readonly disabled: BooleanConstructor;
             readonly min: NumberConstructor;
@@ -523,6 +531,7 @@ export declare const ElCheckbox: import("element-plus/es/utils").SFCWithInstall<
         "update:modelValue": (val: import("./src/checkbox-group").CheckboxGroupValueType) => boolean;
         change: (val: import("./src/checkbox").CheckboxValueType[]) => boolean;
     }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+        readonly ariaLabel: StringConstructor;
         readonly modelValue: import("element-plus/es/utils").EpPropFinalized<(new (...args: any[]) => import("./src/checkbox-group").CheckboxGroupValueType) | (() => import("./src/checkbox-group").CheckboxGroupValueType) | ((new (...args: any[]) => import("./src/checkbox-group").CheckboxGroupValueType) | (() => import("./src/checkbox-group").CheckboxGroupValueType))[], unknown, unknown, () => never[], boolean>;
         readonly disabled: BooleanConstructor;
         readonly min: NumberConstructor;
@@ -550,6 +559,7 @@ export declare const ElCheckbox: import("element-plus/es/utils").SFCWithInstall<
 };
 export default ElCheckbox;
 export declare const ElCheckboxButton: import("element-plus/es/utils").SFCWithInstall<import("vue").DefineComponent<{
+    ariaControls: StringConstructor;
     modelValue: {
         type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
         default: undefined;
@@ -607,6 +617,7 @@ export declare const ElCheckboxButton: import("element-plus/es/utils").SFCWithIn
     };
 }, {
     props: Readonly<import("@vue/shared").LooseRequired<Readonly<import("vue").ExtractPropTypes<{
+        ariaControls: StringConstructor;
         modelValue: {
             type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
             default: undefined;
@@ -704,6 +715,7 @@ export declare const ElCheckboxButton: import("element-plus/es/utils").SFCWithIn
     "update:modelValue": (val: import("./src/checkbox").CheckboxValueType) => boolean;
     change: (val: import("./src/checkbox").CheckboxValueType) => boolean;
 }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+    ariaControls: StringConstructor;
     modelValue: {
         type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
         default: undefined;
@@ -765,10 +777,10 @@ export declare const ElCheckboxButton: import("element-plus/es/utils").SFCWithIn
 }, {
     value: string | number | boolean | Record<string, any>;
     modelValue: string | number | boolean;
-    label: string | number | boolean | Record<string, any>;
     id: string;
     disabled: boolean;
     name: string;
+    label: string | number | boolean | Record<string, any>;
     validateEvent: boolean;
     border: boolean;
     indeterminate: boolean;
@@ -780,6 +792,7 @@ export declare const ElCheckboxButton: import("element-plus/es/utils").SFCWithIn
     controls: string;
 }>>;
 export declare const ElCheckboxGroup: import("element-plus/es/utils").SFCWithInstall<import("vue").DefineComponent<{
+    readonly ariaLabel: StringConstructor;
     readonly modelValue: import("element-plus/es/utils").EpPropFinalized<(new (...args: any[]) => import("./src/checkbox-group").CheckboxGroupValueType) | (() => import("./src/checkbox-group").CheckboxGroupValueType) | ((new (...args: any[]) => import("./src/checkbox-group").CheckboxGroupValueType) | (() => import("./src/checkbox-group").CheckboxGroupValueType))[], unknown, unknown, () => never[], boolean>;
     readonly disabled: BooleanConstructor;
     readonly min: NumberConstructor;
@@ -797,6 +810,7 @@ export declare const ElCheckboxGroup: import("element-plus/es/utils").SFCWithIns
     readonly validateEvent: import("element-plus/es/utils").EpPropFinalized<BooleanConstructor, unknown, unknown, true, boolean>;
 }, {
     props: Readonly<import("@vue/shared").LooseRequired<Readonly<import("vue").ExtractPropTypes<{
+        readonly ariaLabel: StringConstructor;
         readonly modelValue: import("element-plus/es/utils").EpPropFinalized<(new (...args: any[]) => import("./src/checkbox-group").CheckboxGroupValueType) | (() => import("./src/checkbox-group").CheckboxGroupValueType) | ((new (...args: any[]) => import("./src/checkbox-group").CheckboxGroupValueType) | (() => import("./src/checkbox-group").CheckboxGroupValueType))[], unknown, unknown, () => never[], boolean>;
         readonly disabled: BooleanConstructor;
         readonly min: NumberConstructor;
@@ -844,6 +858,7 @@ export declare const ElCheckboxGroup: import("element-plus/es/utils").SFCWithIns
     "update:modelValue": (val: import("./src/checkbox-group").CheckboxGroupValueType) => boolean;
     change: (val: import("./src/checkbox").CheckboxValueType[]) => boolean;
 }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+    readonly ariaLabel: StringConstructor;
     readonly modelValue: import("element-plus/es/utils").EpPropFinalized<(new (...args: any[]) => import("./src/checkbox-group").CheckboxGroupValueType) | (() => import("./src/checkbox-group").CheckboxGroupValueType) | ((new (...args: any[]) => import("./src/checkbox-group").CheckboxGroupValueType) | (() => import("./src/checkbox-group").CheckboxGroupValueType))[], unknown, unknown, () => never[], boolean>;
     readonly disabled: BooleanConstructor;
     readonly min: NumberConstructor;

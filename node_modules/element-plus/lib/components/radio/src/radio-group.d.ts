@@ -1,6 +1,7 @@
 import type { ExtractPropTypes } from '@vue/runtime-core';
 import type RadioGroup from './radio-group.vue';
 export declare const radioGroupProps: {
+    readonly ariaLabel: StringConstructor;
     readonly id: import("element-plus/es/utils").EpPropFinalized<StringConstructor, unknown, unknown, undefined, boolean>;
     readonly size: {
         readonly type: import("@vue/runtime-core").PropType<import("element-plus/es/utils").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", never>>;

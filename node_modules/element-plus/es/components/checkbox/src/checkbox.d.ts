@@ -2,6 +2,7 @@ import type { ExtractPropTypes } from 'vue';
 import type Checkbox from './checkbox.vue';
 export declare type CheckboxValueType = string | number | boolean;
 export declare const checkboxProps: {
+    ariaControls: StringConstructor;
     /**
      * @description binding value
      */
@@ -80,7 +81,7 @@ export declare const checkboxProps: {
         default: undefined;
     };
     /**
-     * @description same as [aria-controls](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-controls), takes effect when `indeterminate` is `true`
+     * @deprecated same as [aria-controls](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-controls), takes effect when `indeterminate` is `true`
      */
     controls: {
         type: StringConstructor;

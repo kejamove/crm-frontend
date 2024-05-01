@@ -87,7 +87,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       if (props.target) {
         target.value = (_a = document.querySelector(props.target)) != null ? _a : void 0;
         if (!target.value)
-          throwError(COMPONENT_NAME, `Target is not existed: ${props.target}`);
+          throwError(COMPONENT_NAME, `Target does not exist: ${props.target}`);
       } else {
         target.value = document.documentElement;
       }

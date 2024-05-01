@@ -14,6 +14,7 @@ var pluginVue_exportHelper = require('../../../_virtual/plugin-vue_export-helper
 var index = require('../../../hooks/use-namespace/index.js');
 var useFormItem = require('../../form/src/hooks/use-form-item.js');
 var event = require('../../../constants/event.js');
+var index$1 = require('../../../hooks/use-deprecated/index.js');
 var error = require('../../../utils/error.js');
 
 const __default__ = vue.defineComponent({
@@ -56,6 +57,13 @@ const _sfc_main = /* @__PURE__ */ vue.defineComponent({
       modelValue,
       changeEvent
     });
+    index$1.useDeprecated({
+      from: "label",
+      replacement: "aria-label",
+      version: "2.8.0",
+      scope: "el-checkbox-group",
+      ref: "https://element-plus.org/en-US/component/checkbox.html"
+    }, vue.computed(() => !!props.label));
     vue.watch(() => props.modelValue, () => {
       if (props.validateEvent) {
         formItem == null ? void 0 : formItem.validate("change").catch((err) => error.debugWarn(err));
@@ -67,7 +75,7 @@ const _sfc_main = /* @__PURE__ */ vue.defineComponent({
         id: vue.unref(groupId),
         class: vue.normalizeClass(vue.unref(ns).b("group")),
         role: "group",
-        "aria-label": !vue.unref(isLabeledByFormItem) ? _ctx.label || "checkbox-group" : void 0,
+        "aria-label": !vue.unref(isLabeledByFormItem) ? _ctx.label || _ctx.ariaLabel || "checkbox-group" : void 0,
         "aria-labelledby": vue.unref(isLabeledByFormItem) ? (_a = vue.unref(formItem)) == null ? void 0 : _a.labelId : void 0
       }, {
         default: vue.withCtx(() => [

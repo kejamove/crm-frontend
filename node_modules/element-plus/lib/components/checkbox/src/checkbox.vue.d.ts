@@ -1,4 +1,5 @@
 declare const _default: import("vue").DefineComponent<{
+    ariaControls: StringConstructor;
     modelValue: {
         type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
         default: undefined;
@@ -56,6 +57,7 @@ declare const _default: import("vue").DefineComponent<{
     };
 }, {
     props: Readonly<import("@vue/shared").LooseRequired<Readonly<import("vue").ExtractPropTypes<{
+        ariaControls: StringConstructor;
         modelValue: {
             type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
             default: undefined;
@@ -153,6 +155,7 @@ declare const _default: import("vue").DefineComponent<{
     "update:modelValue": (val: import("./checkbox").CheckboxValueType) => boolean;
     change: (val: import("./checkbox").CheckboxValueType) => boolean;
 }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+    ariaControls: StringConstructor;
     modelValue: {
         type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
         default: undefined;
@@ -214,10 +217,10 @@ declare const _default: import("vue").DefineComponent<{
 }, {
     value: string | number | boolean | Record<string, any>;
     modelValue: string | number | boolean;
-    label: string | number | boolean | Record<string, any>;
     id: string;
     disabled: boolean;
     name: string;
+    label: string | number | boolean | Record<string, any>;
     validateEvent: boolean;
     border: boolean;
     indeterminate: boolean;

@@ -7,8 +7,8 @@ declare const _default: import("vue").DefineComponent<{
         }>;
         props: {
             readonly closable: boolean;
-            readonly label: string;
             readonly disabled: boolean;
+            readonly label: string;
             readonly lazy: boolean;
             readonly name?: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
         };
@@ -23,8 +23,8 @@ declare const _default: import("vue").DefineComponent<{
         }>;
         props: {
             readonly closable: boolean;
-            readonly label: string;
             readonly disabled: boolean;
+            readonly label: string;
             readonly lazy: boolean;
             readonly name?: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
         };
@@ -39,8 +39,8 @@ declare const _default: import("vue").DefineComponent<{
         }>;
         props: {
             readonly closable: boolean;
-            readonly label: string;
             readonly disabled: boolean;
+            readonly label: string;
             readonly lazy: boolean;
             readonly name?: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
         };
@@ -55,8 +55,8 @@ declare const _default: import("vue").DefineComponent<{
         }>;
         props: {
             readonly closable: boolean;
-            readonly label: string;
             readonly disabled: boolean;
+            readonly label: string;
             readonly lazy: boolean;
             readonly name?: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
         };
@@ -75,8 +75,8 @@ declare const _default: import("vue").DefineComponent<{
             }>;
             props: {
                 readonly closable: boolean;
-                readonly label: string;
                 readonly disabled: boolean;
+                readonly label: string;
                 readonly lazy: boolean;
                 readonly name?: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
             };
@@ -91,8 +91,8 @@ declare const _default: import("vue").DefineComponent<{
             }>;
             props: {
                 readonly closable: boolean;
-                readonly label: string;
                 readonly disabled: boolean;
+                readonly label: string;
                 readonly lazy: boolean;
                 readonly name?: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
             };
@@ -107,8 +107,8 @@ declare const _default: import("vue").DefineComponent<{
             }>;
             props: {
                 readonly closable: boolean;
-                readonly label: string;
                 readonly disabled: boolean;
+                readonly label: string;
                 readonly lazy: boolean;
                 readonly name?: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
             };
@@ -123,8 +123,8 @@ declare const _default: import("vue").DefineComponent<{
             }>;
             props: {
                 readonly closable: boolean;
-                readonly label: string;
                 readonly disabled: boolean;
+                readonly label: string;
                 readonly lazy: boolean;
                 readonly name?: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
             };
@@ -168,8 +168,8 @@ declare const _default: import("vue").DefineComponent<{
         }>;
         props: {
             readonly closable: boolean;
-            readonly label: string;
             readonly disabled: boolean;
+            readonly label: string;
             readonly lazy: boolean;
             readonly name?: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
         };
@@ -184,8 +184,8 @@ declare const _default: import("vue").DefineComponent<{
         }>;
         props: {
             readonly closable: boolean;
-            readonly label: string;
             readonly disabled: boolean;
+            readonly label: string;
             readonly lazy: boolean;
             readonly name?: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
         };
@@ -200,8 +200,8 @@ declare const _default: import("vue").DefineComponent<{
         }>;
         props: {
             readonly closable: boolean;
-            readonly label: string;
             readonly disabled: boolean;
+            readonly label: string;
             readonly lazy: boolean;
             readonly name?: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
         };
@@ -216,8 +216,8 @@ declare const _default: import("vue").DefineComponent<{
         }>;
         props: {
             readonly closable: boolean;
-            readonly label: string;
             readonly disabled: boolean;
+            readonly label: string;
             readonly lazy: boolean;
             readonly name?: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
         };
@@ -234,8 +234,8 @@ declare const _default: import("vue").DefineComponent<{
         }>;
         props: {
             readonly closable: boolean;
-            readonly label: string;
             readonly disabled: boolean;
+            readonly label: string;
             readonly lazy: boolean;
             readonly name?: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
         };

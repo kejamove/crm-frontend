@@ -1,6 +1,6 @@
 import type { ExtractPropTypes } from 'vue';
 import type { FormItemProp } from './form-item';
-declare const formMetaProps: {
+export declare const formMetaProps: {
     readonly size: {
         readonly type: import("vue").PropType<import("element-plus/es/utils").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", unknown>>;
         readonly required: false;
@@ -48,4 +48,3 @@ export declare const formEmits: {
     validate: (prop: FormItemProp, isValid: boolean, message: string) => boolean;
 };
 export declare type FormEmits = typeof formEmits;
-export {};

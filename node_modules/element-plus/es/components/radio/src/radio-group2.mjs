@@ -11,6 +11,7 @@ import { useId } from '../../../hooks/use-id/index.mjs';
 import { useFormItem, useFormItemInputId } from '../../form/src/hooks/use-form-item.mjs';
 import { UPDATE_MODEL_EVENT } from '../../../constants/event.mjs';
 import { debugWarn } from '../../../utils/error.mjs';
+import { useDeprecated } from '../../../hooks/use-deprecated/index.mjs';
 
 const _hoisted_1 = ["id", "aria-label", "aria-labelledby"];
 const __default__ = defineComponent({
@@ -53,6 +54,13 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         formItem == null ? void 0 : formItem.validate("change").catch((err) => debugWarn(err));
       }
     });
+    useDeprecated({
+      from: "label",
+      replacement: "aria-label",
+      version: "2.8.0",
+      scope: "el-radio-group",
+      ref: "https://element-plus.org/en-US/component/radio.html"
+    }, computed(() => !!props.label));
     return (_ctx, _cache) => {
       return openBlock(), createElementBlock("div", {
         id: unref(groupId),
@@ -60,7 +68,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         ref: radioGroupRef,
         class: normalizeClass(unref(ns).b("group")),
         role: "radiogroup",
-        "aria-label": !unref(isLabeledByFormItem) ? _ctx.label || "radio-group" : void 0,
+        "aria-label": !unref(isLabeledByFormItem) ? _ctx.label || _ctx.ariaLabel || "radio-group" : void 0,
         "aria-labelledby": unref(isLabeledByFormItem) ? unref(formItem).labelId : void 0
       }, [
         renderSlot(_ctx.$slots, "default")

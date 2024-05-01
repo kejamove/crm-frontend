@@ -11,6 +11,7 @@ export interface SliderInitData {
     sliderSize: number;
 }
 export declare const sliderProps: {
+    readonly ariaLabel: StringConstructor;
     readonly modelValue: import("element-plus/es/utils").EpPropFinalized<(new (...args: any[]) => Arrayable<number> & {}) | (() => Arrayable<number>) | ((new (...args: any[]) => Arrayable<number> & {}) | (() => Arrayable<number>))[], unknown, unknown, 0, boolean>;
     readonly id: import("element-plus/es/utils").EpPropFinalized<StringConstructor, unknown, unknown, undefined, boolean>;
     readonly min: import("element-plus/es/utils").EpPropFinalized<NumberConstructor, unknown, unknown, 0, boolean>;

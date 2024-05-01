@@ -41,5 +41,5 @@ const DescriptionItem = defineComponent({
   props: descriptionItemProps
 });
 
-export { DescriptionItem as default };
+export { DescriptionItem as default, descriptionItemProps };
 //# sourceMappingURL=description-item.mjs.map

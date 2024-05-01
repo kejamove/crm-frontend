@@ -62,9 +62,9 @@ declare const _default: import("vue").DefineComponent<{
         props: {
             [x: string & `on${string}`]: ((...args: any[]) => any) | ((...args: unknown[]) => any) | undefined;
             readonly closable: boolean;
-            readonly label: string;
             readonly disabled: boolean;
             readonly name: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
+            readonly label: string;
             readonly lazy: boolean;
         };
         paneName: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor], unknown, unknown> | undefined;
@@ -85,8 +85,8 @@ declare const _default: import("vue").DefineComponent<{
     readonly lazy: BooleanConstructor;
 }>>, {
     readonly closable: boolean;
-    readonly label: string;
     readonly disabled: boolean;
+    readonly label: string;
     readonly lazy: boolean;
 }>;
 export default _default;

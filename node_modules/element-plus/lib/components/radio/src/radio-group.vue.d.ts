@@ -1,5 +1,6 @@
 import type { RadioGroupProps } from './radio-group';
 declare const _default: import("vue").DefineComponent<{
+    readonly ariaLabel: StringConstructor;
     readonly id: import("element-plus/es/utils").EpPropFinalized<StringConstructor, unknown, unknown, undefined, boolean>;
     readonly size: {
         readonly type: import("vue").PropType<import("element-plus/es/utils").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", never>>;
@@ -16,6 +17,7 @@ declare const _default: import("vue").DefineComponent<{
     readonly validateEvent: import("element-plus/es/utils").EpPropFinalized<BooleanConstructor, unknown, unknown, true, boolean>;
 }, {
     props: Readonly<import("@vue/shared").LooseRequired<Readonly<import("vue").ExtractPropTypes<{
+        readonly ariaLabel: StringConstructor;
         readonly id: import("element-plus/es/utils").EpPropFinalized<StringConstructor, unknown, unknown, undefined, boolean>;
         readonly size: {
             readonly type: import("vue").PropType<import("element-plus/es/utils").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", never>>;
@@ -64,6 +66,7 @@ declare const _default: import("vue").DefineComponent<{
     "update:modelValue": (val: string | number | boolean | undefined) => boolean;
     change: (val: string | number | boolean | undefined) => boolean;
 }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+    readonly ariaLabel: StringConstructor;
     readonly id: import("element-plus/es/utils").EpPropFinalized<StringConstructor, unknown, unknown, undefined, boolean>;
     readonly size: {
         readonly type: import("vue").PropType<import("element-plus/es/utils").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", never>>;
@@ -84,10 +87,10 @@ declare const _default: import("vue").DefineComponent<{
 }, {
     readonly fill: string;
     readonly modelValue: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor, BooleanConstructor], unknown, unknown>;
-    readonly label: string;
     readonly id: string;
     readonly disabled: boolean;
     readonly name: string;
+    readonly label: string;
     readonly validateEvent: import("element-plus/es/utils").EpPropMergeType<BooleanConstructor, unknown, unknown>;
     readonly textColor: string;
 }>;

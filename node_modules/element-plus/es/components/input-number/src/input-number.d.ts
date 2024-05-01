@@ -1,6 +1,7 @@
 import type { ExtractPropTypes } from 'vue';
 import type InputNumber from './input-number.vue';
 export declare const inputNumberProps: {
+    readonly ariaLabel: StringConstructor;
     readonly id: import("element-plus/es/utils").EpPropFinalized<StringConstructor, unknown, unknown, undefined, boolean>;
     readonly step: import("element-plus/es/utils").EpPropFinalized<NumberConstructor, unknown, unknown, 1, boolean>;
     readonly stepStrictly: BooleanConstructor;

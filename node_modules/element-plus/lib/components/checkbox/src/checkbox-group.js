@@ -7,6 +7,7 @@ require('../../../hooks/index.js');
 require('../../../utils/index.js');
 var runtime = require('../../../utils/vue/props/runtime.js');
 var index = require('../../../hooks/use-size/index.js');
+var index$1 = require('../../../hooks/use-aria/index.js');
 var event = require('../../../constants/event.js');
 var shared = require('@vue/shared');
 
@@ -29,7 +30,8 @@ const checkboxGroupProps = runtime.buildProps({
   validateEvent: {
     type: Boolean,
     default: true
-  }
+  },
+  ...index$1.useAriaProps(["ariaLabel"])
 });
 const checkboxGroupEmits = {
   [event.UPDATE_MODEL_EVENT]: (val) => shared.isArray(val),

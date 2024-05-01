@@ -68,8 +68,8 @@ declare const _default: import("vue").DefineComponent<{
 }>>, {
     readonly value: import("../../../utils").EpPropMergeType<(NumberConstructor | BooleanConstructor | StringConstructor)[], unknown, unknown>;
     readonly modelValue: import("../../../utils").EpPropMergeType<(NumberConstructor | BooleanConstructor | StringConstructor)[], unknown, unknown>;
-    readonly label: import("../../../utils").EpPropMergeType<(NumberConstructor | BooleanConstructor | StringConstructor)[], unknown, unknown>;
     readonly disabled: boolean;
     readonly name: string;
+    readonly label: import("../../../utils").EpPropMergeType<(NumberConstructor | BooleanConstructor | StringConstructor)[], unknown, unknown>;
 }>;
 export default _default;

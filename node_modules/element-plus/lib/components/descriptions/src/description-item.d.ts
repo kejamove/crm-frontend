@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, Slot, VNode } from 'vue';
-declare const descriptionItemProps: {
+export declare const descriptionItemProps: {
     label: import("element-plus/es/utils").EpPropFinalized<StringConstructor, unknown, unknown, string, boolean>;
     span: import("element-plus/es/utils").EpPropFinalized<NumberConstructor, unknown, unknown, number, boolean>;
     width: import("element-plus/es/utils").EpPropFinalized<(NumberConstructor | StringConstructor)[], unknown, unknown, string, boolean>;
@@ -29,8 +29,8 @@ declare const DescriptionItem: import("vue").DefineComponent<{
     labelClassName: import("element-plus/es/utils").EpPropFinalized<StringConstructor, unknown, unknown, string, boolean>;
 }>>, {
     width: import("element-plus/es/utils").EpPropMergeType<(NumberConstructor | StringConstructor)[], unknown, unknown>;
-    label: string;
     className: string;
+    label: string;
     minWidth: import("element-plus/es/utils").EpPropMergeType<(NumberConstructor | StringConstructor)[], unknown, unknown>;
     span: number;
     align: string;

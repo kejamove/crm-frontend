@@ -6,6 +6,7 @@ export declare type AutocompleteData = Record<string, any>[];
 export declare type AutocompleteFetchSuggestionsCallback = (data: AutocompleteData) => void;
 export declare type AutocompleteFetchSuggestions = ((queryString: string, cb: AutocompleteFetchSuggestionsCallback) => Awaitable<AutocompleteData> | void) | AutocompleteData;
 export declare const autocompleteProps: {
+    readonly ariaLabel: StringConstructor;
     readonly valueKey: import("element-plus/es/utils").EpPropFinalized<StringConstructor, unknown, unknown, "value", boolean>;
     readonly modelValue: import("element-plus/es/utils").EpPropFinalized<readonly [StringConstructor, NumberConstructor], unknown, unknown, "", boolean>;
     readonly debounce: import("element-plus/es/utils").EpPropFinalized<NumberConstructor, unknown, unknown, 300, boolean>;
@@ -15,12 +16,6 @@ export declare const autocompleteProps: {
     readonly triggerOnFocus: import("element-plus/es/utils").EpPropFinalized<BooleanConstructor, unknown, unknown, true, boolean>;
     readonly selectWhenUnmatched: import("element-plus/es/utils").EpPropFinalized<BooleanConstructor, unknown, unknown, false, boolean>;
     readonly hideLoading: import("element-plus/es/utils").EpPropFinalized<BooleanConstructor, unknown, unknown, false, boolean>;
-    readonly label: {
-        readonly type: import("vue").PropType<string>;
-        readonly required: false;
-        readonly validator: ((val: unknown) => boolean) | undefined;
-        __epPropKey: true;
-    };
     readonly teleported: import("element-plus/es/utils").EpPropFinalized<BooleanConstructor, unknown, unknown, true, boolean>;
     readonly highlightFirstItem: import("element-plus/es/utils").EpPropFinalized<BooleanConstructor, unknown, unknown, false, boolean>;
     readonly fitInputWidth: import("element-plus/es/utils").EpPropFinalized<BooleanConstructor, unknown, unknown, false, boolean>;

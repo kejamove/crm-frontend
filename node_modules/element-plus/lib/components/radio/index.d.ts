@@ -78,9 +78,9 @@ export declare const ElRadio: import("element-plus/es/utils").SFCWithInstall<imp
 }, {
     readonly value: import("element-plus/es/utils").EpPropMergeType<(NumberConstructor | BooleanConstructor | StringConstructor)[], unknown, unknown>;
     readonly modelValue: import("element-plus/es/utils").EpPropMergeType<(NumberConstructor | BooleanConstructor | StringConstructor)[], unknown, unknown>;
-    readonly label: import("element-plus/es/utils").EpPropMergeType<(NumberConstructor | BooleanConstructor | StringConstructor)[], unknown, unknown>;
     readonly disabled: boolean;
     readonly name: string;
+    readonly label: import("element-plus/es/utils").EpPropMergeType<(NumberConstructor | BooleanConstructor | StringConstructor)[], unknown, unknown>;
     readonly border: boolean;
 }>> & {
     RadioButton: import("vue").DefineComponent<{
@@ -152,11 +152,12 @@ export declare const ElRadio: import("element-plus/es/utils").SFCWithInstall<imp
     }>>, {
         readonly value: import("element-plus/es/utils").EpPropMergeType<(NumberConstructor | BooleanConstructor | StringConstructor)[], unknown, unknown>;
         readonly modelValue: import("element-plus/es/utils").EpPropMergeType<(NumberConstructor | BooleanConstructor | StringConstructor)[], unknown, unknown>;
-        readonly label: import("element-plus/es/utils").EpPropMergeType<(NumberConstructor | BooleanConstructor | StringConstructor)[], unknown, unknown>;
         readonly disabled: boolean;
         readonly name: string;
+        readonly label: import("element-plus/es/utils").EpPropMergeType<(NumberConstructor | BooleanConstructor | StringConstructor)[], unknown, unknown>;
     }>;
     RadioGroup: import("vue").DefineComponent<{
+        readonly ariaLabel: StringConstructor;
         readonly id: import("element-plus/es/utils").EpPropFinalized<StringConstructor, unknown, unknown, undefined, boolean>;
         readonly size: {
             readonly type: import("vue").PropType<import("element-plus/es/utils").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", never>>;
@@ -173,6 +174,7 @@ export declare const ElRadio: import("element-plus/es/utils").SFCWithInstall<imp
         readonly validateEvent: import("element-plus/es/utils").EpPropFinalized<BooleanConstructor, unknown, unknown, true, boolean>;
     }, {
         props: Readonly<import("@vue/shared").LooseRequired<Readonly<import("vue").ExtractPropTypes<{
+            readonly ariaLabel: StringConstructor;
             readonly id: import("element-plus/es/utils").EpPropFinalized<StringConstructor, unknown, unknown, undefined, boolean>;
             readonly size: {
                 readonly type: import("vue").PropType<import("element-plus/es/utils").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", never>>;
@@ -221,6 +223,7 @@ export declare const ElRadio: import("element-plus/es/utils").SFCWithInstall<imp
         "update:modelValue": (val: string | number | boolean | undefined) => boolean;
         change: (val: string | number | boolean | undefined) => boolean;
     }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+        readonly ariaLabel: StringConstructor;
         readonly id: import("element-plus/es/utils").EpPropFinalized<StringConstructor, unknown, unknown, undefined, boolean>;
         readonly size: {
             readonly type: import("vue").PropType<import("element-plus/es/utils").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", never>>;
@@ -241,16 +244,17 @@ export declare const ElRadio: import("element-plus/es/utils").SFCWithInstall<imp
     }, {
         readonly fill: string;
         readonly modelValue: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor, BooleanConstructor], unknown, unknown>;
-        readonly label: string;
         readonly id: string;
         readonly disabled: boolean;
         readonly name: string;
+        readonly label: string;
         readonly validateEvent: import("element-plus/es/utils").EpPropMergeType<BooleanConstructor, unknown, unknown>;
         readonly textColor: string;
     }>;
 };
 export default ElRadio;
 export declare const ElRadioGroup: import("element-plus/es/utils").SFCWithInstall<import("vue").DefineComponent<{
+    readonly ariaLabel: StringConstructor;
     readonly id: import("element-plus/es/utils").EpPropFinalized<StringConstructor, unknown, unknown, undefined, boolean>;
     readonly size: {
         readonly type: import("vue").PropType<import("element-plus/es/utils").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", never>>;
@@ -267,6 +271,7 @@ export declare const ElRadioGroup: import("element-plus/es/utils").SFCWithInstal
     readonly validateEvent: import("element-plus/es/utils").EpPropFinalized<BooleanConstructor, unknown, unknown, true, boolean>;
 }, {
     props: Readonly<import("@vue/shared").LooseRequired<Readonly<import("vue").ExtractPropTypes<{
+        readonly ariaLabel: StringConstructor;
         readonly id: import("element-plus/es/utils").EpPropFinalized<StringConstructor, unknown, unknown, undefined, boolean>;
         readonly size: {
             readonly type: import("vue").PropType<import("element-plus/es/utils").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", never>>;
@@ -315,6 +320,7 @@ export declare const ElRadioGroup: import("element-plus/es/utils").SFCWithInstal
     "update:modelValue": (val: string | number | boolean | undefined) => boolean;
     change: (val: string | number | boolean | undefined) => boolean;
 }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+    readonly ariaLabel: StringConstructor;
     readonly id: import("element-plus/es/utils").EpPropFinalized<StringConstructor, unknown, unknown, undefined, boolean>;
     readonly size: {
         readonly type: import("vue").PropType<import("element-plus/es/utils").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", never>>;
@@ -335,10 +341,10 @@ export declare const ElRadioGroup: import("element-plus/es/utils").SFCWithInstal
 }, {
     readonly fill: string;
     readonly modelValue: import("element-plus/es/utils").EpPropMergeType<readonly [StringConstructor, NumberConstructor, BooleanConstructor], unknown, unknown>;
-    readonly label: string;
     readonly id: string;
     readonly disabled: boolean;
     readonly name: string;
+    readonly label: string;
     readonly validateEvent: import("element-plus/es/utils").EpPropMergeType<BooleanConstructor, unknown, unknown>;
     readonly textColor: string;
 }>>;
@@ -411,9 +417,9 @@ export declare const ElRadioButton: import("element-plus/es/utils").SFCWithInsta
 }>>, {
     readonly value: import("element-plus/es/utils").EpPropMergeType<(NumberConstructor | BooleanConstructor | StringConstructor)[], unknown, unknown>;
     readonly modelValue: import("element-plus/es/utils").EpPropMergeType<(NumberConstructor | BooleanConstructor | StringConstructor)[], unknown, unknown>;
-    readonly label: import("element-plus/es/utils").EpPropMergeType<(NumberConstructor | BooleanConstructor | StringConstructor)[], unknown, unknown>;
     readonly disabled: boolean;
     readonly name: string;
+    readonly label: import("element-plus/es/utils").EpPropMergeType<(NumberConstructor | BooleanConstructor | StringConstructor)[], unknown, unknown>;
 }>>;
 export * from './src/radio';
 export * from './src/radio-group';

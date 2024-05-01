@@ -4,6 +4,7 @@ import '../../../constants/index.mjs';
 import '../../../hooks/index.mjs';
 import { buildProps, definePropType } from '../../../utils/vue/props/runtime.mjs';
 import { useSizeProp } from '../../../hooks/use-size/index.mjs';
+import { useAriaProps } from '../../../hooks/use-aria/index.mjs';
 import { isNumber } from '../../../utils/types.mjs';
 import { isArray } from '@vue/shared';
 import { UPDATE_MODEL_EVENT, INPUT_EVENT, CHANGE_EVENT } from '../../../constants/event.mjs';
@@ -84,7 +85,8 @@ const sliderProps = buildProps({
   validateEvent: {
     type: Boolean,
     default: true
-  }
+  },
+  ...useAriaProps(["ariaLabel"])
 });
 const isValidValue = (value) => isNumber(value) || isArray(value) && value.every(isNumber);
 const sliderEmits = {

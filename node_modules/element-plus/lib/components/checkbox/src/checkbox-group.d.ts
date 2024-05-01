@@ -3,6 +3,7 @@ import type checkboxGroup from './checkbox-group.vue';
 import type { CheckboxValueType } from './checkbox';
 export declare type CheckboxGroupValueType = Exclude<CheckboxValueType, boolean>[];
 export declare const checkboxGroupProps: {
+    readonly ariaLabel: StringConstructor;
     readonly modelValue: import("element-plus/es/utils").EpPropFinalized<(new (...args: any[]) => CheckboxGroupValueType) | (() => CheckboxGroupValueType) | ((new (...args: any[]) => CheckboxGroupValueType) | (() => CheckboxGroupValueType))[], unknown, unknown, () => never[], boolean>;
     readonly disabled: BooleanConstructor;
     readonly min: NumberConstructor;

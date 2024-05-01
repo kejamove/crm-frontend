@@ -46,4 +46,5 @@ const DescriptionItem = vue.defineComponent({
 });
 
 exports["default"] = DescriptionItem;
+exports.descriptionItemProps = descriptionItemProps;
 //# sourceMappingURL=description-item.js.map

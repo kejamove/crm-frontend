@@ -3,6 +3,7 @@ import '../../../hooks/index.mjs';
 import '../../../utils/index.mjs';
 import { buildProps, definePropType } from '../../../utils/vue/props/runtime.mjs';
 import { useSizeProp } from '../../../hooks/use-size/index.mjs';
+import { useAriaProps } from '../../../hooks/use-aria/index.mjs';
 import { UPDATE_MODEL_EVENT } from '../../../constants/event.mjs';
 import { isArray } from '@vue/shared';
 
@@ -25,7 +26,8 @@ const checkboxGroupProps = buildProps({
   validateEvent: {
     type: Boolean,
     default: true
-  }
+  },
+  ...useAriaProps(["ariaLabel"])
 });
 const checkboxGroupEmits = {
   [UPDATE_MODEL_EVENT]: (val) => isArray(val),

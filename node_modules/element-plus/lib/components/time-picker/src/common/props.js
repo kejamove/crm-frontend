@@ -8,6 +8,8 @@ var iconsVue = require('@element-plus/icons-vue');
 var shared = require('../props/shared.js');
 var runtime = require('../../../../utils/vue/props/runtime.js');
 var index = require('../../../../hooks/use-size/index.js');
+var index$1 = require('../../../../hooks/use-empty-values/index.js');
+var index$2 = require('../../../../hooks/use-aria/index.js');
 
 const timePickerDefaultProps = runtime.buildProps({
   id: {
@@ -97,7 +99,9 @@ const timePickerDefaultProps = runtime.buildProps({
     type: Boolean,
     default: true
   },
-  unlinkPanels: Boolean
+  unlinkPanels: Boolean,
+  ...index$1.useEmptyValuesProps,
+  ...index$2.useAriaProps(["ariaLabel"])
 });
 
 exports.timePickerDefaultProps = timePickerDefaultProps;

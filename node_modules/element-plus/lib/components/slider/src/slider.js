@@ -8,6 +8,7 @@ require('../../../constants/index.js');
 require('../../../hooks/index.js');
 var runtime = require('../../../utils/vue/props/runtime.js');
 var index = require('../../../hooks/use-size/index.js');
+var index$1 = require('../../../hooks/use-aria/index.js');
 var types = require('../../../utils/types.js');
 var shared = require('@vue/shared');
 var event = require('../../../constants/event.js');
@@ -88,7 +89,8 @@ const sliderProps = runtime.buildProps({
   validateEvent: {
     type: Boolean,
     default: true
-  }
+  },
+  ...index$1.useAriaProps(["ariaLabel"])
 });
 const isValidValue = (value) => types.isNumber(value) || shared.isArray(value) && value.every(types.isNumber);
 const sliderEmits = {
