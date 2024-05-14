@@ -47,7 +47,7 @@ onMounted(()=>{
   <div class="grid md:grid-cols-12 h-screen ">
     <div class="w-full col-span-5 flex flex-col gap-4 h-full hidden md:flex items-center justify-center bg-gray-50">
       <div class="h-2/3 flex items-center justify-center w-full">
-        <img alt="agile ui login illustration " :src="'src/assets/auth/' + currentImage()" class="w-2/3" >
+        <img alt="agile ui login illustration " :src="'/' + currentImage()" class="w-2/3" >
       </div>
 
       <div class="flex flex-row gap-2 ">
@@ -61,7 +61,6 @@ onMounted(()=>{
     <div class="w-full h-full col-span-7 flex items-center justify-center">
       <div class="w-8/12 flex flex-col gap-4 ">
         <slot></slot>
-        <external-auth/>
       </div>
 
     </div>

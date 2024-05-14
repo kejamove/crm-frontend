@@ -1,0 +1,134 @@
+<template>
+
+  <BaseDialog>
+    <template #title>
+      Create Store
+    </template>
+
+    <template #content>
+      <el-form
+          ref="ruleFormRef"
+          :model="form"
+          :rules="rules"
+          class="w-full flex flex-col gap-4"
+          label-position="top"
+      >
+
+        <el-form-item label="Store Name" prop="name"
+                      :rules="[
+            {
+              required: true,
+              message: 'Please input a store name',
+              trigger: 'blur',
+            }
+         ]"
+        >
+          <el-input
+              v-model="form.name"
+              :prefix-icon="House"
+              placeholder="store name"
+              size="large"
+          />
+        </el-form-item>
+
+        <el-form-item label="Store Location" prop="location"
+                      :rules="[
+            {
+              required: true,
+              message: 'Please input the store location',
+              trigger: 'blur',
+            }
+         ]"
+        >
+          <el-input
+              v-model="form.location"
+              :prefix-icon="Location"
+              placeholder="Store Location eg Kitisuru Nairobi"
+              size="large"
+          />
+        </el-form-item>
+
+        <!--            <el-input-->
+        <div class="flex w-full ">
+          <el-button
+              :loading="registerLoading"
+              class="w-fit "
+              size="large"
+              style="border-radius: 4px"
+              type="primary"
+              @click="submitForm(ruleFormRef)"
+          >
+            <!--                @click="submitForm(loginFormRef)"-->
+
+            Submit
+          </el-button>
+        </div>
+
+
+
+      </el-form>
+
+    </template>
+  </BaseDialog>
+
+</template>
+
+<script lang="ts" setup>
+import { reactive, ref } from "vue";
+import {ElNotification, FormInstance, FormRules} from "element-plus";
+import store from "@/store/index";
+import router from "@/router/index"
+import {House, Location} from "@element-plus/icons-vue";
+import Swal from "sweetalert2";
+import BaseDialog from "@/components/base/BaseDialog.vue";
+const loading = ref(false);
+const form = reactive({
+});
+
+
+const registerLoading = ref(false);
+
+const ruleFormRef = ref<FormInstance>();
+const rules = reactive<FormRules>({
+});
+const submitForm = async (formEl: FormInstance | undefined) => {
+  registerLoading.value = true;
+  if (!formEl) return;
+  await formEl.validate((valid, fields) => {
+    console.log(fields,'fields')
+    if (valid) {
+      store
+          .dispatch("postData", {
+            url: "register-store",
+            data: form
+          })
+          .then((resp) => {
+            registerLoading.value = false;
+            router.go(-1)
+          })
+          .catch((err)=>{
+            registerLoading.value = false;
+          })
+      ;
+    } else {
+      registerLoading.value = false;
+      // Swal.fire({
+      //   icon: 'error',
+      //   title: 'Error',
+      //   html: '<p class="text-red-400">Fill All required Fields</p>',
+      //   timer: 4000,
+      // });
+      ElNotification({
+        title: 'Error',
+        type: "error",
+        position: "top-right",
+        message: 'All Fields are required'
+      })
+    }
+    loading.value = false;
+  });
+};
+
+</script>
+
+<style scoped></style>

@@ -7,18 +7,30 @@
     label-position="top"
   >
     <div class="flex gap-2 items-center">
-      <h1 class="font-bold text-2xl text-blue-500">Agile UI</h1>
+      <h1 class="font-bold text-2xl text-blue-500">Keja Move</h1>
     </div>
 
     <h2 class="font-bold text-gray-400">Sign In</h2>
 
-    <el-form-item label="Username" prop="username">
+    <el-form-item label="Email" prop="email"
+         :rules="[
+            {
+              required: true,
+              message: 'Please input email address',
+              trigger: 'blur',
+            },
+            {
+              type: 'email',
+              message: 'Please input correct email address',
+              trigger: 'blur',
+            },
+         ]"
+    >
       <el-input
-        v-model="form.username"
+        v-model="form.email"
         :prefix-icon="UserIcon"
-        placeholder="username"
+        placeholder="email"
         size="large"
-        type="text"
       />
     </el-form-item>
     <el-form-item label="Password" prop="password">
@@ -34,7 +46,7 @@
     <!--            <el-input-->
     <div class="flex w-full ">
       <el-button
-        :loading="loading"
+        :loading="loginLoading"
         class="w-fit "
         size="large"
         style="border-radius: 4px"
@@ -46,7 +58,7 @@
         Login
       </el-button>
     </div>
-    <div class="text-sm">
+    <div class="text-sm hidden">
       <span class="text-gray-400"> Don't have an Account ? </span>
       <router-link :to="{name:'register'}" class="text-blue-400 hover:text-blue-500 hover:font-bold"> Register </router-link>
     </div>
@@ -60,11 +72,14 @@ import { reactive, ref } from "vue";
 import { LockClosedIcon, UserIcon } from "@heroicons/vue/24/solid";
 import {ElNotification, FormInstance, FormRules} from "element-plus";
 import store from "@/store/index";
+import router from "@/router/index"
+import Swal from "sweetalert2";
 const loading = ref(false);
 const form = reactive({
-  username: "",
-  password: "",
 });
+
+
+const loginLoading = ref(false);
 
 const ruleFormRef = ref<FormInstance>();
 const rules = reactive<FormRules>({
@@ -80,32 +95,33 @@ const rules = reactive<FormRules>({
   }
 });
 const submitForm = async (formEl: FormInstance | undefined) => {
-  loading.value = true;
+  loginLoading.value = true;
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     console.log(fields,'fields')
     if (valid) {
       store
         .dispatch("postData", {
-          url: "token/request",
-          data: {
-            username: form.username,
-            password: form.password,
-          },
+          url: "login",
+          data: form
         })
         .then((resp) => {
           localStorage.setItem("authData", JSON.stringify(resp.data));
-          // router.push({ name: "available-job", replace: true });
-        });
+          loginLoading.value = false;
+          router.push({name: 'welcome'})
+        })
+          .catch((err)=>{
+            loginLoading.value = false;
+          })
+      ;
     } else {
-      ElNotification(
-        {
-          title: `Login Error`,
-          type: "warning",
-          position: "top-right",
-          message: 'Check your credentials and Try again',
-        }
-      )
+      loginLoading.value = true;
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        html: '<p class="text-red-400">Fill All required Fields</p>',
+        timer: 4000,
+      });
     }
     loading.value = false;
   });

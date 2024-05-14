@@ -1,4 +1,4 @@
-<template>
+  <template>
     <el-form
       ref="loginFormRef"
       :model="form"
@@ -7,7 +7,7 @@
       label-position="top"
     >
       <div class="flex gap-2 items-center">
-        <h1 class="font-bold text-2xl">Agile UI</h1>
+        <h1 class="font-bold text-2xl text-blue-500">Keja Move CRM</h1>
       </div>
 
       <h2 class="font-bold text-gray-400">Registration</h2>
