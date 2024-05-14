@@ -11,6 +11,14 @@ const props = defineProps({
     type: String,
     default: 'text-red-500'
   },
+  showActions: {
+    type: Boolean,
+    default: false
+  },
+  showActionsWidth: {
+    type: String,
+    default: 200
+  },
 })
 </script>
 
@@ -28,7 +36,8 @@ const props = defineProps({
         <el-popover
             placement="bottom"
             title="Actions"
-            style="width: fit-content"
+            :width="showActionsWidth"
+            v-if="showActions"
             trigger="hover"
         >
           <template #reference>

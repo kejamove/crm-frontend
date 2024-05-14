@@ -146,7 +146,7 @@ watch(() => router.currentRoute, () => {
 <!--    Cards-->
     <div class="flex flex-wrap gap-x-4 gap-y-4 items-start w-full ">
       <!--      store   -->
-      <DisplayCard text-color="text-green-500" bg-color="bg-green-100">
+      <DisplayCard text-color="text-green-500" bg-color="bg-green-100" show-actions>
         <template #icon>
           <shop class="h-8 w-8"/>
         </template>
@@ -166,12 +166,12 @@ watch(() => router.currentRoute, () => {
 
           <div class="flex items-center gap-2">
             <router-link :to="{name: 'register-store'}">
-              <el-button :icon="Plus"/>
+              <el-button :icon="Plus">Add</el-button>
             </router-link>
 
             <router-link :to="{name: 'partial-list-stores'}">
               <!--            <Open/>-->
-              <el-button :icon="FolderOpened"/>
+              <el-button :icon="Open">View</el-button>
             </router-link>
           </div>
 
