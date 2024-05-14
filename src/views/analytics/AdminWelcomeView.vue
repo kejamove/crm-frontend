@@ -29,6 +29,22 @@ const fetchStoreData = ()=>{
       })
 }
 
+const movesPlotLoading = ref(false)
+const movePlotData = ref([])
+const movesPerMonth = (year)=>{
+  movesPlotLoading.value= true
+  movePlotData.value = []
+
+  store.dispatch('postData', {url:`moves-per-month/${year}`, })
+      .then((resp)=>{
+        movePlotData.value = resp.data
+        movesPlotLoading.value= false
+      })
+      .catch(err=>{
+        movesPlotLoading.value= false
+      })
+}
+
 const moveLoading = ref(false)
 const registeredMoves = ref(null)
 
@@ -87,10 +103,11 @@ onMounted(()=>{
 })
 
 const fetchOnMount = ()=>{
-  fetchStoreData()
-  fetchMoveData()
-  fetchLeadData()
-  fetchUserData()
+  // fetchStoreData()
+  // fetchMoveData()
+  // fetchLeadData()
+  // fetchUserData()
+  movesPerMonth(2024)
 }
 
 watch(() => router.currentRoute, () => {
