@@ -267,7 +267,7 @@ watch(() => router.currentRoute, () => {
 
 
       <div class="pb-4 w-full rounded-md border">
-        <GrowthChart :chartData="movesData"/>
+        <GrowthChart :chartData="movesData" class="md-w-[400px]"/>
       </div>
     </div>
 
