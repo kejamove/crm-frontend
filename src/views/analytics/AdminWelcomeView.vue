@@ -236,7 +236,7 @@ watch(() => router.currentRoute, () => {
       </DisplayCard>
 
       <!--      users   -->
-      <DisplayCard text-color="text-purple-500" bg-color="bg-purple-100">
+      <DisplayCard text-color="text-purple-500" bg-color="bg-purple-100" show-actions>
         <template #icon>
           <UserFilled class="h-6 w-6"/>
 
@@ -255,8 +255,8 @@ watch(() => router.currentRoute, () => {
 
         <template #actions>
 
-          <router-link :to="{name: 'register-store'}">
-            <el-button :icon="Plus"/>
+          <router-link :to="{name: 'partial-user-registration'}">
+            <el-button :icon="Plus">Add</el-button>
           </router-link>
 
         </template>

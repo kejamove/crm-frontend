@@ -1,28 +1,23 @@
   <template>
     <el-form
-      ref="loginFormRef"
+      ref="ruleForm"
       :model="form"
       :rules="rules"
       class="flex flex-col gap-4 w-full h-fit"
       label-position="top"
     >
-      <div class="flex gap-2 items-center">
-        <h1 class="font-bold text-2xl text-blue-500">Keja Move CRM</h1>
-      </div>
 
-      <h2 class="font-bold text-gray-400">Registration</h2>
-
-      <el-form-item label="First Name" prop="fname">
+      <el-form-item label="First Name" prop="first_name">
         <el-input
           v-model="form.first_name"
           :prefix-icon="UserIcon"
-          placeholder="username"
+          placeholder="first name"
           size="large"
           type="text"
         />
       </el-form-item>
 
-      <el-form-item label="Last Name" prop="lname">
+      <el-form-item label="Last Name" prop="last_name">
         <el-input
           v-model="form.last_name"
           :prefix-icon="UserIcon"
@@ -59,21 +54,106 @@
           type="password"
         />
       </el-form-item>
-      <!--            <el-input-->
+      <el-form-item
+          :rules="[
+              {
+                required: true,
+                trigger: 'blur',
+                message: 'Please enter password',
+              },
+              {
+                validator: validatePassword
+              }
+          ]"
+          label="Password Confirmation" prop="password_confirmation">
+        <el-input
+            v-model="form.password_confirmation"
+            :prefix-icon="LockClosedIcon"
+            placeholder="password"
+            show-password
+            size="large"
+            type="password"
+        />
+      </el-form-item>
+      <el-form-item label="User Type" prop="user_type" class="w-full">
+        <el-select
+            clearable
+            v-model="form.user_type"
+            placeholder="Select"
+            size="large"
+        >
+          <el-option
+              v-for="item in user_types"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="Phone Number" prop="phone_local_number" class="w-full"
+            :rules="[
+              {
+                required: true,
+                trigger: 'blur',
+                message: 'Please enter a valid phone number',
+              },
+              {
+                validator: validatePhoneNumber
+              }
+          ]"
+      >
+        <el-input
+            v-model="form.phone_local_number"
+            style="max-width: 600px"
+            placeholder="Please input phone number"
+            class="input-with-select"
+            type="number"
+        >
+          <template #prepend>
+            <el-select v-model="form.phone_country_code"
+                       placeholder="Country Code" style="width: 60px">
+              <el-option label="+254" value="+254" />
+              <el-option label="+255" value="+255" />
+            </el-select>
+          </template>
+        </el-input>
+      </el-form-item>
+      <el-form-item label="Store" prop="store" class="w-full">
+        <el-select
+            v-model="form.store"
+            clearable
+            @focus="fetchStores"
+            :loading="storeLoading"
+            placeholder="Store To Which a user belongs"
+            size="large"
+        >
+          <template #loading>
+            <BaseLoader/>
+          </template>
+          <el-option
+              v-for="item in registeredStores"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+
       <div class="flex w-full ">
         <el-button
-          :loading="loading"
+          :loading="registerUserLoading"
           class="w-fit "
           size="large"
           style="border-radius: 4px"
           type="primary"
           html-type="submit"
-          @click="submitForm(loginFormRef)"
+          @click="submitForm(ruleForm)"
         >
           Register
         </el-button>
       </div>
-      <div class="text-sm">
+      <div class="text-sm hidden">
         <span class="text-gray-400"> Already have an Account ? </span>
         <router-link :to="{name:'login'}" class="text-blue-400 hover:text-blue-500 hover:font-bold">
           Sign In </router-link>
@@ -82,11 +162,14 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { reactive, ref,onMounted } from "vue";
 import { LockClosedIcon, UserIcon } from "@heroicons/vue/24/solid";
 import { FormInstance, FormRules } from "element-plus";
 import store from "@/store";
+import router from "@/router";
 import { FolderOpened } from '@element-plus/icons-vue'
+import BaseLoader from "@/components/base/BaseLoader.vue";
+
 
 const loading = ref(false);
 const form = ref({
@@ -97,7 +180,7 @@ const form = ref({
   email:''
 });
 
-const loginFormRef = ref<FormInstance>();
+const ruleForm = ref<FormInstance>();
 const rules = reactive<FormRules>({
   username: [
     {
@@ -112,25 +195,114 @@ const rules = reactive<FormRules>({
     message: "Please enter password",
   },
 });
+const registerUserLoading = ref(false)
 const submitForm = async (formEl: FormInstance | undefined) => {
-  loading.value = true;
+  registerUserLoading.value = true;
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
-    console.log(fields, 'fields')
+    console.log(fields,'fields')
     if (valid) {
       store
-        .dispatch("postData", {
-          url: "register-users",
-          data: form,
-        })
-        .then((resp) => {
-          loading.value = false
-          console.log(resp?.data)
-        });
+          .dispatch("postData", {
+            url: "register-user",
+            data: form.value
+          })
+          .then((resp) => {
+            registerUserLoading.value = false;
+            router.go(-1)
+          })
+          .catch((err)=>{
+            registerUserLoading.value = false;
+          })
+      ;
     } else {
+      registerUserLoading.value = false;
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        html: '<p class="text-red-400">Fill All required Fields</p>',
+        timer: 4000,
+      });
     }
+    loading.value = false;
   });
 };
+
+const user_types = [
+  {
+    value: 'admin',
+    label: 'Admin',
+  },
+  {
+    value: 'store_owner',
+    label: 'Store Owner',
+  },
+  {
+    value: 'project_manager',
+    label: 'Project Manager',
+  },
+  {
+    value: 'sales',
+    label: 'Sales Person',
+  },
+  {
+    value: 'marketing',
+    label: 'Marketing Person',
+  }
+]
+
+const validatePassword = (rule: any, value: any, callback: any) => {
+  if (value === '') {
+    callback(new Error('Please input the password again'))
+  } else if (value !== form.value.password) {
+    callback(new Error("Two inputs don't match!"))
+  } else {
+    callback()
+  }
+}
+
+const validatePhoneNumber = (rule, value, callback) => {
+  const phoneNumberPattern = /^[0-9]+$/; // Regular expression to match only digits
+
+  if (value.length < 7) {
+    callback(new Error('Phone number must be at least 7 characters'));
+  } else if (value.length > 11) {
+    callback(new Error('Phone number must be no more than 11 characters'));
+  } else if (!phoneNumberPattern.test(value)) {
+    callback(new Error('Phone number must contain only digits'));
+  } else {
+    callback();
+  }
+};
+
+const registeredStores = ref([])
+const storeLoading = ref(false)
+
+const fetchStores = ()=>{
+  storeLoading.value= true
+  registeredStores.value = []
+
+  store.dispatch('fetchList', {url:'all-stores'})
+      .then((resp)=>{
+        resp.data.map((store)=>{
+          registeredStores.value.push({
+            'label': store.name,
+            'value': store.id,
+          })
+        })
+        storeLoading.value= false
+      })
+      .catch(err=>{
+        storeLoading.value= false
+      })
+}
+
+
+
+onMounted(()=>{
+  // fetchStores()
+})
+
 </script>
 
 <style scoped></style>

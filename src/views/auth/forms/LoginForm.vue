@@ -115,7 +115,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           })
       ;
     } else {
-      loginLoading.value = true;
+      loginLoading.value = false;
       Swal.fire({
         icon: 'error',
         title: 'Error',

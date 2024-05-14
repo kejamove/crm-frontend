@@ -6,6 +6,7 @@ import AdminWelcomeView from "@/views/analytics/AdminWelcomeView.vue";
 import CreateEditStore from "@/views/admin/store/CreateEditStore.vue";
 import ListStores from "@/views/admin/store/ListStores.vue";
 import DialogStore from "@/views/admin/store/components/DialogStore.vue";
+import UserCreateEdit from "@/views/admin/users/UserCreateEdit.vue";
 
 const routes = [
   {
@@ -45,6 +46,13 @@ const routes = [
             name:'partial-list-stores',
             path:'partial-stores',
             component: DialogStore,
+            requiresAuth: true,
+            roles: ['admin'],
+          },
+          {
+            name:'partial-user-registration',
+            path:'partial-user-registration',
+            component: UserCreateEdit,
             requiresAuth: true,
             roles: ['admin'],
           },
