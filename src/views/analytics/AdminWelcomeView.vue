@@ -142,6 +142,9 @@ watch(() => router.currentRoute, () => {
       Admin Dashboard
     </h1>
 
+    <div class="flex flex-wrap gap-4">
+      <el-button size="large" type="primary" :icon="Plus">Invoice(s)</el-button>
+    </div>
 
 <!--    Cards-->
     <div class="flex flex-wrap gap-x-4 gap-y-4 items-start w-full ">
