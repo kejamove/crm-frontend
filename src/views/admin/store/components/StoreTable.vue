@@ -1,6 +1,7 @@
 <script setup>
 import {Delete, EditPen} from "@element-plus/icons-vue";
 import BaseDataTable from "@/components/base/BaseDataTable.vue";
+import {ref} from "vue"
 
 const columns = ref([
   {
