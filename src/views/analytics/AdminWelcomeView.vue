@@ -12,19 +12,73 @@ const store = useStore()
 const router = useRouter()
 const storeLoading = ref(false);
 
-const registeredStores = ref(0);
+const registeredStores = ref(null);
 
 const fetchStoreData = ()=>{
   storeLoading.value= true
+  registeredStores.value = null
 
   store.dispatch('fetchList', {url:'store-data'})
       .then((resp)=>{
         // console.log(resp)
-        registeredStores.value = resp.data[0]
+        registeredStores.value = resp.data
         storeLoading.value= false
       })
       .catch(err=>{
         storeLoading.value= false
+      })
+}
+
+const moveLoading = ref(false)
+const registeredMoves = ref(null)
+
+const fetchMoveData = ()=>{
+  moveLoading.value= true
+  registeredMoves.value = null
+
+  store.dispatch('fetchList', {url:'move-data'})
+      .then((resp)=>{
+        registeredMoves.value = resp.data
+        moveLoading.value= false
+      })
+      .catch(err=>{
+        moveLoading.value= false
+      })
+}
+
+// LEADS
+const leadLoading = ref(false)
+const registeredLeads = ref(null)
+
+const fetchLeadData = ()=>{
+  leadLoading.value= true
+  registeredLeads.value = null
+
+  store.dispatch('fetchList', {url:'lead-data'})
+      .then((resp)=>{
+        registeredLeads.value = resp.data
+        leadLoading.value= false
+      })
+      .catch(err=>{
+        leadLoading.value= false
+      })
+}
+
+// USERS
+const userLoading = ref(false)
+const registeredUsers = ref(null)
+
+const fetchUserData = ()=>{
+  userLoading.value= true
+  registeredUsers.value = null
+
+  store.dispatch('fetchList', {url:'user-data'})
+      .then((resp)=>{
+        registeredUsers.value = resp.data
+        userLoading.value= false
+      })
+      .catch(err=>{
+        userLoading.value= false
       })
 }
 
@@ -34,6 +88,9 @@ onMounted(()=>{
 
 const fetchOnMount = ()=>{
   fetchStoreData()
+  fetchMoveData()
+  fetchLeadData()
+  fetchUserData()
 }
 
 watch(() => router.currentRoute, () => {
@@ -54,7 +111,6 @@ watch(() => router.currentRoute, () => {
 
 <!--    Cards-->
     <div class="flex flex-wrap gap-x-4 gap-y-8 items-start w-full ">
-
       <!--      store   -->
       <DisplayCard text-color="text-green-500" bg-color="bg-green-100">
         <template #icon>
@@ -67,7 +123,7 @@ watch(() => router.currentRoute, () => {
 
         <template #content >
           <p v-if="!storeLoading">
-            {{registeredStores}} stores registered
+            {{registeredStores?.count}} stores registered
           </p>
           <BaseLoader v-if="storeLoading"/>
         </template>
@@ -102,9 +158,9 @@ watch(() => router.currentRoute, () => {
 
         <template #content >
           <p v-if="!storeLoading">
-            {{registeredStores}} stores registered
+            {{registeredMoves?.count}} moves made
           </p>
-          <BaseLoader v-if="storeLoading"/>
+          <BaseLoader v-if="moveLoading"/>
         </template>
 
         <template #actions>
@@ -131,9 +187,9 @@ watch(() => router.currentRoute, () => {
 
         <template #content >
           <p v-if="!storeLoading">
-            {{registeredStores}} stores registered
+            {{registeredLeads?.count}} possible Leads
           </p>
-          <BaseLoader v-if="storeLoading"/>
+          <BaseLoader v-if="leadLoading"/>
         </template>
 
         <template #actions>
@@ -158,9 +214,9 @@ watch(() => router.currentRoute, () => {
 
         <template #content >
           <p v-if="!storeLoading">
-            {{registeredStores}} stores registered
+            {{registeredUsers?.count}} system users
           </p>
-          <BaseLoader v-if="storeLoading"/>
+          <BaseLoader v-if="userLoading"/>
         </template>
 
         <template #actions>

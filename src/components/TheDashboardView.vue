@@ -46,9 +46,12 @@ const authData = JSON.parse(localStorage.getItem("authData"));
             content="this is content, this is content, this is content"
         >
           <template #reference>
-            <el-avatar shape="square" size="default" class="cursor-pointer font-extrabold" style="background-color: #fc7c04" >
-              {{authData?.user?.first_name[0]}} {{authData?.user?.last_name[0]}}
-            </el-avatar>
+<!--            <div size="default" class="cursor-pointer font-extrabold flex gap-2 h-12 px-2  w-fit rounded text-white items-center justify-center"  >-->
+<!--              <span>{{authData?.user?.first_name[0]}}</span> <span>{{authData?.user?.last_name[0]}}</span>-->
+<!--            </div>-->
+            <ElButton size="large" style="background-color: #fc7c04; color:white; font-weight: bold;" class="text-white font-bold">
+              <span>{{authData?.user?.first_name[0]}}</span> <span>{{authData?.user?.last_name[0]}}</span>
+            </ElButton>
           </template>
 
           <template #default>
