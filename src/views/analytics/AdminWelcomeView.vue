@@ -80,6 +80,21 @@ const fetchLeadData = ()=>{
       })
 }
 
+const movesData = ref( [
+  { "month": 1, "count": 15 },
+  { "month": 2, "count": 20 },
+  { "month": 3, "count": 25 },
+  { "month": 4, "count": 0 },
+  { "month": 5, "count": 10 },
+  { "month": 6, "count": 5 },
+  { "month": 7, "count": 30 },
+  { "month": 8, "count": 0 },
+  { "month": 9, "count": 12 },
+  { "month": 10, "count": 18 },
+  { "month": 11, "count": 22 },
+  { "month": 12, "count": 30 }
+])
+
 // USERS
 const userLoading = ref(false)
 const registeredUsers = ref(null)
@@ -103,10 +118,10 @@ onMounted(()=>{
 })
 
 const fetchOnMount = ()=>{
-  // fetchStoreData()
-  // fetchMoveData()
-  // fetchLeadData()
-  // fetchUserData()
+  fetchStoreData()
+  fetchMoveData()
+  fetchLeadData()
+  fetchUserData()
   movesPerMonth(2024)
 }
 
@@ -117,7 +132,7 @@ watch(() => router.currentRoute, () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-8 h-full w-full pb-4">
+  <div class="flex flex-col gap-8 h-full w-full pb-4 overflow-y-auto">
 
     <router-view/>
 
@@ -251,8 +266,8 @@ watch(() => router.currentRoute, () => {
     <div class="flex flex-col gap-4 h-full w-full pr-4">
 
 
-      <div class="h-full w-full rounded-md border bg-white">
-
+      <div class="pb-4 w-full rounded-md border">
+        <GrowthChart :chartData="movesData"/>
       </div>
     </div>
 

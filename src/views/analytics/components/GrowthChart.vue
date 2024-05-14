@@ -1,46 +1,75 @@
 <template>
   <div>
-    <Line :data="chartData" :options="chartOptions" />
+    <canvas ref="chart" class="h-full"></canvas>
   </div>
 </template>
 
 <script>
-import { Line } from 'vue-chartjs'
-import { ref, reactive } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
+import { Chart, registerables } from 'chart.js';
 
 export default {
-  name: 'LineChart',
-  components: { Line },
-  setup() {
-    const chartData = reactive({
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label: 'Data One',
-          type: 'line',
-          backgroundColor: '#f87979',
-          borderColor: '#36495d',
-          borderWidth: 3,
-          data: [40, 39, 10, 40, 39, 80, 40]
-        }
-      ]
-    })
+  props: ['chartData'],
+  setup(props) {
+    const chart = ref(null);
 
-    const chartOptions = reactive({
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          beginAtZero: true,
-          type: 'linear'
+    const renderChart = () => {
+      const ctx = chart.value.getContext('2d');
+
+      const chartData = {
+        labels: props.chartData.map(data => data.month),
+        datasets: [{
+          label: 'Moves Per Month',
+          data: props.chartData.map(data => data.count),
+          borderColor: 'rgb(75, 192, 192)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          tension: 0.4,
+          fill: true,
+        }],
+      };
+
+      const options = {
+        scales: {
+          y: {
+            type: 'linear', // Ensure the scale type is set to 'linear'
+            beginAtZero: true
+          }
         }
+      };
+
+      if (chart.value && chart.value.chart) {
+        chart.value.chart.destroy();
       }
-    })
 
-    return {
-      chartData,
-      chartOptions
-    }
+      Chart.register(...registerables);
+
+      chart.value = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: options,
+        plugins: registerables
+      });
+    };
+
+    onMounted(() => {
+      renderChart();
+    });
+
+    onBeforeUnmount(() => {
+      if (chart.value && chart.value.chart) {
+        chart.value.chart.destroy();
+      }
+    });
+
+    watch(() => props.chartData, () => {
+      renderChart();
+    });
+
+    return { chart };
   }
-}
+};
 </script>
+
+<style scoped>
+/* Add your styles here if needed */
+</style>
