@@ -5,6 +5,8 @@ import TheDashboardView from "@/components/TheDashboardView.vue";
 import AdminWelcomeView from "@/views/analytics/AdminWelcomeView.vue";
 import CreateEditStore from "@/views/admin/store/CreateEditStore.vue";
 import ListStores from "@/views/admin/store/ListStores.vue";
+import DialogStore from "@/views/admin/store/components/DialogStore.vue";
+
 const routes = [
   {
     name:'register',
@@ -19,40 +21,6 @@ const routes = [
     component: LoginView
   },
   {
-    name:'admin',
-    path:'/admin',
-    component: TheDashboardView,
-    requiresAuth: true,
-    roles: ['admin'],
-    children : [
-      {
-        name:'welcome',
-        path:'',
-        component: AdminWelcomeView,
-        requiresAuth: true,
-        roles: ['admin'],
-        children: [
-          {
-            name:'register-store',
-            path:'register-store',
-            component: CreateEditStore,
-            requiresAuth: true,
-            roles: ['admin'],
-          }
-        ]
-      },
-      {
-        name:'admin-list-stores',
-        path:'list-stores',
-        component: ListStores,
-        requiresAuth: true,
-        roles: ['admin'],
-      },
-
-    ]
-  },
-
-  {
     name:'dashboard',
     path:'/dashboard',
     component: TheDashboardView,
@@ -61,7 +29,7 @@ const routes = [
     children : [
       {
         name:'welcome',
-        path:'',
+        path:'store',
         component: AdminWelcomeView,
         requiresAuth: true,
         roles: ['admin'],
@@ -74,13 +42,20 @@ const routes = [
             roles: ['admin'],
           },
           {
-            name:'list-stores',
-            path:'list-stores',
-            component: ListStores,
+            name:'partial-list-stores',
+            path:'partial-stores',
+            component: DialogStore,
             requiresAuth: true,
             roles: ['admin'],
           },
         ]
+      },
+      {
+        name:'admin-list-stores',
+        path:'list-stores',
+        component: ListStores,
+        requiresAuth: true,
+        roles: ['admin'],
       },
 
     ]

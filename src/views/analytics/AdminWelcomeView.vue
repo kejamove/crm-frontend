@@ -7,6 +7,7 @@ import {onMounted, ref, watch} from "vue";
 import BaseLoader from "@/components/base/BaseLoader.vue";
 import {useRouter} from "vue-router";
 import GrowthChart from "@/views/analytics/components/GrowthChart.vue";
+import BaseDialog from "@/components/base/BaseDialog.vue";
 
 const store = useStore()
 const router = useRouter()
@@ -133,6 +134,7 @@ watch(() => router.currentRoute, () => {
 
 <template>
   <div class="flex flex-col gap-8 h-full w-full pb-4 overflow-y-auto">
+<!--    <BaseDialog/>-->
 
     <router-view/>
 
@@ -142,7 +144,7 @@ watch(() => router.currentRoute, () => {
 
 
 <!--    Cards-->
-    <div class="flex flex-wrap gap-x-4 gap-y-8 items-start w-full ">
+    <div class="flex flex-wrap gap-x-4 gap-y-4 items-start w-full ">
       <!--      store   -->
       <DisplayCard text-color="text-green-500" bg-color="bg-green-100">
         <template #icon>
@@ -167,7 +169,7 @@ watch(() => router.currentRoute, () => {
               <el-button :icon="Plus"/>
             </router-link>
 
-            <router-link :to="{name: 'register-store'}">
+            <router-link :to="{name: 'partial-list-stores'}">
               <!--            <Open/>-->
               <el-button :icon="FolderOpened"/>
             </router-link>
@@ -261,7 +263,7 @@ watch(() => router.currentRoute, () => {
       </DisplayCard>
     </div>
 
-    <h1 class="text-lg font-semibold">System Usage Graph</h1>
+    <h1 class="text-lg font-semibold">Moves Per Month</h1>
 
     <div class="flex flex-col gap-4 h-full w-full pr-4">
 

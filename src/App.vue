@@ -6,9 +6,8 @@ const store = useStore()
 </script>
 
 <template>
-  <div :class="{'light-mode': store.getters.getLightMode, 'dark-mode': !store.getters.getLightMode}" class="h-screen w-[100vw]">
+  <div :class="{'light-mode': store.getters.getLightMode, 'dark-mode': !store.getters.getLightMode}" class="h-screen w-full">
 
-    <!-- Your content here -->
     <router-view/>
 
   </div>
