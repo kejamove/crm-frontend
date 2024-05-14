@@ -270,7 +270,6 @@ watch(() => router.currentRoute, () => {
         <GrowthChart :chartData="movesData"/>
       </div>
     </div>
-<!--sme-->
 
   </div>
 </template>

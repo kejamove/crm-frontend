@@ -1,7 +1,6 @@
 <template>
   <div>
     <canvas ref="chart" class="h-full"></canvas>
-<!--    sme-->
   </div>
 </template>
 
