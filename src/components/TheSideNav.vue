@@ -69,6 +69,7 @@ const navigateToSelectedPage = (index)=>{
           :collapse="!store.state.sideNavCollapse"
           @open="handleOpen"
           @close="handleClose"
+          @select="navigateToSelectedPage"
       >
         <AdminLinks/>
       </el-menu>
