@@ -231,11 +231,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 const user_types = [
   {
     value: 'admin',
-    label: 'Admin',
+    label: 'Super Admin',
   },
   {
     value: 'store_owner',
-    label: 'Store Owner',
+    label: 'Branch Manager',
   },
   {
     value: 'project_manager',

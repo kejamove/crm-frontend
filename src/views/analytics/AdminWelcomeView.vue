@@ -13,16 +13,15 @@ const store = useStore()
 const router = useRouter()
 const storeLoading = ref(false);
 
-const registeredStores = ref(null);
+const registeredFirms = ref(null);
 
 const fetchStoreData = ()=>{
   storeLoading.value= true
-  registeredStores.value = null
+  registeredFirms.value = null
 
-  store.dispatch('fetchList', {url:'store-data'})
+  store.dispatch('fetchList', {url:'firm-count'})
       .then((resp)=>{
-        // console.log(resp)
-        registeredStores.value = resp.data
+        registeredFirms.value = resp.data
         storeLoading.value= false
       })
       .catch(err=>{
@@ -71,7 +70,7 @@ const fetchLeadData = ()=>{
   leadLoading.value= true
   registeredLeads.value = null
 
-  store.dispatch('fetchList', {url:'lead-data'})
+  store.dispatch('fetchList', {url:'lead-count'})
       .then((resp)=>{
         registeredLeads.value = resp.data
         leadLoading.value= false
@@ -121,9 +120,9 @@ onMounted(()=>{
 const fetchOnMount = ()=>{
   fetchStoreData()
   fetchMoveData()
-  fetchLeadData()
   fetchUserData()
-  movesPerMonth(2024)
+  fetchLeadData()
+  // movesPerMonth(2024)
 }
 
 watch(() => router.currentRoute, () => {
@@ -155,12 +154,12 @@ watch(() => router.currentRoute, () => {
         </template>
 
         <template #title>
-          Store
+          Firm
         </template>
 
         <template #content >
           <p v-if="!storeLoading">
-            {{registeredStores?.count}} stores registered
+            {{ registeredFirms?.data }} firms registered
           </p>
           <BaseLoader v-if="storeLoading"/>
         </template>
@@ -224,7 +223,7 @@ watch(() => router.currentRoute, () => {
 
         <template #content >
           <p v-if="!storeLoading">
-            {{registeredLeads?.count}} possible Leads
+            {{registeredLeads?.data}} possible Leads
           </p>
           <BaseLoader v-if="leadLoading"/>
         </template>
@@ -266,12 +265,12 @@ watch(() => router.currentRoute, () => {
       </DisplayCard>
     </div>
 
-    <h1 class="text-lg font-semibold">Moves Per Month</h1>
+    <h1 class="text-lg font-semibold hidden">Moves Per Month</h1>
 
     <div class="flex flex-col gap-4 h-full w-full pr-4">
 
 
-      <div class="pb-4 w-full rounded-md border">
+      <div class="pb-4 w-full rounded-md border hidden">
         <GrowthChart :chartData="movesData" class="md-w-[400px]"/>
       </div>
     </div>

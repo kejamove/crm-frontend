@@ -2,7 +2,7 @@
 
   <BaseDialog>
     <template #title>
-      Create Store
+      Create Firm
     </template>
 
     <template #content>
@@ -14,11 +14,11 @@
           label-position="top"
       >
 
-        <el-form-item label="Store Name" prop="name"
+        <el-form-item label="Firm Name" prop="name"
                       :rules="[
             {
               required: true,
-              message: 'Please input a store name',
+              message: 'Please input a firm name',
               trigger: 'blur',
             }
          ]"
@@ -26,16 +26,16 @@
           <el-input
               v-model="form.name"
               :prefix-icon="House"
-              placeholder="store name"
+              placeholder="firm name"
               size="large"
           />
         </el-form-item>
 
-        <el-form-item label="Store Location" prop="location"
+        <el-form-item label="Firm Location" prop="location"
                       :rules="[
             {
               required: true,
-              message: 'Please input the store location',
+              message: 'Please input the firm location',
               trigger: 'blur',
             }
          ]"
@@ -43,7 +43,7 @@
           <el-input
               v-model="form.location"
               :prefix-icon="Location"
-              placeholder="Store Location eg Kitisuru Nairobi"
+              placeholder="Firm Location eg Kitisuru Nairobi"
               size="large"
           />
         </el-form-item>
@@ -99,7 +99,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       store
           .dispatch("postData", {
-            url: "register-store",
+            url: "register-firm",
             data: form
           })
           .then((resp) => {
@@ -112,12 +112,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       ;
     } else {
       registerLoading.value = false;
-      // Swal.fire({
-      //   icon: 'error',
-      //   title: 'Error',
-      //   html: '<p class="text-red-400">Fill All required Fields</p>',
-      //   timer: 4000,
-      // });
       ElNotification({
         title: 'Error',
         type: "error",
