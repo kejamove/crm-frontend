@@ -21,7 +21,7 @@ const authData = JSON.parse(localStorage.getItem("authData"));
   <div class="h-full min-w-screen max-w-screen-md" style="max-width: 100vw">
 
   <div class=" flex flex-col  min-w-full  h-full items-center">
-      <div class="h-[70px] border-b w-full flex items-center justify-end gap-4 px-4">
+      <div class="h-[70px] border-b w-full flex items-center justify-between gap-4 px-4">
         <div class="h-[70px] md:flex items-center border-b hidden ">
           <el-button class="w-[40px] bg-amber-600"
                      @click="store.state.sideNavCollapse = !store.state.sideNavCollapse">
@@ -31,55 +31,58 @@ const authData = JSON.parse(localStorage.getItem("authData"));
           </el-button>
         </div>
 
-        <div class="border-b h-[70px]  flex items-center w-full text-center text-2xl font-bold text-[#fc7c04]">
+        <div class="border-b h-[70px]  flex items-center  text-center text-2xl font-bold text-[#fc7c04]">
           <!--      <img class="" src="@/assets/Kejamove_Logo1x.png">-->
           KEJA<span class="text-gray-800">MOVE</span> <span class="mx-2 text-gray-500 italic hidden">crm</span>
 
         </div>
 
 
-        <el-popover
-            placement="bottom"
-            title="Profile"
-            :width="200"
-            trigger="click"
-            content="this is content, this is content, this is content"
-        >
-          <template #reference>
-<!--            <div size="default" class="cursor-pointer font-extrabold flex gap-2 h-12 px-2  w-fit rounded text-white items-center justify-center"  >-->
-<!--              <span>{{authData?.user?.first_name[0]}}</span> <span>{{authData?.user?.last_name[0]}}</span>-->
-<!--            </div>-->
-            <div class=" font-bold bg-[#fc7c04] rounded-full h-[3rem] w-[3rem] flex items-center justify-center cursor-pointer text-[#fc7c04]">
-              <div class="flex items-center w-fit h-[1.5rem] text-white justify-center ">
-                <span class="h-fit">{{authData?.user?.first_name[0]}}</span> <span class="h-fit">{{authData?.user?.last_name[0]}}</span>
+        <div class="w-full flex items-center justify-end h-fit p-0">
+          <el-popover
+              placement="bottom"
+              title="Profile"
+              :width="200"
+              trigger="click"
+              content="this is content, this is content, this is content"
+          >
+            <template #reference>
+              <!--            <div size="default" class="cursor-pointer font-extrabold flex gap-2 h-12 px-2  w-fit rounded text-white items-center justify-center"  >-->
+              <!--              <span>{{authData?.user?.first_name[0]}}</span> <span>{{authData?.user?.last_name[0]}}</span>-->
+              <!--            </div>-->
+              <div class=" font-bold bg-[#fc7c04] rounded-full h-[3rem] w-[3rem] flex items-center justify-center cursor-pointer text-[#fc7c04]">
+                <div class="flex items-center w-fit h-[1.5rem] text-white justify-center ">
+                  <span class="h-fit">{{authData?.user?.first_name[0]}}</span> <span class="h-fit">{{authData?.user?.last_name[0]}}</span>
+                </div>
+
               </div>
+            </template>
 
-            </div>
-          </template>
+            <template #default>
+              <div class="w-full border-t flex flex-col gap-2 py-2">
+                <div class="flex flex-col p-2 bg-gray-100 capitalize items-center justify-center hover:bg-gray-200 cursor-pointer rounded-md">
+                  <p class="w-full">
+                    {{authData?.user?.first_name}} {{authData?.user?.last_name}}
 
-          <template #default>
-            <div class="w-full border-t flex flex-col gap-2 py-2">
-              <div class="flex flex-col p-2 bg-gray-100 capitalize items-center justify-center hover:bg-gray-200 cursor-pointer rounded-md">
-                <p class="w-full">
-                  {{authData?.user?.first_name}} {{authData?.user?.last_name}}
+                  </p>
+                  <p class="w-full" >
+                    {{authData?.user?.phone_number_full}}
+                  </p>
+                </div>
+                <button
+                    @click="logout"
+                    class="w-full p-3 h-10 rounded-md flex items-center justify-center gap-2 hover:text-lg bg-red-500 text-white">
+                  logout
 
-                </p>
-                <p class="w-full" >
-                  {{authData?.user?.phone_number_full}}
-                </p>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                  </svg>
+                </button>
               </div>
-              <button
-                  @click="logout"
-                  class="w-full p-3 h-10 rounded-md flex items-center justify-center gap-2 hover:text-lg bg-red-500 text-white">
-                logout
+            </template>
+          </el-popover>
+        </div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
-                </svg>
-              </button>
-            </div>
-          </template>
-        </el-popover>
 
         <div class="sm:flex items-center border-b md:hidden ">
           <el-button class="w-[40px] bg-amber-600" size="large"
@@ -91,9 +94,10 @@ const authData = JSON.parse(localStorage.getItem("authData"));
         </div>
 
       </div>
+<!--    end top nav-->
 
       <div class="flex h-full w-full">
-        <div class="hidden md:block">
+        <div class="hidden md:block z-50">
           <TheSideNav/>
         </div>
 

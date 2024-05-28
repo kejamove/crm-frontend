@@ -9,6 +9,8 @@ import DialogFirm from "@/views/firm/components/DialogFirm.vue";
 import UserCreateEdit from "@/views/users/UserCreateEdit.vue";
 import FirmView from "@/views/firm/FirmView.vue";
 import FirmList from "@/views/firm/FirmList.vue";
+import ListBranches from "@/views/branch/ListBranches.vue";
+import CreateEditBranch from "@/views/branch/CreateEditBranch.vue";
 
 const routes = [
   {
@@ -32,7 +34,7 @@ const routes = [
     children : [
       {
         name:'welcome',
-        path:'firm',
+        path:'welcome',
         component: AdminWelcomeView,
         requiresAuth: true,
         roles: ['admin'],
@@ -73,8 +75,28 @@ const routes = [
             path:'partial-firm-view/:id',
             component: FirmView,
           },
+          {
+            name:'create-firm',
+            path:'create-firm',
+            component: CreateEditFirms,
+            requiresAuth: true,
+            roles: ['admin'],
+          },
         ]
       },
+      {
+        name:'branch-list',
+        path:'branch-list',
+        component: ListBranches,
+        children: [
+          {
+            name:'create-branch',
+            path:'create-branch',
+            component: CreateEditBranch,
+          }
+        ]
+      }
+
 
 
     ]

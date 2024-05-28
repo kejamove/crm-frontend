@@ -30,6 +30,24 @@
 
         />
       </el-form-item>
+      <el-form-item label="Mailer" prop="mailer" show-message message="message"
+                    :rules="[
+            {
+              required: true,
+              message: 'Please input your mailer',
+              trigger: 'blur',
+            }
+         ]"
+
+      >
+        <el-input
+            v-model="form.mailer"
+            :prefix-icon="UserIcon"
+            placeholder="smtp"
+            size="large"
+
+        />
+      </el-form-item>
       <el-form-item label="Port" prop="port"
                     :rules="[
             {
@@ -94,7 +112,7 @@
             size="large"
         />
       </el-form-item>
-      <el-form-item label="Email" prop="email"
+      <el-form-item label="Email" prop="from_address"
                     :rules="[
             {
               required: true,
@@ -109,7 +127,7 @@
          ]"
       >
         <el-input
-            v-model="form.email"
+            v-model="form.from_address"
             :prefix-icon="UserIcon"
             placeholder="email"
             size="large"
@@ -167,6 +185,7 @@ import router from "@/router/index"
 import Swal from "sweetalert2";
 const loading = ref(false);
 const form = reactive({
+  firm:'18'
 });
 
 
@@ -193,7 +212,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       store
           .dispatch("postData", {
-            url: "login",
+            url: "setup-email",
             data: form
           })
           .then((resp) => {

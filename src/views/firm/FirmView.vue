@@ -6,7 +6,8 @@ import store from "@/store/index.js";
 import router from "@/router/index.js";
 import {onMounted,ref} from "vue";
 import MailSetup from "@/views/firm/components/MailSetup.vue";
-import ListBranches from "@/views/branch/components/ListBranches.vue";
+import ListBranches from "@/views/branch/ListBranches.vue";
+import ListBranchesByFirm from "@/views/branch/ListBranchesByFirm.vue";
 
 const getFirmById = () => {
   let id = router?.currentRoute?._value?.params?.id;
@@ -55,7 +56,7 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
             <MailSetup/>
           </el-tab-pane>
           <el-tab-pane label="Branches" name="second">
-            <ListBranches/>
+            <ListBranchesByFirm/>
           </el-tab-pane>
         </el-tabs>
 

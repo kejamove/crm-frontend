@@ -140,6 +140,27 @@
         </el-select>
       </el-form-item>
 
+      <el-form-item label="Branch **Optional" prop="branch" class="w-full" v-if="form.firm">
+        <el-select
+            v-model="form.branch"
+            clearable
+            @focus="fetchBranches"
+            :loading="branchLoading"
+            placeholder="Branch To Which a user belongs"
+            size="large"
+        >
+          <template #loading>
+            <BaseLoader/>
+          </template>
+          <el-option
+              v-for="item in registeredBranches"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
+
       <div class="flex w-full ">
         <el-button
           :loading="registerUserLoading"
@@ -297,7 +318,22 @@ const fetchStores = ()=>{
       })
 }
 
+const registeredBranches = ref([])
+const branchLoading = ref(false)
 
+const fetchBranches = ()=>{
+  branchLoading.value= true
+  registeredBranches.value = []
+
+  store.dispatch('fetchList', {url:`list-firms/${form.value?.firm}/branches`})
+      .then((resp)=>{
+        registeredBranches.value = resp.data
+        branchLoading.value= false
+      })
+      .catch(err=>{
+        branchLoading.value= false
+      })
+}
 
 onMounted(()=>{
   // fetchStores()

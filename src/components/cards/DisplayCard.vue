@@ -17,7 +17,7 @@ const props = defineProps({
   },
   showActionsWidth: {
     type: String,
-    default: 200
+    default: "200"
   },
 })
 </script>

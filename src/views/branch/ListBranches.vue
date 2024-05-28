@@ -5,7 +5,17 @@ import {ref} from "vue"
 import router from "@/router/index.js";
 
 const firmUrl = router?.currentRoute?._value?.params?.id
-const fetchUrl = `list-firms/${firmUrl}/branches`
+const routeName = router?.currentRoute?._value?.name
+const authData = JSON.parse(localStorage.getItem("authData"));
+
+const loggedInUserFirm = ref(authData?.user?.firm)
+const userType = authData?.user?.user_type
+
+const fetchUrl = firmUrl ? `list-firms/${firmUrl}/branches` : `list-firms/${loggedInUserFirm}/branches`
+
+// return by firm if we are not on branch-list url , else check if user is super admin else just fetch by id
+const newFetchUrl = routeName === 'branch-list' ? (userType === 'super_admin' ? `list-branches` : fetchUrl) : fetchUrl
+
 
 const columns = ref([
   {
@@ -34,18 +44,16 @@ const goTo = (name, id) => {
   router.push({name: name, params: {id: id}});
 }
 
-// const
 
 </script>
 
 <template>
   <router-view/>
-
   <BaseDataTable
       :columns="columns"
-      :fetch-url="fetchUrl"
-      createRouteName="register-firm"
-      title="Stores">
+      fetch-url="list-branches"
+      createRouteName="create-branch"
+      title="Branches">
 
 
     <template v-slot:bodyCell="slotProps">
