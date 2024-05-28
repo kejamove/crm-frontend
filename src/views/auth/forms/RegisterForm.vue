@@ -119,13 +119,13 @@
           </template>
         </el-input>
       </el-form-item>
-      <el-form-item label="Store" prop="store" class="w-full">
+      <el-form-item label="Firm" prop="firm" class="w-full">
         <el-select
-            v-model="form.store"
+            v-model="form.firm"
             clearable
             @focus="fetchStores"
             :loading="storeLoading"
-            placeholder="Store To Which a user belongs"
+            placeholder="Firm To Which a user belongs"
             size="large"
         >
           <template #loading>
@@ -230,11 +230,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
 const user_types = [
   {
-    value: 'admin',
+    value: 'super_admin',
     label: 'Super Admin',
   },
   {
-    value: 'store_owner',
+    value: 'branch_manager',
     label: 'Branch Manager',
   },
   {
@@ -282,7 +282,7 @@ const fetchStores = ()=>{
   storeLoading.value= true
   registeredStores.value = []
 
-  store.dispatch('fetchList', {url:'all-stores'})
+  store.dispatch('fetchList', {url:'list-firms'})
       .then((resp)=>{
         resp.data.map((store)=>{
           registeredStores.value.push({

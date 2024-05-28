@@ -24,23 +24,23 @@ api.interceptors.response.use(undefined, function (err) {
     return new Promise(function () {
         console.log('status', err.response.status)
         if (err.response.status === 401) {
-            Swal.fire({
-                icon: 'error',
+            ElNotification({
                 title: 'Error',
-                text:'Session Expired',
-                timer: 3000,
-            });
+                type: "error",
+                position: "top-right",
+                message: 'Session Expired',
+            })
             deleteLocalStorageInformation()
 
             router.push({name : "login"});
 
         } else if (err.response.status === 403) {
-            Swal.fire({
-                icon: 'error',
+            ElNotification({
                 title: 'Error',
-                html: '<p class="text-red-400">Permission Denied </p>',
-                timer: 3000,
-            });
+                type: "error",
+                position: "top-right",
+                message: 'Permission Denied',
+            })
         }
         throw err;
     });

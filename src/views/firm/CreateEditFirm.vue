@@ -76,10 +76,9 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import {ElNotification, FormInstance, FormRules} from "element-plus";
-import store from "@/store/index";
-import router from "@/router/index"
+import store from "@/store";
+import router from "@/router"
 import {House, Location} from "@element-plus/icons-vue";
-import Swal from "sweetalert2";
 import BaseDialog from "@/components/base/BaseDialog.vue";
 const loading = ref(false);
 const form = reactive({

@@ -3,10 +3,11 @@ import LoginView from "@/views/auth/view/LoginView.vue"
 import RegisterView from "@/views/auth/view/RegisterView.vue"
 import TheDashboardView from "@/components/TheDashboardView.vue";
 import AdminWelcomeView from "@/views/analytics/AdminWelcomeView.vue";
-import CreateEditStore from "@/views/admin/store/CreateEditStore.vue";
-import ListStores from "@/views/admin/store/ListStores.vue";
-import DialogStore from "@/views/admin/store/components/DialogStore.vue";
-import UserCreateEdit from "@/views/admin/users/UserCreateEdit.vue";
+import CreateEditFirms from "@/views/firm/CreateEditFirm.vue";
+import ListFirms from "@/views/firm/ListFirms.vue";
+import DialogFirm from "@/views/firm/components/DialogFirm.vue";
+import UserCreateEdit from "@/views/users/UserCreateEdit.vue";
+import FirmView from "@/views/firm/FirmView.vue";
 
 const routes = [
   {
@@ -30,25 +31,30 @@ const routes = [
     children : [
       {
         name:'welcome',
-        path:'store',
+        path:'firm',
         component: AdminWelcomeView,
         requiresAuth: true,
         roles: ['admin'],
         children: [
           {
-            name:'register-store',
-            path:'register-store',
-            component: CreateEditStore,
+            name:'register-firm',
+            path:'register-firm',
+            component: CreateEditFirms,
             requiresAuth: true,
             roles: ['admin'],
           },
           {
-            name:'partial-list-stores',
-            path:'partial-stores',
-            component: DialogStore,
+            name:'partial-list-firm',
+            path:'partial-firm',
+            component: DialogFirm,
             requiresAuth: true,
-            roles: ['admin'],
+            roles: ['super_admin'],
+            children : [
+
+            ]
+
           },
+
           {
             name:'partial-user-registration',
             path:'partial-user-registration',
@@ -59,11 +65,9 @@ const routes = [
         ]
       },
       {
-        name:'admin-list-stores',
-        path:'list-stores',
-        component: ListStores,
-        requiresAuth: true,
-        roles: ['admin'],
+        name:'partial-firm-view',
+        path:'partial-firm-view/:id',
+        component: FirmView,
       },
 
     ]

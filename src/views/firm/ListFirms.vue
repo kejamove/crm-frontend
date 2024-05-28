@@ -1,7 +1,7 @@
 <script setup>
 
 import {ref} from "vue"
-import StoreTable from "@/views/admin/store/components/StoreTable.vue";
+import StoreTable from "@/views/StoreTable.vue";
 import BaseDialog from "@/components/base/BaseDialog.vue";
 
 </script>

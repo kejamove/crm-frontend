@@ -49,9 +49,12 @@ const authData = JSON.parse(localStorage.getItem("authData"));
 <!--            <div size="default" class="cursor-pointer font-extrabold flex gap-2 h-12 px-2  w-fit rounded text-white items-center justify-center"  >-->
 <!--              <span>{{authData?.user?.first_name[0]}}</span> <span>{{authData?.user?.last_name[0]}}</span>-->
 <!--            </div>-->
-            <ElButton size="large" style="background-color: #fc7c04; color:white; font-weight: bold;" class="text-white font-bold">
-              <span>{{authData?.user?.first_name[0]}}</span> <span>{{authData?.user?.last_name[0]}}</span>
-            </ElButton>
+            <div class=" font-bold bg-[#fc7c04] rounded-full h-[3rem] w-[3rem] flex items-center justify-center cursor-pointer text-[#fc7c04]">
+              <div class="flex items-center w-fit h-[1.5rem] text-white justify-center ">
+                <span class="h-fit">{{authData?.user?.first_name[0]}}</span> <span class="h-fit">{{authData?.user?.last_name[0]}}</span>
+              </div>
+
+            </div>
           </template>
 
           <template #default>
@@ -94,7 +97,7 @@ const authData = JSON.parse(localStorage.getItem("authData"));
           <TheSideNav/>
         </div>
 
-        <div class="flex-1 pl-4 bg-gray-50 overflow-hidden">
+        <div class="flex-1 p-4 bg-gray-50 overflow-x-hidden overflow-y-auto h-full ">
           <router-view/>
         </div>
 

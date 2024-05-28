@@ -23,33 +23,24 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="w-[320px] shadow p-4 rounded-lg flex gap-2 items-center bg-white">
-    <div class="h-14 w-14 flex items-center justify-center bg-yellow-50 rounded-full"
+  <div class="w-[320px] shadow px-4 py-8 rounded-lg flex gap-2 items-center bg-white" style="height: 7rem">
+    <div class="h-20 w-20 flex items-center justify-center bg-yellow-50 rounded-full"
          :class="[bgColor ? bgColor : 'bg-gray-100'] , [textColor ? textColor : 'text-gray-100']">
       <slot name="icon"></slot>
     </div>
 
-    <div class="flex flex-col items-between w-[240px]">
-      <div class="flex items-center justify-between">
-        <h1 class="text-lg text-gray-700"><slot name="title"/></h1>
+    <div class="flex flex-col items-between w-[240px]  h-[4rem]">
+      <span class=" text-gray-800 font-bold"> <slot name="content"/> </span>
 
-        <el-popover
-            placement="bottom"
-            title="Actions"
-            :width="showActionsWidth"
-            v-if="showActions"
-            trigger="hover"
-        >
-          <template #reference>
-            <info-filled class="h-8 w-8 cursor-pointer hover:text-gray-600 text-gray-500"/>
-          </template>
-
-          <template #default>
+      <div
+          title="Actions"
+          v-if="showActions"
+      >
+          <span>
             <slot name="actions"></slot>
-          </template>
-        </el-popover>
+          </span>
       </div>
-      <p class=" text-gray-800 font-bold"> <slot name="content"/> </p>
+
     </div>
   </div>
 </template>
