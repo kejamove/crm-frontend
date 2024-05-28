@@ -19,18 +19,29 @@ const props = defineProps({
     type: String,
     default: "200"
   },
+  content: {
+    type: String,
+    default: "some data"
+  },
+  count: {
+    type: Number,
+    default: 0
+  },
 })
 </script>
 
 <template>
-  <div class="w-full md:w-[320px] shadow px-4 py-8 rounded-lg flex gap-2 items-center bg-gray-50" style="height: 7rem">
+  <div class="w-full md:w-[320px] px-4 py-4 rounded-lg flex gap-2 items-center bg-white" style="height: 7rem">
     <div class="h-20 w-20 flex items-center justify-center bg-yellow-50 rounded-full"
          :class="[bgColor ? bgColor : 'bg-gray-100'] , [textColor ? textColor : 'text-gray-100']">
       <slot name="icon"></slot>
     </div>
 
-    <div class="flex flex-col items-between w-[240px]  h-[4rem]">
-      <span class=" text-gray-800 font-bold"> <slot name="content"/> </span>
+    <div class="flex flex-col items-between w-fit  h-full">
+      <span class=" text-gray-800 h-full flex flex-col items-center justify-between">
+        <span class="font-extrabold text-lg capitalize">{{content}}</span>
+        <span class="text-4xl text-orange-500 font-extrabold">{{count}}</span>
+      </span>
 
       <div
           title="Actions"

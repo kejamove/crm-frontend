@@ -2,6 +2,11 @@
 
 import {DataAnalysis, HomeFilled, Setting, UserFilled} from "@element-plus/icons-vue";
 
+const userType = JSON.parse(localStorage.getItem("authData"))?.user?.user_type;
+// const branch = JSON.parse(localStorage.getItem("authData"))?.user?.branch;
+const branch = 1;
+const branchUrl = 'branch-view'
+
 </script>
 
 <template>
@@ -12,7 +17,9 @@ import {DataAnalysis, HomeFilled, Setting, UserFilled} from "@element-plus/icons
     <template #title>Analytics</template>
   </el-menu-item>
 
-  <el-sub-menu index="sub-1">
+  <el-sub-menu
+      v-if="userType ==='super_admin' || userType === 'firm_owner'"
+      index="sub-1">
     <template #title>
       <el-icon>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -22,7 +29,9 @@ import {DataAnalysis, HomeFilled, Setting, UserFilled} from "@element-plus/icons
       <span>Firm & Branches</span>
     </template>
 
-    <el-menu-item-group title="Firms">
+    <el-menu-item-group
+        v-if="userType !== 'firm_owner'"
+        title="Firms">
       <el-menu-item index="firm-list">
         <el-icon>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -63,6 +72,27 @@ import {DataAnalysis, HomeFilled, Setting, UserFilled} from "@element-plus/icons
 
 
   </el-sub-menu>
+
+  <el-menu-item
+      v-if="userType !=='super_admin' && userType !== 'firm_owner'"
+      :index="JSON.stringify({ name: branchUrl, id: branch })" >
+    <el-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+      </svg>
+    </el-icon>
+    <template #title>My Branch</template>
+  </el-menu-item>
+  <el-menu-item
+      v-if="userType === 'firm_owner'"
+      index="employees" >
+    <el-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+      </svg>
+    </el-icon>
+    <template #title>Employees</template>
+  </el-menu-item>
 
 
   <el-menu-item index="4">

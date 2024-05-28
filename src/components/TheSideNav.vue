@@ -19,7 +19,17 @@ const handleClose = (key: string, keyPath: string[]) => {
 const authData = JSON.parse(localStorage.getItem("authData"));
 
 const navigateToSelectedPage = (index)=>{
-  router.push({name: index})
+  let selectedParams;
+
+  try {
+    /**
+     * Where data has been json parsed , then there a parameter is required
+     */
+    selectedParams = JSON.parse(index);
+    router.push({name: selectedParams.name, params: {id: selectedParams.id}});
+  } catch {
+    router.push({name: index})
+  }
 }
 
 </script>

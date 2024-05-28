@@ -61,7 +61,7 @@ const goTo = (name, id) => {
         <!--                      {{ slotProps.text }}-->
 
         <ElButton type="info"
-                  @click="goTo('partial-firm-view', slotProps.text?.id)"
+                  @click="goTo('branch-view', slotProps.text?.id)"
                   size="default" plain>
           <template #icon>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

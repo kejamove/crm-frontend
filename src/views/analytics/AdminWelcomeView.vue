@@ -7,7 +7,7 @@ import {onMounted, ref, watch} from "vue";
 import BaseLoader from "@/components/base/BaseLoader.vue";
 import {useRouter} from "vue-router";
 import GrowthChart from "@/views/analytics/components/GrowthChart.vue";
-import BaseDialog from "@/components/base/BaseDialog.vue";
+import {userType} from "@/utility/constants.js"
 
 const store = useStore()
 const router = useRouter()
@@ -146,21 +146,19 @@ watch(() => router.currentRoute, () => {
     </div>
 
 <!--    Cards-->
-    <div class="flex flex-wrap gap-x-2 gap-y-2 items-start w-full bg-white p-2 rounded-md">
+    <div class="flex flex-wrap gap-x-4 gap-y-4 items-start w-full md:w-full md:mx-auto p-2 md:p-4 rounded-md">
       <!--      firm   -->
-      <DisplayCard text-color="text-green-500" bg-color="bg-green-100" show-actions>
+      <DisplayCard
+          :count="registeredFirms?.data"
+          content="firms registered"
+          text-color="text-green-500" bg-color="bg-green-100" show-actions>
         <template #icon>
-          <shop class="h-12 w-12"/>
+          <BaseLoader v-if="storeLoading" hide-text/>
+          <shop v-else class="h-12 w-12"/>
         </template>
 
-        <template #content >
-          <p v-if="!storeLoading">
-            {{ registeredFirms?.data }} firms registered
-          </p>
-          <BaseLoader v-if="storeLoading"/>
-        </template>
 
-        <template #actions>
+        <template v-if="userType === 'super_admin'" #actions>
 
           <div class="flex items-center gap-2">
             <router-link :to="{name: 'register-firm'}">
@@ -177,22 +175,16 @@ watch(() => router.currentRoute, () => {
       </DisplayCard>
 
       <!--      moves   -->
-      <DisplayCard text-color="text-yellow-500" bg-color="bg-yellow-100">
+      <DisplayCard
+          :count="registeredMoves?.count"
+          content="moves made"
+          text-color="text-yellow-500" bg-color="bg-yellow-100">
         <template #icon>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-12 w-12">
+          <BaseLoader v-if="moveLoading" hide-text/>
+
+          <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-12 w-12">
             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
           </svg>
-        </template>
-
-        <template #title>
-          Moves
-        </template>
-
-        <template #content >
-          <p v-if="!storeLoading">
-            {{registeredMoves?.count}} moves made
-          </p>
-          <BaseLoader v-if="moveLoading"/>
         </template>
 
         <template #actions>
@@ -205,19 +197,16 @@ watch(() => router.currentRoute, () => {
       </DisplayCard>
 
       <!--      leads   -->
-      <DisplayCard text-color="text-blue-500" bg-color="bg-blue-100">
+      <DisplayCard
+          :count="registeredLeads?.data"
+          content="possible Leads"
+          text-color="text-blue-500" bg-color="bg-blue-100">
         <template #icon>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-12 w-12">
+          <BaseLoader v-if="leadLoading" hide-text/>
+
+          <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-12 w-12">
             <path stroke-linecap="round" stroke-linejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75" />
           </svg>
-
-        </template>
-
-        <template #content >
-          <p v-if="!storeLoading">
-            {{registeredLeads?.data}} possible Leads
-          </p>
-          <BaseLoader v-if="leadLoading"/>
         </template>
 
         <template #actions>
@@ -230,31 +219,26 @@ watch(() => router.currentRoute, () => {
       </DisplayCard>
 
       <!--      users   -->
-      <DisplayCard text-color="text-purple-500" bg-color="bg-purple-100" show-actions>
+      <DisplayCard text-color="text-purple-500"
+                   content="system users"
+                   :count="registeredUsers?.count"
+                   :loading="storeLoading"
+                   bg-color="bg-purple-100" show-actions>
         <template #icon>
-          <UserFilled class="h-12 w-12"/>
+          <BaseLoader v-if="userLoading" hide-text/>
+          <UserFilled v-else class="h-12 w-12"/>
 
         </template>
-
-        <template #title>
-          Users
-        </template>
-
-        <template #content >
-          <p v-if="!storeLoading">
-            {{registeredUsers?.count}} system users
-          </p>
-          <BaseLoader v-if="userLoading"/>
-        </template>
-
         <template #actions>
+          <router-link
+              v-if="userType === 'super_admin'"
 
-          <router-link :to="{name: 'partial-user-registration'}">
+              :to="{name: 'partial-user-registration'}">
             <el-button size="default">Add</el-button>
           </router-link>
-
         </template>
       </DisplayCard>
+
     </div>
 
     <h1 class="text-lg font-semibold hidden">Moves Per Month</h1>

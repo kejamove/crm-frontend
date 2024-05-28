@@ -11,6 +11,10 @@ import FirmView from "@/views/firm/FirmView.vue";
 import FirmList from "@/views/firm/FirmList.vue";
 import ListBranches from "@/views/branch/ListBranches.vue";
 import CreateEditBranch from "@/views/branch/CreateEditBranch.vue";
+import BranchView from "@/views/branch/BranchView.vue";
+import BranchEmployees from "@/views/branch/components/BranchEmployees.vue";
+import BranchAnalytics from "@/views/branch/components/BranchAnalytics.vue";
+import Employees from "@/views/branch/components/Employees.vue";
 
 const routes = [
   {
@@ -95,7 +99,30 @@ const routes = [
             component: CreateEditBranch,
           }
         ]
+      },
+      {
+        name:'branch-view',
+        path:'branch-view/:id',
+        component: BranchView,
+        children: [
+          {
+            name:'branch-analytics',
+            path:'branch-analytics',
+            component: BranchAnalytics,
+          },
+          {
+            name:'branch-employees',
+            path:'branch-employees',
+            component: BranchEmployees,
+          },
+        ]
+      },
+      {
+        name:'employees',
+        path:'employees',
+        component: Employees,
       }
+
 
 
 
