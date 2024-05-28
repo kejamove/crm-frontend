@@ -23,7 +23,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="w-[320px] shadow px-4 py-8 rounded-lg flex gap-2 items-center bg-white" style="height: 7rem">
+  <div class="w-full md:w-[320px] shadow px-4 py-8 rounded-lg flex gap-2 items-center bg-gray-50" style="height: 7rem">
     <div class="h-20 w-20 flex items-center justify-center bg-yellow-50 rounded-full"
          :class="[bgColor ? bgColor : 'bg-gray-100'] , [textColor ? textColor : 'text-gray-100']">
       <slot name="icon"></slot>

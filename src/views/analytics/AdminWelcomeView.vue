@@ -146,7 +146,7 @@ watch(() => router.currentRoute, () => {
     </div>
 
 <!--    Cards-->
-    <div class="flex flex-wrap gap-x-4 gap-y-4 items-start w-full ">
+    <div class="flex flex-wrap gap-x-2 gap-y-2 items-start w-full bg-white p-2 rounded-md">
       <!--      firm   -->
       <DisplayCard text-color="text-green-500" bg-color="bg-green-100" show-actions>
         <template #icon>

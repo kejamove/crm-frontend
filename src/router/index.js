@@ -8,6 +8,7 @@ import ListFirms from "@/views/firm/ListFirms.vue";
 import DialogFirm from "@/views/firm/components/DialogFirm.vue";
 import UserCreateEdit from "@/views/users/UserCreateEdit.vue";
 import FirmView from "@/views/firm/FirmView.vue";
+import FirmList from "@/views/firm/FirmList.vue";
 
 const routes = [
   {
@@ -48,11 +49,7 @@ const routes = [
             path:'partial-firm',
             component: DialogFirm,
             requiresAuth: true,
-            roles: ['super_admin'],
-            children : [
-
-            ]
-
+            roles: ['super_admin']
           },
 
           {
@@ -65,10 +62,20 @@ const routes = [
         ]
       },
       {
-        name:'partial-firm-view',
-        path:'partial-firm-view/:id',
-        component: FirmView,
+        name:'firm-list',
+        path:'firm-list',
+        component: FirmList,
+        requiresAuth: true,
+        roles: ['super_admin'],
+        children: [
+          {
+            name:'partial-firm-view',
+            path:'partial-firm-view/:id',
+            component: FirmView,
+          },
+        ]
       },
+
 
     ]
   },

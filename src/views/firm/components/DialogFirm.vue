@@ -1,7 +1,7 @@
 <script setup>
 
 import BaseDialog from "@/components/base/BaseDialog.vue";
-import StoreTable from "@/views/StoreTable.vue";
+import StoreTable from "@/views/firm/FirmList.vue";
 </script>
 
 <template>
