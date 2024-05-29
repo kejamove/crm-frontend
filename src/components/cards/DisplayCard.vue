@@ -1,6 +1,8 @@
 <script setup>
 
 import {InfoFilled} from "@element-plus/icons-vue";
+import router from "@/router/index.js";
+import {ref, computed} from "vue";
 
 const props = defineProps({
   bgColor: {
@@ -23,11 +25,42 @@ const props = defineProps({
     type: String,
     default: "some data"
   },
+  actionRoutes: {
+    type: Array,
+    default: [{label:'Actions', value:'', roles:[]}]
+  },
+  allowedRoles: {
+    type: Array,
+    default: ['super_admin']
+  },
   count: {
     type: Number,
     default: 0
   },
 })
+
+const filteredRoutes = computed(() => {
+  const filtered = props.actionRoutes.filter(route =>
+      Array.isArray(route.roles) && route.roles.some(role => props.allowedRoles.includes(role))
+  );
+  console.log('Filtered Routes:', filtered); // Debugging line
+  return filtered;
+});
+
+const actions = ref('')
+const performAction = ()=>{
+  if (actions.value !== ''){
+    router.push({name: actions.value})
+        .then(()=>
+        {
+          actions.value = ''
+        })
+        .catch((error) =>
+        {
+            console.error('Navigation error:', error);
+        });
+  }
+}
 </script>
 
 <template>
@@ -37,20 +70,36 @@ const props = defineProps({
       <slot name="icon"></slot>
     </div>
 
-    <div class="flex flex-col items-between w-fit  h-full">
-      <span class=" text-gray-800 h-full flex flex-col items-center justify-between">
-        <span class="font-extrabold text-lg capitalize">{{content}}</span>
-        <span class="text-4xl text-orange-500 font-extrabold">{{count}}</span>
-      </span>
+    <div class="flex flex-col items-start w-fit justify-between h-full">
+      <span class="text-gray-800 font-extrabold text-lg capitalize">{{content}}</span>
 
-      <div
-          title="Actions"
-          v-if="showActions"
-      >
-          <span>
-            <slot name="actions"></slot>
+      <div class="w-full flex items-center justify-between gap-4">
+        <div class="text-3xl flex items-center justify-center text-orange-500 font-extrabold p-2 rounded h-[3rem] w-[3rem]">{{count}}</div>
+        <div
+            title="Actions"
+            v-if="showActions"
+            class="p-2"
+        >
+          <span>{{actions}}
+            <el-select
+                v-model="actions"
+                placeholder="Actions"
+                size="default"
+                class=""
+                @change="performAction"
+                style="width: 150px; border-radius: 60px"
+            >
+            <el-option
+                v-for="item in filteredRoutes"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            />
+          </el-select>
           </span>
+        </div>
       </div>
+
 
     </div>
   </div>

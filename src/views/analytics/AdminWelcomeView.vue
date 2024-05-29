@@ -62,8 +62,16 @@ const fetchMoveData = ()=>{
       })
 }
 
+const actions = ref('')
+const performAction = ()=>{
+  if (actions.value !== ''){
+    router.push({name: actions.value})
+  }
+}
+
 // LEADS
 const leadLoading = ref(false)
+
 const registeredLeads = ref(null)
 
 const fetchLeadData = ()=>{
@@ -122,11 +130,10 @@ const fetchOnMount = ()=>{
   fetchMoveData()
   fetchUserData()
   fetchLeadData()
-  // movesPerMonth(2024)
 }
 
 watch(() => router.currentRoute, () => {
-  fetchStoreData()
+  fetchOnMount()
 }, { deep: true })
 
 </script>
@@ -151,26 +158,14 @@ watch(() => router.currentRoute, () => {
       <DisplayCard
           :count="registeredFirms?.data"
           content="firms registered"
+          :action-routes="[
+                       {value: 'register-firm', roles:['super_admin'], label:'Register Firm'},
+                       {value: 'partial-list-firm', roles:['super_admin'], label:'View Firms'},
+                       ]"
           text-color="text-green-500" bg-color="bg-green-100" show-actions>
         <template #icon>
           <BaseLoader v-if="storeLoading" hide-text/>
           <shop v-else class="h-12 w-12"/>
-        </template>
-
-
-        <template v-if="userType === 'super_admin'" #actions>
-
-          <div class="flex items-center gap-2">
-            <router-link :to="{name: 'register-firm'}">
-              <el-button :icon="Plus" size="default"/>
-            </router-link>
-
-            <router-link :to="{name: 'partial-list-firm'}">
-              <!--            <Open/>-->
-              <el-button :icon="Open" size="default"></el-button>
-            </router-link>
-          </div>
-
         </template>
       </DisplayCard>
 
@@ -223,19 +218,14 @@ watch(() => router.currentRoute, () => {
                    content="system users"
                    :count="registeredUsers?.count"
                    :loading="storeLoading"
+                   :action-routes="[
+                       {value: 'partial-user-registration', roles:['super_admin'], label:'User Registration'},
+                       {value: 'partial-user-registration', roles:['admin'], label:'User Registration'}
+                       ]"
                    bg-color="bg-purple-100" show-actions>
         <template #icon>
           <BaseLoader v-if="userLoading" hide-text/>
           <UserFilled v-else class="h-12 w-12"/>
-
-        </template>
-        <template #actions>
-          <router-link
-              v-if="userType === 'super_admin'"
-
-              :to="{name: 'partial-user-registration'}">
-            <el-button size="default">Add</el-button>
-          </router-link>
         </template>
       </DisplayCard>
 
