@@ -40,7 +40,7 @@ const branchRoutes = ref([
       id: 2,
       name: 'branch-employees',
       label:'Employees',
-      roles: [ 'firm_owner', 'branch_manager']
+      roles: [ 'firm_owner', 'branch_manager','super_admin']
     },
 ])
 
@@ -60,7 +60,8 @@ watch(activeTab, (newVal, oldVal) => {
 
 const openAprropriateTabOnMount = ()=>{
   console.log('sss')
-  if (userType === 'super_admin'){
+  if (userType === 'super_admin' || userType === 'firm_owner' || userType === 'branch_manager' ) {
+    activeTab.value = 'branch-analytics';
     router.push({name:'branch-analytics'})
   }
 }

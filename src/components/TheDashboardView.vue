@@ -5,9 +5,10 @@ import TheSideNav from "@/components/TheSideNav.vue";
 import { UserFilled} from "@element-plus/icons-vue";
 import {useStore} from "vuex";
 import {deleteLocalStorageInformation} from "@/utility/functions.js";
-import {useRouter} from "vue-router";
+import {useRouter, useRoute} from "vue-router";
 const store = useStore()
 const router = useRouter()
+import {watch} from "vue"
 
 const logout = ()=>{
   deleteLocalStorageInformation()
@@ -15,13 +16,26 @@ const logout = ()=>{
 }
 const authData = JSON.parse(localStorage.getItem("authData"));
 
+const route = useRoute();
+const breadcrumbs = ref([]);
+
+const updateBreadcrumbs = () => {
+  breadcrumbs.value = route.matched.map(route => ({
+    path: route.path,
+    label: route.meta.slug || route.name
+  }));
+};
+
+watch(route, updateBreadcrumbs, { immediate: true });
+
 </script>
 
 <template>
   <div class="h-full min-w-screen max-w-screen-md" style="max-width: 100vw">
 
   <div class=" flex flex-col  min-w-full  h-full items-center">
-      <div class="h-[70px] border-b w-full flex items-center justify-between gap-4 px-4">
+<!--    h-[70px]-->
+      <div class=" border-b w-full flex items-center justify-between gap-4 px-4">
         <div class="h-[70px] md:flex items-center border-b hidden ">
           <el-button class="w-[40px] bg-amber-600"
                      @click="store.state.sideNavCollapse = !store.state.sideNavCollapse">
@@ -38,7 +52,16 @@ const authData = JSON.parse(localStorage.getItem("authData"));
         </div>
 
 
-        <div class="w-full flex items-center justify-end h-fit p-0">
+
+        <div class="w-full flex items-center justify-end md:justify-between h-fit p-0">
+          <el-breadcrumb separator="/" class="hidden md:block">
+            <el-breadcrumb-item v-for="(breadcrumb, index) in breadcrumbs" :key="index">
+              <span v-if="breadcrumb?.label === 'Dashboard' || breadcrumb?.label === 'dashboard'">Dashboard </span>
+              <router-link v-else :to="breadcrumb.path">{{ breadcrumb.label }}</router-link>
+            </el-breadcrumb-item>
+          </el-breadcrumb>
+
+
           <el-popover
               placement="bottom"
               title="Profile"
@@ -102,6 +125,12 @@ const authData = JSON.parse(localStorage.getItem("authData"));
         </div>
 
         <div class="flex-1 p-4 bg-gray-50 overflow-x-hidden overflow-y-auto h-full ">
+          <el-breadcrumb separator="/" class="md:hidden">
+            <el-breadcrumb-item v-for="(breadcrumb, index) in breadcrumbs" :key="index">
+              <span v-if="breadcrumb?.label === 'Dashboard' || breadcrumb?.label === 'dashboard'">Dashboard </span>
+              <router-link v-else :to="breadcrumb.path">{{ breadcrumb.label }}</router-link>
+            </el-breadcrumb-item>
+          </el-breadcrumb>
           <router-view/>
         </div>
 

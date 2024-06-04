@@ -7,8 +7,9 @@ import {onMounted, ref, watch} from "vue";
 import BaseLoader from "@/components/base/BaseLoader.vue";
 import {useRouter} from "vue-router";
 import GrowthChart from "@/views/analytics/components/GrowthChart.vue";
-import {userType} from "@/utility/constants.js"
+// import {activeUser, userType} from "@/utility/constants.js"
 
+const activeUser =  JSON.parse(localStorage.getItem("authData"))?.user;
 const store = useStore()
 const router = useRouter()
 const storeLoading = ref(false);
@@ -145,7 +146,7 @@ watch(() => router.currentRoute, () => {
     <router-view/>
 
     <h1 class="font-bold text-2xl my-2">
-      Admin Dashboard
+      Hello, {{activeUser.first_name}}
     </h1>
 
     <div class="flex flex-wrap gap-4 hidden">
@@ -154,15 +155,18 @@ watch(() => router.currentRoute, () => {
 
 <!--    Cards-->
     <div class="flex flex-wrap gap-x-4 gap-y-4 items-start w-full md:w-full md:mx-auto p-2 md:p-4 rounded-md">
+
       <!--      firm   -->
       <DisplayCard
           :count="registeredFirms?.data"
           content="firms registered"
           :action-routes="[
                        {value: 'register-firm', roles:['super_admin'], label:'Register Firm'},
-                       {value: 'partial-list-firm', roles:['super_admin'], label:'View Firms'},
+                       {value: 'partial-list-firm', roles:['super_admin', 'firm_owner'], label:'View Firms'},
                        ]"
-          text-color="text-green-500" bg-color="bg-green-100" show-actions>
+          text-color="text-green-500"
+          bg-color="bg-green-200"
+          show-actions>
         <template #icon>
           <BaseLoader v-if="storeLoading" hide-text/>
           <shop v-else class="h-12 w-12"/>
@@ -173,7 +177,7 @@ watch(() => router.currentRoute, () => {
       <DisplayCard
           :count="registeredMoves?.count"
           content="moves made"
-          text-color="text-yellow-500" bg-color="bg-yellow-100">
+          text-color="text-yellow-500" bg-color="bg-yellow-200">
         <template #icon>
           <BaseLoader v-if="moveLoading" hide-text/>
 
@@ -195,7 +199,7 @@ watch(() => router.currentRoute, () => {
       <DisplayCard
           :count="registeredLeads?.data"
           content="possible Leads"
-          text-color="text-blue-500" bg-color="bg-blue-100">
+          text-color="text-blue-500" bg-color="bg-blue-200">
         <template #icon>
           <BaseLoader v-if="leadLoading" hide-text/>
 
@@ -219,10 +223,10 @@ watch(() => router.currentRoute, () => {
                    :count="registeredUsers?.count"
                    :loading="storeLoading"
                    :action-routes="[
-                       {value: 'partial-user-registration', roles:['super_admin'], label:'User Registration'},
-                       {value: 'partial-user-registration', roles:['admin'], label:'User Registration'}
+                       {value: 'partial-user-registration', roles:['super_admin'], label:'Register User'},
+                       {value: 'employees', roles:['super_admin', 'firm_owner'], label:'View Users'}
                        ]"
-                   bg-color="bg-purple-100" show-actions>
+                   bg-color="bg-purple-200" show-actions>
         <template #icon>
           <BaseLoader v-if="userLoading" hide-text/>
           <UserFilled v-else class="h-12 w-12"/>

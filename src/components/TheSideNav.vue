@@ -76,7 +76,7 @@ const navigateToSelectedPage = (index)=>{
           default-active="1"
           class="el-menu-vertical-demo "
           style="border: none; width: 100%"
-          :collapse="!store.state.sideNavCollapse"
+          :collapse="!store.state.ShowMobileMenu"
           @open="handleOpen"
           @close="handleClose"
           @select="navigateToSelectedPage"

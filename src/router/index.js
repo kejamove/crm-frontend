@@ -15,6 +15,9 @@ import BranchView from "@/views/branch/BranchView.vue";
 import BranchEmployees from "@/views/branch/components/BranchEmployees.vue";
 import BranchAnalytics from "@/views/branch/components/BranchAnalytics.vue";
 import Employees from "@/views/branch/components/Employees.vue";
+import MoveList from "@/views/moves/MoveList.vue";
+import MoveView from "@/views/moves/MoveView.vue";
+import CreateEditMove from "@/views/moves/CreateEditMove.vue";
 
 const routes = [
   {
@@ -22,12 +25,18 @@ const routes = [
     path: '/register',
     component: RegisterView,
     requiresAuth: true,
-    roles: ['admin', 'store_owner']
+    roles: ['admin', 'store_owner'],
+    meta: {
+      slug: 'User Registration',
+    },
   },
   {
     name:'login',
     path: '/',
-    component: LoginView
+    component: LoginView,
+    meta: {
+      slug: 'Login',
+    },
   },
   {
     name:'dashboard',
@@ -35,6 +44,10 @@ const routes = [
     component: TheDashboardView,
     requiresAuth: true,
     roles: ['admin', 'store_owner'],
+    meta: {
+      slug: 'Dashboard',
+    },
+
     children : [
       {
         name:'welcome',
@@ -42,6 +55,10 @@ const routes = [
         component: AdminWelcomeView,
         requiresAuth: true,
         roles: ['admin'],
+        meta: {
+          slug: 'Welcome',
+        },
+
         children: [
           {
             name:'register-firm',
@@ -49,13 +66,21 @@ const routes = [
             component: CreateEditFirms,
             requiresAuth: true,
             roles: ['admin'],
+            meta: {
+              slug: 'Register Firm',
+            },
+
           },
           {
             name:'partial-list-firm',
             path:'partial-firm',
             component: DialogFirm,
             requiresAuth: true,
-            roles: ['super_admin']
+            roles: ['super_admin'],
+            meta: {
+              slug: 'List Firms',
+            },
+
           },
 
           {
@@ -64,6 +89,10 @@ const routes = [
             component: UserCreateEdit,
             requiresAuth: true,
             roles: ['admin'],
+            meta: {
+              slug: 'Register User',
+            },
+
           },
         ]
       },
@@ -73,11 +102,19 @@ const routes = [
         component: FirmList,
         requiresAuth: true,
         roles: ['super_admin'],
+        meta: {
+          slug: 'List Firms',
+        },
+
         children: [
           {
             name:'partial-firm-view',
             path:'partial-firm-view/:id',
             component: FirmView,
+            meta: {
+              slug: 'View Firm',
+            },
+
           },
           {
             name:'create-firm',
@@ -85,6 +122,9 @@ const routes = [
             component: CreateEditFirms,
             requiresAuth: true,
             roles: ['admin'],
+            meta: {
+              slug: 'Register Firm',
+            },
           },
         ]
       },
@@ -92,11 +132,18 @@ const routes = [
         name:'branch-list',
         path:'branch-list',
         component: ListBranches,
+        meta: {
+          slug: 'List Branches',
+        },
+
         children: [
           {
             name:'create-branch',
             path:'create-branch',
             component: CreateEditBranch,
+            meta: {
+              slug: 'Register Branch',
+            },
           }
         ]
       },
@@ -104,16 +151,27 @@ const routes = [
         name:'branch-view',
         path:'branch-view/:id',
         component: BranchView,
+        meta: {
+          slug: 'View Branch',
+        },
         children: [
           {
             name:'branch-analytics',
             path:'branch-analytics',
             component: BranchAnalytics,
+            meta: {
+              slug: 'Branch Analytics',
+            },
+
           },
           {
             name:'branch-employees',
             path:'branch-employees',
             component: BranchEmployees,
+            meta: {
+              slug: 'Branch Employees',
+            },
+
           },
         ]
       },
@@ -121,11 +179,48 @@ const routes = [
         name:'employees',
         path:'employees',
         component: Employees,
-      }
-
-
-
-
+        meta: {
+          slug: 'List Employees',
+        },
+        children: [
+          {
+            name:'register-user',
+            path:'register-user',
+            component: UserCreateEdit,
+            requiresAuth: true,
+            roles: ['admin'],
+            meta: {
+              slug: 'System Users',
+            },
+          },
+        ]
+      },
+      {
+        name:'moves',
+        path:'moves',
+        component: MoveList,
+        meta: {
+          slug: 'List Moves',
+        },
+        children: [
+          {
+            name:'move-view',
+            path:'move-view/:id',
+            component: MoveView,
+            meta: {
+              slug: 'View Move',
+            }
+          },
+          {
+            name:'create-move',
+            path:'create-move',
+            component: CreateEditMove,
+            meta: {
+              slug: 'Register Moves',
+            }
+          }
+        ]
+      },
     ]
   },
 

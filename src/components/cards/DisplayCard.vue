@@ -3,6 +3,7 @@
 import {InfoFilled} from "@element-plus/icons-vue";
 import router from "@/router/index.js";
 import {ref, computed} from "vue";
+import {userType} from "@/utility/constants.js";
 
 const props = defineProps({
   bgColor: {
@@ -31,7 +32,7 @@ const props = defineProps({
   },
   allowedRoles: {
     type: Array,
-    default: ['super_admin']
+    default: [userType]
   },
   count: {
     type: Number,
@@ -64,9 +65,10 @@ const performAction = ()=>{
 </script>
 
 <template>
-  <div class="w-full md:w-[320px] px-4 py-4 rounded-lg flex gap-2 items-center bg-white" style="height: 7rem">
-    <div class="h-20 w-20 flex items-center justify-center bg-yellow-50 rounded-full"
+  <div class="w-full md:w-[340px] px-4 py-4 rounded-lg flex gap-2 items-center bg-white">
+    <div class="h-18 w-18 flex items-center justify-center bg-yellow-50 rounded-full p-2"
          :class="[bgColor ? bgColor : 'bg-gray-100'] , [textColor ? textColor : 'text-gray-100']">
+
       <slot name="icon"></slot>
     </div>
 
@@ -80,7 +82,7 @@ const performAction = ()=>{
             v-if="showActions"
             class="p-2"
         >
-          <span>{{actions}}
+          <span>
             <el-select
                 v-model="actions"
                 placeholder="Actions"

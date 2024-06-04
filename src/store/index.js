@@ -7,7 +7,7 @@ export default createStore({
   state: {
     sideBarCollapse : false,
     lightMode : true,
-    sideNavCollapse:true,
+    sideNavCollapse:false,
     ShowMobileMenu:false
   },
   actions:{

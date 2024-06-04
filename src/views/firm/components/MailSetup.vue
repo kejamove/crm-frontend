@@ -151,8 +151,6 @@
       </el-form-item>
     </div>
 
-
-
     <div class="flex w-full ">
       <el-button
           :loading="loginLoading"
@@ -177,17 +175,18 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { LockClosedIcon, UserIcon } from "@heroicons/vue/24/solid";
 import {ElNotification, FormInstance, FormRules} from "element-plus";
 import store from "@/store/index";
 import router from "@/router/index"
 import Swal from "sweetalert2";
 const loading = ref(false);
+
 const form = reactive({
-  firm:'18'
 });
 
+const isEdit = ref(false)
 
 const loginLoading = ref(false);
 
@@ -204,25 +203,59 @@ const rules = reactive<FormRules>({
     message: "Please enter password",
   }
 });
+
+/**
+ * IF a firm is already configured then get its data and fill the form
+ */
+const getMailData = ()=>{
+  let id = router?.currentRoute?._value?.params?.id;
+  store.dispatch('fetchList', {url: `list-email-setup?firm=${id}`}).then(res=>{
+    Object.assign(form, res.data[0][0]);
+    if (res.data[0].length > 0) {
+      isEdit.value = true
+    }
+  })
+}
+
 const submitForm = async (formEl: FormInstance | undefined) => {
   loginLoading.value = true;
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
-    console.log(fields,'fields')
     if (valid) {
-      store
-          .dispatch("postData", {
-            url: "setup-email",
-            data: form
-          })
-          .then((resp) => {
-            localStorage.setItem("authData", JSON.stringify(resp.data));
-            loginLoading.value = false;
+      if (!isEdit.value){
+        /**
+         * POST
+         */
+        let firmId = router?.currentRoute?._value?.params?.id;
+        store
+            .dispatch("postData", {
+              url: "setup-email",
+              data: {...form, firm: `${firmId}`},
             })
-          .catch((err)=>{
-            loginLoading.value = false;
-          })
-      ;
+            .then((resp) => {
+              loginLoading.value = false;
+            })
+            .catch((err)=>{
+              loginLoading.value = false;
+            });
+      }else {
+        /**
+         * EDIT
+         */
+        store
+            .dispatch("putData", {
+              url: "setup-email",
+              data: {...form, firm: form.firm ? form.firm.toString() : ''},
+              id : form.id
+            })
+            .then((resp) => {
+              loginLoading.value = false;
+            })
+            .catch((err)=>{
+              loginLoading.value = false;
+            });
+      }
+
     } else {
       loginLoading.value = false;
       Swal.fire({
@@ -235,6 +268,10 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     loading.value = false;
   });
 };
+
+onMounted(()=>{
+  getMailData()
+})
 
 </script>
 

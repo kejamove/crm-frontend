@@ -116,7 +116,7 @@ const storeLoading = ref(false);
 const fetchFirms = ()=>{
   storeLoading.value = true;
 
-  if (userType === 'super_admin'){
+  if (userType === 'super_admin' || userType === 'firm_owner') {
     store.dispatch('fetchList', { url:'list-firms'}).then(res=>{
       firmData.value = res.data;
       branches.value = res.data?.branches;
@@ -125,6 +125,7 @@ const fetchFirms = ()=>{
       storeLoading.value = false;
     })
   }
+   storeLoading.value = false
 }
 
 const registerLoading = ref(false);

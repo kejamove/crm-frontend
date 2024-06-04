@@ -4,6 +4,14 @@ import BaseDataTable from "@/components/base/BaseDataTable.vue";
 import {ref} from "vue"
 import router from "@/router/index.js";
 
+const props = defineProps(
+    {
+      newUrl : {
+        type: String,
+      default : 'list-users'
+      },
+})
+
 const columns = ref([
   {
     title: "First Name",
@@ -31,6 +39,8 @@ const goTo = (name, id)=>{
   router.push({name: name, params: {id: id}});
 }
 
+
+
 </script>
 
 <template>
@@ -38,8 +48,8 @@ const goTo = (name, id)=>{
 
   <BaseDataTable
       :columns="columns"
-      fetch-url="list-users"
-      createRouteName="create-firm"
+      :fetch-url="props.newUrl"
+      createRouteName="register-user"
       title="Employees">
 
 
