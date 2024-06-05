@@ -5,9 +5,9 @@ import router from "./router/index.js";
 import store from "./store/index.js";
 import {deleteLocalStorageInformation} from "@/utility/functions.js";
 import api from "@/utility/api.js";
-import Swal from "sweetalert2";
 import 'element-plus/dist/index.css'
 import 'ant-design-vue/dist/reset.css';
+// import 'styles/element/index.scss'
 
 api.interceptors.request.use((config) => {
     const authData = JSON.parse(localStorage.getItem("authData"));

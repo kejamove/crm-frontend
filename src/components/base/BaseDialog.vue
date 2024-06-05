@@ -1,7 +1,7 @@
 <template>
   <el-dialog v-model="visible" :show-close="false"
              :before-close="closeDialog"
-             width="500" style="border-radius: 5px; max-width: 90%; min-width: 50%">
+             width="1000" style="border-radius: 5px; max-width: 90%; min-width: 50%">
     <template #header="{ close, titleId, titleClass }">
       <div class="my-header">
         <h4 :id="titleId" :class="titleClass">

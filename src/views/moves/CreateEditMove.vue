@@ -13,7 +13,6 @@
           class="w-full flex flex-col gap-4"
           label-position="top"
       >
-
         <div class="grid grid-cols-1 md:grid-cols-3 gap-2 items-center">
           <el-form-item label="Customer Name" prop="consumer_name"
                         :rules="[
@@ -149,7 +148,8 @@
                 placeholder="contacted"
                 size="large"
             >
-              <el-option label="Contacted" value="contacted"></el-option>
+              <el-option v-for="move in move_stages" :label="move.label" :value="move.value"></el-option>
+
             </el-select>
           </el-form-item>
 
@@ -167,7 +167,7 @@
                 placeholder="contacted"
                 size="large"
             >
-              <el-option label="Contacted" value="contacted"></el-option>
+              <el-option v-for="lead in lead_sources" :label="lead.label" :value="lead.value"></el-option>
             </el-select>
           </el-form-item>
 
@@ -200,7 +200,6 @@
             </el-select>
           </el-form-item>
 
-          {{registeredSalesReps}}
           <el-form-item label="Sales Representative" prop="sales_representative"
                         v-if="registeredSalesReps.length > 0"
                         :rules="[
@@ -230,7 +229,6 @@
           </el-form-item>
 
         </div>
-
 
         <!--            <el-input-->
         <div class="flex w-full ">
@@ -283,7 +281,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       store
           .dispatch("postData", {
-            url: "register-firm",
+            url: "register-move",
             data: form
           })
           .then((resp) => {
@@ -314,6 +312,10 @@ const fetchBranches = ()=>{
   branchLoading.value= true
   registeredBranches.value = []
 
+  if (form.hasOwnProperty('sales_representative')) {
+    delete form.sales_representative;
+  }
+
   store.dispatch('fetchList', {url:'list-branches'})
       .then((resp)=>{
         resp.data.map((store)=>{
@@ -329,6 +331,23 @@ const fetchBranches = ()=>{
       })
 }
 
+const move_stages = ref([
+  {label: 'new lead', value :'new_lead' },
+  {label: 'contacted', value : 'contacted'},
+  {label: 'proposal', value :'proposal' },
+  {label: 'negotions started', value : 'negotions_started'},
+  {label: 'won', value : 'won'},
+  {label: 'lost', value : 'lost'},
+])
+
+const lead_sources = ref([
+  {label: 'referral', value :'referral' },
+  {label: 'web', value : 'offline_marketing'},
+  {label: 'offline marketing', value :'offline_marketing' },
+  {label: 'social media', value : 'social_media'},
+  {label: 'repeat client', value : 'repeat_client'},
+])
+
 const registeredSalesReps = ref([])
 const salesRepLoading = ref(false)
 
@@ -336,7 +355,7 @@ const fetchSalesRep = ()=>{
   salesRepLoading.value= true
   registeredSalesReps.value = []
 
-  store.dispatch('fetchList', {url:'list-users'})
+  store.dispatch('fetchSingleItem', {url:'list-user-by-branch', id: form.branch})
       .then((resp)=>{
         console.log(resp)
         resp.data.map((user)=>{

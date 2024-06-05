@@ -2,13 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-.light-mode {
-    background-color: #ffffff;
-    color: #000000;
-}
+/*.light-mode {*/
+/*    background-color: #ffffff;*/
+/*    color: #000000;*/
+/*}*/
 
-/* Define styles for dark mode */
-.dark-mode {
-    background-color: gray;
-    color: #ffffff;
-}
+/*!* Define styles for dark mode *!*/
+/*.dark-mode {*/
+/*    background-color: gray;*/
+/*    color: #ffffff;*/
+/*}*/
+
+/*:root {*/
+/*    --background-color: #1e1e1e;*/
+/*    --text-color: #fff;*/
+/*    --primary-color: #bb86fc;*/
+/*    --secondary-color: #03dac6;*/
+/*    !* Add more variables as needed *!*/
+/*}*/
+
+/*!* Dark theme styles *!*/
+/*.dark-theme {*/
+/*    background-color: var(--background-color);*/
+/*    color: var(--text-color);*/
+/*}*/
+
+/*!* Example component styles using theme variables *!*/
+/*.dark-theme button {*/
+/*    background-color: var(--primary-color);*/
+/*    color: var(--text-color);*/
+/*    border: 1px solid var(--primary-color);*/
+/*}*/
+
+/*.dark-theme button:hover {*/
+/*    background-color: var(--secondary-color);*/
+/*}*/
+
+/*.dark-theme input[type="text"] {*/
+/*    background-color: #333;*/
+/*    color: #fff;*/
+/*    border-color: #333;*/
+/*}*/
+
