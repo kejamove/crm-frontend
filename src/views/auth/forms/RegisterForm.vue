@@ -7,55 +7,55 @@
       label-position="top"
     >
 
-      <el-form-item label="First Name" prop="first_name">
-        <el-input
-          v-model="form.first_name"
-          :prefix-icon="UserIcon"
-          placeholder="first name"
-          size="large"
-          type="text"
-        />
-      </el-form-item>
-
-      <el-form-item label="Last Name" prop="last_name">
-        <el-input
-          v-model="form.last_name"
-          :prefix-icon="UserIcon"
-          placeholder="last name"
-          size="large"
-          type="text"
-        />
-      </el-form-item>
-      <el-form-item label="Username" prop="username">
-        <el-input
-          v-model="form.username"
-          :prefix-icon="UserIcon"
-          placeholder="username"
-          size="large"
-          type="text"
-        />
-      </el-form-item>
-      <el-form-item label="Email" prop="email">
-        <el-input
-          v-model="form.email"
-          :prefix-icon="FolderOpened"
-          placeholder="email"
-          size="large"
-          type="email"
-        />
-      </el-form-item>
-      <el-form-item label="Password" prop="password">
-        <el-input
-          v-model="form.password"
-          :prefix-icon="LockClosedIcon"
-          placeholder="password"
-          show-password
-          size="large"
-          type="password"
-        />
-      </el-form-item>
-      <el-form-item
-          :rules="[
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-2 items-center">
+        <el-form-item label="First Name" prop="first_name">
+          <el-input
+              v-model="form.first_name"
+              :prefix-icon="UserIcon"
+              placeholder="first name"
+              size="large"
+              type="text"
+          />
+        </el-form-item>
+        <el-form-item label="Last Name" prop="last_name">
+          <el-input
+              v-model="form.last_name"
+              :prefix-icon="UserIcon"
+              placeholder="last name"
+              size="large"
+              type="text"
+          />
+        </el-form-item>
+        <el-form-item label="Username" prop="username">
+          <el-input
+              v-model="form.username"
+              :prefix-icon="UserIcon"
+              placeholder="username"
+              size="large"
+              type="text"
+          />
+        </el-form-item>
+        <el-form-item label="Email" prop="email">
+          <el-input
+              v-model="form.email"
+              :prefix-icon="FolderOpened"
+              placeholder="email"
+              size="large"
+              type="email"
+          />
+        </el-form-item>
+        <el-form-item label="Password" prop="password">
+          <el-input
+              v-model="form.password"
+              :prefix-icon="LockClosedIcon"
+              placeholder="password"
+              show-password
+              size="large"
+              type="password"
+          />
+        </el-form-item>
+        <el-form-item label="Password Confirmation" prop="password_confirmation"
+            :rules="[
               {
                 required: true,
                 trigger: 'blur',
@@ -65,34 +65,33 @@
                 validator: validatePassword
               }
           ]"
-          label="Password Confirmation" prop="password_confirmation">
-        <el-input
-            v-model="form.password_confirmation"
-            :prefix-icon="LockClosedIcon"
-            placeholder="password"
-            show-password
-            size="large"
-            type="password"
-        />
-      </el-form-item>
-      <el-form-item label="User Type" prop="user_type" class="w-full">
-        <el-select
-            clearable
-            v-model="form.user_type"
-            placeholder="Select"
-            size="large"
-        >
-          <el-option
-              v-for="item in user_types"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+            >
+          <el-input
+              v-model="form.password_confirmation"
+              :prefix-icon="LockClosedIcon"
+              placeholder="password"
+              show-password
+              size="large"
+              type="password"
           />
-        </el-select>
-      </el-form-item>
-
-      <el-form-item label="Phone Number" prop="phone_local_number" class="w-full"
-            :rules="[
+        </el-form-item>
+        <el-form-item label="User Type" prop="user_type" class="w-full">
+          <el-select
+              clearable
+              v-model="form.user_type"
+              placeholder="Select"
+              size="large"
+          >
+            <el-option
+                v-for="item in user_types"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Phone Number" prop="phone_local_number" class="w-full"
+                      :rules="[
               {
                 required: true,
                 trigger: 'blur',
@@ -102,64 +101,65 @@
                 validator: validatePhoneNumber
               }
           ]"
-      >
-        <el-input
-            v-model="form.phone_local_number"
-            style="max-width: 600px"
-            placeholder="Please input phone number"
-            class="input-with-select"
-            type="number"
         >
-          <template #prepend>
-            <el-select v-model="form.phone_country_code"
-                       placeholder="Country Code" style="width: 60px">
-              <el-option label="+254" value="+254" />
-              <el-option label="+255" value="+255" />
-            </el-select>
-          </template>
-        </el-input>
-      </el-form-item>
-      <el-form-item label="Firm" prop="firm" class="w-full">
-        <el-select
-            v-model="form.firm"
-            clearable
-            @focus="fetchStores"
-            :loading="storeLoading"
-            placeholder="Firm To Which a user belongs"
-            size="large"
-        >
-          <template #loading>
-            <BaseLoader/>
-          </template>
-          <el-option
-              v-for="item in registeredStores"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-          />
-        </el-select>
-      </el-form-item>
+          <el-input
+              v-model="form.phone_local_number"
+              style="max-width: 600px"
+              placeholder="Please input phone number"
+              class="input-with-select"
+              type="number"
+          >
+            <template #prepend>
+              <el-select v-model="form.phone_country_code"
+                         placeholder="Country Code" style="width: 60px">
+                <el-option label="+254" value="+254" />
+                <el-option label="+255" value="+255" />
+              </el-select>
+            </template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="Firm" prop="firm" class="w-full">
+          <el-select
+              v-model="form.firm"
+              clearable
+              @focus="fetchStores"
+              :loading="storeLoading"
+              placeholder="Firm To Which a user belongs"
+              size="large"
+          >
+            <template #loading>
+              <BaseLoader/>
+            </template>
+            <el-option
+                v-for="item in registeredStores"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Branch **Optional" prop="branch" class="w-full" v-if="form.firm">
+          <el-select
+              v-model="form.branch"
+              clearable
+              @focus="fetchBranches"
+              :loading="branchLoading"
+              placeholder="Branch To Which a user belongs"
+              size="large"
+          >
+            <template #loading>
+              <BaseLoader/>
+            </template>
+            <el-option
+                v-for="item in registeredBranches"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+      </div>
 
-      <el-form-item label="Branch **Optional" prop="branch" class="w-full" v-if="form.firm">
-        <el-select
-            v-model="form.branch"
-            clearable
-            @focus="fetchBranches"
-            :loading="branchLoading"
-            placeholder="Branch To Which a user belongs"
-            size="large"
-        >
-          <template #loading>
-            <BaseLoader/>
-          </template>
-          <el-option
-              v-for="item in registeredBranches"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-          />
-        </el-select>
-      </el-form-item>
 
       <div class="flex w-full ">
         <el-button

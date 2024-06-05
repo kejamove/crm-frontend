@@ -1,7 +1,6 @@
 <template>
-  <div class="px-2 pb-2">
+  <div :class="{ 'dark-mode': !$store.getters.getLightMode }" class="px-2 pb-2">
     <div class="flex flex-col w-full h-full">
-
       <a-table
           :columns="columns"
           :data-source="dataSource"
@@ -10,82 +9,54 @@
           :row-key="(record) => record?.id"
       >
         <template #bodyCell="{ column, text }" class="w-full">
-
           <slot :column="column" :text="text" name="bodyCell"></slot>
         </template>
-
         <template #title>
-          <div
-              class="w-full py-4 flex flex-col md:justify-between  md:flex-row flex-wrap gap-4
-                 bg-white border-b rounded-t border-b-gray-100 md:items-center"
-          >
-                <div class="font-bold text-xl text-gray-600">{{ title }}</div>
-            <el-input  placeholder="Search"
+          <div class="w-full py-4 flex flex-col md:justify-between  md:flex-row flex-wrap gap-4
+                 bg-white border-b rounded-t border-b-gray-100 md:items-center">
+            <div class="font-bold text-xl text-gray-600">{{ title }}</div>
+            <el-input placeholder="Search"
                       v-if="showSearch"
                       size="small"
                       class="text-lg h-12 rounded hidden md:block md:w-[300px] w-full "></el-input>
             <div v-else></div>
-
             <div class="flex flex-col md:flex-row gap-6">
-              <slot v-if="show0therItems" name="otherItems"></slot>
-              <router-link
-                  v-if="createRouteName !== undefined"
-                  :to="{ name: createRouteName }"
-              >
+              <slot v-if="showOtherItems" name="otherItems"></slot>
+              <router-link v-if="createRouteName !== undefined" :to="{ name: createRouteName }">
                 <ElButton size="large" type="primary" class="">
-                    <template #icon>
-                      <PlusOutlined class="h-fit "/>
-                    </template>
-
-                  <span >Add New</span>
+                  <template #icon>
+                    <PlusOutlined class="h-fit"/>
+                  </template>
+                  <span>Add New</span>
                 </ElButton>
               </router-link>
-
               <div class="flex items-start gap-4 justify-between font-bold text-gray-800">
-                <ElButton
-                          size="large"
-                          @click="toggleFilters"
-                >
-                  <template #icon
-                            v-if="!showFilters">
-                    <FilterOutlined class="h-fit"
-
-                    ></FilterOutlined>
+                <ElButton size="large" @click="toggleFilters">
+                  <template #icon v-if="!showFilters">
+                    <FilterOutlined class="h-fit"/>
                   </template>
-
-                  <template #icon
-                            v-if="showFilters">
-                    <FilterFilled class="h-fit"
-                    ></FilterFilled>
+                  <template #icon v-if="showFilters">
+                    <FilterFilled class="h-fit"/>
                   </template>
                 </ElButton>
-
                 <ElButton size="large" @click="refresh">
                   <template #icon>
                     <ReloadOutlined></ReloadOutlined>
                   </template>
                 </ElButton>
-
-
               </div>
             </div>
-
-            <ElInput v-if="showSearch"
-                     style="width: 300px"
-                     placeholder="Search"  class="text-lg h-12 rounded  md:hidden"></ElInput>
-
+            <ElInput v-if="showSearch" style="width: 300px" placeholder="Search" class="text-lg h-12 rounded  md:hidden"></ElInput>
           </div>
-          <div v-if="showFilters || show0therItems" class="flex w-full py-4 gap-2 bg-white justify-start">
-            <slot name="filters">
-
-            </slot>
-
+          <div v-if="showFilters || showOtherItems" class="flex w-full py-4 gap-2 bg-white justify-start">
+            <slot name="filters"></slot>
           </div>
         </template>
       </a-table>
     </div>
   </div>
 </template>
+
 <script >
 import store from "../../store"
 import {Table} from "ant-design-vue"
@@ -129,10 +100,10 @@ export default {
       type: String,
       default: "all-users",
     },
-    show0therItems:{
+    showOtherItems: {
       type: Boolean,
       default: false,
-    },showSearch:{
+    }, showSearch: {
       type: Boolean,
       default: false,
     },
@@ -153,17 +124,16 @@ export default {
         ];
       },
     },
-
   },
   methods: {
-    emit(){
+    emit() {
       return defineEmits(['trailingReload'])
     },
     queryData(url) {
       this.loading = true;
 
       store
-          .dispatch("fetchList", { url })
+          .dispatch("fetchList", {url})
           .then((resp) => {
             this.dataSource = resp.data;
             this.loading = false;
@@ -172,22 +142,19 @@ export default {
             this.loading = false;
           });
     },
-    toggleFilters(){
+    toggleFilters() {
       this.showFilters = !this.showFilters
-      console.log(typeof(this.show0therItems), this.show0therItems)
-      // this.show0therItems = !this.show0therItems
-
     },
-    refresh(){
+    refresh() {
       this.queryData(this.fetchUrl);
       this.trailingReload()
     },
-    trailingReload(){
+    trailingReload() {
       this.$emit('trailingReload')
     }
   },
   watch: {
-    fetchUrl : function (newVal,oldVal){
+    fetchUrl: function (newVal, oldVal) {
       this.queryData(this.fetchUrl);
     }
   },
@@ -196,3 +163,30 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.dark-mode {
+  background-color: #212121;
+  color: white;
+}
+
+.dark-mode .custom-table {
+  /* Add styles for the table in dark mode */
+  /* Example: */
+  background-color: #212121;
+  color: white;
+}
+
+.dark-mode .custom-table th,
+.dark-mode .custom-table td {
+  /* Add styles for table headers and cells in dark mode */
+  /* Example: */
+  border-color: #fff;
+}
+
+.dark-mode .custom-table .ant-table-tbody > tr.ant-table-row:hover > td {
+  /* Add styles for table row hover effect in dark mode */
+  /* Example: */
+  background-color: #444;
+}
+</style>

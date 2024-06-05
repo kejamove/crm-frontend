@@ -8,7 +8,23 @@ import {deleteLocalStorageInformation} from "@/utility/functions.js";
 import {useRouter, useRoute} from "vue-router";
 const store = useStore()
 const router = useRouter()
-import {watch} from "vue"
+import {watch, computed} from "vue"
+
+const breadcrumbStyle = computed(() => {
+  return {
+    'separator-color': store.getters.getLightMode ? '#ffd04b' : '#ffd04b'
+    // Add any other breadcrumb styles here if needed
+  };
+});
+
+const routerViewStyle = computed(() => {
+  return {
+    // Add dynamic styles based on the theme
+    color: store.getters.getLightMode ? 'gray' : 'white',
+    backgroundColor: store.getters.getLightMode ? 'white' : 'gray',
+    // Add any other styles you want to apply
+  };
+});
 
 const logout = ()=>{
   deleteLocalStorageInformation()
@@ -54,7 +70,7 @@ watch(route, updateBreadcrumbs, { immediate: true });
 
 
         <div class="w-full flex items-center justify-end md:justify-between h-fit p-0">
-          <el-breadcrumb separator="/" class="hidden md:block">
+          <el-breadcrumb :style="breadcrumbStyle" separator="/" class="hidden md:block">
             <el-breadcrumb-item v-for="(breadcrumb, index) in breadcrumbs" :key="index">
               <span v-if="breadcrumb?.label === 'Dashboard' || breadcrumb?.label === 'dashboard'">Dashboard </span>
               <router-link v-else :to="breadcrumb.path">{{ breadcrumb.label }}</router-link>
@@ -124,14 +140,17 @@ watch(route, updateBreadcrumbs, { immediate: true });
           <TheSideNav/>
         </div>
 
-        <div class="flex-1 p-4 bg-gray-50 overflow-x-hidden overflow-y-auto h-full ">
-          <el-breadcrumb separator="/" class="md:hidden">
+        <div :style="routerViewStyle" class="flex-1 p-4 bg-gray-50 overflow-x-hidden overflow-y-auto h-full ">
+          <el-breadcrumb separator="/"
+                         :style="breadcrumbStyle"
+                         class="md:hidden" >
             <el-breadcrumb-item v-for="(breadcrumb, index) in breadcrumbs" :key="index">
               <span v-if="breadcrumb?.label === 'Dashboard' || breadcrumb?.label === 'dashboard'">Dashboard </span>
               <router-link v-else :to="breadcrumb.path">{{ breadcrumb.label }}</router-link>
             </el-breadcrumb-item>
           </el-breadcrumb>
-          <router-view/>
+
+          <router-view :style="routerViewStyle"/>
         </div>
 
       </div>
