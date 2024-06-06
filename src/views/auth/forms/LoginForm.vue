@@ -108,7 +108,30 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         .then((resp) => {
           localStorage.setItem("authData", JSON.stringify(resp.data));
           loginLoading.value = false;
-          router.push({name: 'welcome'})
+          /**
+           * Redirect based on user type
+           *
+           */
+
+          const user = resp.data?.user;
+
+          console.log('User:', user);
+
+          if (user.user_type == 'sales' || user.user_type == 'marketing' || user.user_type == 'project_manager') {
+            console.log('Routing to moves');
+            router.push({name: 'moves'});
+          }
+
+          if (user.user_type == 'super_admin' || user.user_type == 'firm_owner') {
+            console.log('Routing to welcome');
+            router.push({name: 'welcome'});
+          }
+
+          if (user.user_type == 'branch_manager') {
+            console.log('Routing to branch-analytics');
+            router.push({name: 'branch-analytics'});
+          }
+
         })
           .catch((err)=>{
             loginLoading.value = false;
