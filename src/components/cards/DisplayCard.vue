@@ -3,7 +3,7 @@
 import {InfoFilled} from "@element-plus/icons-vue";
 import router from "@/router/index.js";
 import {ref, computed} from "vue";
-import {userType} from "@/utility/constants.js";
+
 
 const props = defineProps({
   bgColor: {
@@ -32,7 +32,7 @@ const props = defineProps({
   },
   allowedRoles: {
     type: Array,
-    default: [userType]
+    default: []
   },
   count: {
     type: Number,
@@ -40,26 +40,38 @@ const props = defineProps({
   },
 })
 
+const userType = JSON.parse(localStorage.getItem("authData"))?.user?.user_type;
+
+// Compute the allowed roles based on userType and props.allowedRoles
+const computedAllowedRoles = computed(() => {
+  if (userType) {
+    return [userType];
+  }
+  return props.allowedRoles;
+});
+console.log('Computed Allowed Roles:', computedAllowedRoles.value);
+
 const filteredRoutes = computed(() => {
   const filtered = props.actionRoutes.filter(route =>
-      Array.isArray(route.roles) && route.roles.some(role => props.allowedRoles.includes(role))
+      Array.isArray(route.roles) && route.roles.some(role => computedAllowedRoles.value.includes(role))
   );
   console.log('Filtered Routes:', filtered); // Debugging line
   return filtered;
-});
+})
 
 const actions = ref('')
 const performAction = ()=>{
-  if (actions.value !== ''){
-    router.push({name: actions.value})
-        .then(()=>
-        {
-          actions.value = ''
+  if (actions.value !== '') {
+    router.push({ name: actions.value })
+        .then(() => {
+          console.log('Navigation success');
+          actions.value = '';
         })
-        .catch((error) =>
-        {
-            console.error('Navigation error:', error);
+        .catch((error) => {
+          console.error('Navigation error:', error);
         });
+  } else {
+    console.error('Action value is empty or invalid');
   }
 }
 </script>

@@ -105,7 +105,8 @@ watch(route, updateBreadcrumbs, { immediate: true });
 
                   </p>
                   <p class="w-full" >
-                    {{authData?.user?.phone_number_full}}
+                    {{authData?.user?.phone_country_code}}
+                    {{authData?.user?.phone_local_number}}
                   </p>
                 </div>
                 <button

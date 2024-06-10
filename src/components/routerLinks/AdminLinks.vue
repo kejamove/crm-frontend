@@ -3,14 +3,17 @@
 import {DataAnalysis, HomeFilled, Setting, UserFilled} from "@element-plus/icons-vue";
 
 const userType = JSON.parse(localStorage.getItem("authData"))?.user?.user_type;
+const user = JSON.parse(localStorage.getItem("authData"))?.user;
 // const branch = JSON.parse(localStorage.getItem("authData"))?.user?.branch;
-const branch = 1;
+const branch = user?.branch;
 const branchUrl = 'branch-view'
 
 </script>
 
 <template>
-  <el-menu-item index="welcome">
+  <el-menu-item
+      v-if="userType ==='super_admin' || userType === 'firm_owner'"
+      index="welcome">
     <el-icon>
       <data-analysis/>
     </el-icon>
@@ -74,7 +77,7 @@ const branchUrl = 'branch-view'
   </el-sub-menu>
 
   <el-menu-item
-      v-if="userType !=='super_admin' && userType !== 'firm_owner'"
+      v-if="userType === 'branch_manager' "
       :index="JSON.stringify({ name: branchUrl, id: branch })" >
     <el-icon>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -83,6 +86,7 @@ const branchUrl = 'branch-view'
     </el-icon>
     <template #title>My Branch</template>
   </el-menu-item>
+
   <el-menu-item
       v-if="userType === 'firm_owner' || userType === 'super_admin' || userType === 'branch_manager'"
       index="employees" >

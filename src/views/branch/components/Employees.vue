@@ -3,6 +3,8 @@ import {Delete, EditPen} from "@element-plus/icons-vue";
 import BaseDataTable from "@/components/base/BaseDataTable.vue";
 import {ref} from "vue"
 import router from "@/router/index.js";
+import store from "@/store/index.js";
+const userType = JSON.parse(localStorage.getItem("authData"))?.user?.user_type;
 
 const props = defineProps(
     {
@@ -29,6 +31,11 @@ const columns = ref([
     key: "user_type",
   },
   {
+    title: "Is Active",
+    dataIndex: "is_active",
+    key: "is_active",
+  },
+  {
     title: "Actions",
     dataIndex: "",
     key: "actions",
@@ -37,6 +44,10 @@ const columns = ref([
 
 const goTo = (name, id)=>{
   router.push({name: name, params: {id: id}});
+}
+
+const deleteUser =  (id)=> {
+  store.dispatch('deleteData',{id: id, url: 'delete-user'});
 }
 
 
@@ -54,6 +65,17 @@ const goTo = (name, id)=>{
 
 
     <template v-slot:bodyCell="slotProps">
+
+      <template v-if="slotProps.column.key === 'is_active'">
+        <el-tag size="large" type="success" v-if="slotProps.text === true" class="capitalize">
+          {{slotProps.text}}
+        </el-tag>
+
+        <el-tag type="danger" size="large" v-else class="capitalize">
+          {{slotProps.text}}
+        </el-tag>
+      </template>
+
       <template v-if="slotProps.column.key === 'actions'">
         <!--                      {{ slotProps.text }}-->
 
@@ -67,13 +89,18 @@ const goTo = (name, id)=>{
           </template>
         </ElButton>
 
-        <ElButton type="primary" size="default" plain>
+        <ElButton type="primary"
+                  size="default" plain>
           <template #icon>
             <EditPen class="h-fit"/>
           </template>
         </ElButton>
 
-        <ElButton type="danger" size="default" plain>
+        <ElButton type="danger"
+                  title="Fire User"
+                  v-if="userType === 'super_admin' || userType === 'firm_owner'"
+                  @click="deleteUser(slotProps.text?.id)"
+                  size="default" plain>
           <template #icon>
             <Delete class="h-fit"/>
           </template>

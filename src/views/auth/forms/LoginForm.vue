@@ -108,11 +108,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         .then((resp) => {
           localStorage.setItem("authData", JSON.stringify(resp.data));
           loginLoading.value = false;
+
           /**
            * Redirect based on user type
            *
            */
-
           const user = resp.data?.user;
 
           console.log('User:', user);
@@ -129,7 +129,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
           if (user.user_type == 'branch_manager') {
             console.log('Routing to branch-analytics');
-            router.push({name: 'branch-analytics'});
+            router.push({name: 'branch-view', params: {
+              id: user?.branch}});
           }
 
         })
