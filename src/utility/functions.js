@@ -3,12 +3,6 @@ import Swal from 'sweetalert2';
 
 export function showSuccess (text)
 {
-    // Swal.fire({
-    //     icon: 'success',
-    //     title: 'Success',
-    //     text: text,
-    //     timer: 4000
-    // });
     ElNotification({
         title: 'Success',
         type: "success",
@@ -75,27 +69,14 @@ export function raiseServerError(err) {
 
 
         } else if (err.response.data.message && err.response.data.error) {
-            // QueryException, AuthenticationException, or other exceptions
-            // Swal.fire({
-            //     icon: 'error',
-            //     title: err.response.data.message,
-            //     text: err.response.data.error,
-            //     timer: 4000,
-            // });
             ElNotification({
-                title: err.response.data.message,
+                title: 'Error',
                 type: "error",
                 position: "top-right",
                 message: err.response.data.error,
             })
         }  else if (err.response.data.message ) {
-            // QueryException, AuthenticationException, or other exceptions
-            // Swal.fire({
-            //     icon: 'error',
-            //     title: err.response.data.message,
-            //     text: err.response.data.message,
-            //     timer: 4000,
-            // });
+
             ElNotification({
                 title: err.response.data.message,
                 type: "error",
@@ -104,13 +85,7 @@ export function raiseServerError(err) {
             })
         }
         else {
-            // Unexpected error format
-            // Swal.fire({
-            //     icon: 'error',
-            //     title: 'Error',
-            //     text: 'An unexpected error occurred.',
-            //     timer: 4000,
-            // });
+
             ElNotification({
                 title: 'Error',
                 type: "error",
@@ -120,13 +95,7 @@ export function raiseServerError(err) {
 
         }
     } else {
-        // Handle generic error
-        // Swal.fire({
-        //     icon: 'error',
-        //     title: 'Error',
-        //     text: 'An error occurred. Please try again later.',
-        //     timer: 4000,
-        // });
+
         ElNotification({
             title: 'Error',
             type: "error",

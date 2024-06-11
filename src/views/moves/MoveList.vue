@@ -3,6 +3,7 @@ import {Delete, EditPen} from "@element-plus/icons-vue";
 import BaseDataTable from "@/components/base/BaseDataTable.vue";
 import {ref} from "vue"
 import router from "@/router/index.js";
+import store from "@/store/index.js";
 
 const firmUrl = router?.currentRoute?._value?.params?.id
 const routeName = router?.currentRoute?._value?.name
@@ -44,6 +45,16 @@ const columns = ref([
     key: "moving_to",
   },
   {
+    title: "Move Stage",
+    dataIndex: "move_stage",
+    key: "move_stage",
+  },
+  {
+    title: "Invoiced Amount",
+    dataIndex: "invoiced_amount",
+    key: "invoiced_amount",
+  },
+  {
     title: "Actions",
     dataIndex: "",
     key: "actions",
@@ -54,6 +65,9 @@ const goTo = (name, id) => {
   router.push({name: name, params: {id: id}});
 }
 
+const deleteMove =  (id)=> {
+  store.dispatch('deleteData',{id: id, url: 'delete-move'});
+}
 
 </script>
 
@@ -86,11 +100,25 @@ const goTo = (name, id) => {
             </template>
           </ElButton>
 
-          <ElButton type="danger" size="default" plain>
-            <template #icon>
-              <Delete class="h-fit"/>
+          <el-popconfirm
+              confirm-button-text="Yes"
+              cancel-button-text="No"
+              :icon="InfoFilled"
+              icon-color="#626AEF"
+              title="Are you sure to delete this?"
+              @confirm="deleteMove(slotProps.text?.id)"
+          >
+            <template #reference>
+              <ElButton type="danger"
+                        size="default" plain>
+                <template #icon>
+                  <Delete class="h-fit"/>
+                </template>
+              </ElButton>
             </template>
-          </ElButton>
+          </el-popconfirm>
+
+
         </div>
 
       </template>

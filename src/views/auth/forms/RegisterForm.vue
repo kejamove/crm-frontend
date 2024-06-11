@@ -257,6 +257,9 @@ const user_types = [
   {
     value: 'branch_manager',
     label: 'Branch Manager',
+  },{
+    value: 'firm_owner',
+    label: 'Firm Owner',
   },
   {
     value: 'project_manager',

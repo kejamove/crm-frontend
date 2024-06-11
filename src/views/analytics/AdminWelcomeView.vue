@@ -223,7 +223,7 @@ watch(() => router.currentRoute, () => {
                    :count="registeredUsers?.count"
                    :loading="storeLoading"
                    :action-routes="[
-                       {value: 'partial-user-registration', roles:['super_admin'], label:'Register User'},
+                       {value: 'partial-user-registration', roles:['super_admin', 'firm_owner'], label:'Register User'},
                        {value: 'employees', roles:['super_admin', 'firm_owner'], label:'View Users'}
                        ]"
                    bg-color="bg-purple-200" show-actions>

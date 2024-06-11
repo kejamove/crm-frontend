@@ -98,7 +98,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   loginLoading.value = true;
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
-    console.log(fields,'fields')
     if (valid) {
       store
         .dispatch("postData", {
@@ -115,22 +114,44 @@ const submitForm = async (formEl: FormInstance | undefined) => {
            */
           const user = resp.data?.user;
 
-          console.log('User:', user);
 
-          if (user.user_type == 'sales' || user.user_type == 'marketing' || user.user_type == 'project_manager') {
-            console.log('Routing to moves');
+          if (user.user_type == 'sales' || user.user_type == 'marketing' || user.user_type == 'project_manager' && user.branch !== null) {
             router.push({name: 'moves'});
+          }else {
+            ElNotification({
+              title: 'Error',
+              type: "error",
+              position: "top-right",
+              message: 'No Branch Associated.'
+            })
           }
 
           if (user.user_type == 'super_admin' || user.user_type == 'firm_owner') {
-            console.log('Routing to welcome');
+            if (user.user_type == 'firm_owner' && user.firm == null) {4
+              ElNotification({
+                title: 'Error',
+                type: "error",
+                position: "top-right",
+                message: 'No Firm Associated'
+              })
+
+              return;
+            }
+
             router.push({name: 'welcome'});
           }
 
-          if (user.user_type == 'branch_manager') {
-            console.log('Routing to branch-analytics');
+          if (user.user_type == 'branch_manager' && user.branch !== null) {
             router.push({name: 'branch-view', params: {
               id: user?.branch}});
+          }
+          else {
+            ElNotification({
+              title: 'Error',
+              type: "error",
+              position: "top-right",
+              message: 'No Branch Associated'
+            })
           }
 
         })

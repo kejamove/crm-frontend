@@ -3,6 +3,7 @@ import {Delete, EditPen} from "@element-plus/icons-vue";
 import BaseDataTable from "@/components/base/BaseDataTable.vue";
 import {ref} from "vue"
 import router from "@/router/index.js";
+import store from "@/store/index.js";
 
 const columns = ref([
   {
@@ -29,6 +30,10 @@ const columns = ref([
 
 const goTo = (name, id)=>{
   router.push({name: name, params: {id: id}});
+}
+
+const deleteFirm =  (id)=> {
+  store.dispatch('deleteData',{id: id, url: 'delete-firm'});
 }
 
 </script>
@@ -63,11 +68,23 @@ const goTo = (name, id)=>{
           </template>
         </ElButton>
 
-        <ElButton type="danger" size="default" plain>
-          <template #icon>
-            <Delete class="h-fit"/>
+        <el-popconfirm
+            confirm-button-text="Yes"
+            cancel-button-text="No"
+            :icon="InfoFilled"
+            icon-color="#626AEF"
+            title="Are you sure to delete this?"
+            @confirm="deleteFirm(slotProps.text?.id)"
+        >
+          <template #reference>
+            <ElButton type="danger"
+                      size="default" plain>
+              <template #icon>
+                <Delete class="h-fit"/>
+              </template>
+            </ElButton>
           </template>
-        </ElButton>
+        </el-popconfirm>
       </template>
     </template>
   </BaseDataTable>
