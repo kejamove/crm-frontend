@@ -117,7 +117,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
           if (user.user_type == 'sales' || user.user_type == 'marketing' || user.user_type == 'project_manager' && user.branch !== null) {
             router.push({name: 'moves'});
-          }else {
+          }else if (user.user_type == 'sales' || user.user_type == 'marketing' || user.user_type == 'project_manager' && user.branch == null) {
+
             ElNotification({
               title: 'Error',
               type: "error",
@@ -145,7 +146,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             router.push({name: 'branch-view', params: {
               id: user?.branch}});
           }
-          else {
+          else if (user.user_type == 'branch_manager' && user.branch == null){
             ElNotification({
               title: 'Error',
               type: "error",
