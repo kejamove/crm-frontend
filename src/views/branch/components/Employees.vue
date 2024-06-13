@@ -48,9 +48,10 @@ const goTo = (name, id)=>{
 
 const deleteUser =  (id)=> {
   store.dispatch('deleteData',{id: id, url: 'delete-user'});
+  allowDelete.value = ''
 }
 
-
+const allowDelete = ref('');
 
 </script>
 
@@ -96,15 +97,48 @@ const deleteUser =  (id)=> {
           </template>
         </ElButton>
 
-        <ElButton type="danger"
-                  title="Fire User"
-                  v-if="userType === 'super_admin' || userType === 'firm_owner'"
-                  @click="deleteUser(slotProps.text?.id)"
-                  size="default" plain>
-          <template #icon>
-            <Delete class="h-fit"/>
+        <el-popover
+            placement="bottom"
+            title=""
+            :width="200"
+            trigger="click"
+        >
+          <template #reference>
+            <ElButton type="danger"
+                      title="Fire User"
+                      v-if="userType === 'super_admin' || userType === 'firm_owner'"
+                      size="default" plain>
+              <template #icon>
+                <Delete class="h-fit"/>
+              </template>
+            </ElButton>
           </template>
-        </ElButton>
+
+          <template #default>
+            <div class="flex flex-col gap-2">
+<!--              <span>Type the word <span>delete</span> to confirm</span>-->
+              <el-form
+                  label-position="top"
+              >
+                <el-form-item label="Type delete to confirm">
+                  <el-input placeholder="delete" v-model="allowDelete" size="large"></el-input>
+                </el-form-item>
+              </el-form>
+
+
+              <el-button
+                  type="danger"
+                  class="capitalize"
+                  :disabled="allowDelete == 'delete' ? false : true"
+                  @click="deleteUser(slotProps.text?.id)"
+                  size="large">
+                confirm and delete
+              </el-button>
+            </div>
+
+          </template>
+
+        </el-popover>
       </template>
     </template>
   </BaseDataTable>
