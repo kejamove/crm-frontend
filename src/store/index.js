@@ -129,8 +129,37 @@ export default createStore({
         } catch (err) {
           raiseServerError(err);
         }
+      },
+      async downloadFirmData({ state, commit }, payload) {
+          try {
+              const response = await api.get(`${baseUrl}${payload.url}/${payload.id}`, {
+                  responseType: 'blob',
+              });
+
+              // Create a new Blob object using the response data
+              const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+              // Create a link element
+              const link = document.createElement('a');
+
+              // Set the download attribute with a filename
+              link.href = URL.createObjectURL(blob);
+              link.download = 'firm_data.xlsx';
+
+              // Append the link to the body
+              document.body.appendChild(link);
+
+              // Programmatically click the link to trigger the download
+              link.click();
+
+              // Remove the link from the document
+              document.body.removeChild(link);
+          } catch (error) {
+              console.error('Error downloading the file:', error);
+          }
       }
-    },
+
+  },
   mutations:{
     setSideBarCollapse(state) {
       state.sideBarCollapse = !state.sideBarCollapse
