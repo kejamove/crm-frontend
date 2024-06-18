@@ -31,9 +31,13 @@ const columns = ref([
 const goTo = (name, id)=>{
   router.push({name: name, params: {id: id}});
 }
+const allowDelete = ref('');
 
 const deleteFirm =  (id)=> {
-  store.dispatch('deleteData',{id: id, url: 'delete-firm'});
+  store.dispatch('downloadFirmData',{id: id, url: 'export-firm-data'}).then((res)=>{
+    store.dispatch('deleteData',{id: id, url: 'delete-firm'});
+  })
+  allowDelete.value = ''
 }
 
 </script>
@@ -68,23 +72,51 @@ const deleteFirm =  (id)=> {
           </template>
         </ElButton>
 
-        <el-popconfirm
-            confirm-button-text="Yes"
-            cancel-button-text="No"
-            :icon="InfoFilled"
-            icon-color="#626AEF"
-            title="Are you sure to delete this?"
-            @confirm="deleteFirm(slotProps.text?.id)"
+        <el-popover
+            placement="bottom"
+            title=""
+            :width="300"
+            trigger="click"
         >
           <template #reference>
             <ElButton type="danger"
+                      title="Fire User"
                       size="default" plain>
               <template #icon>
                 <Delete class="h-fit"/>
               </template>
             </ElButton>
           </template>
-        </el-popconfirm>
+
+          <template #default>
+            <div class="flex flex-col gap-2 text-lg">
+
+              <span class="text-orange-500">When a firm is deleted all its data is lost</span>
+
+              <p>You will receive everything about your firm in an excel sheet but you will not be able to find it in our database</p>
+
+              <el-form
+                  label-position="top"
+              >
+                <el-form-item label="Type delete to confirm">
+                  <el-input placeholder="delete" v-model="allowDelete" size="large"></el-input>
+                </el-form-item>
+              </el-form>
+
+              <el-button
+                  type="danger"
+                  class="capitalize"
+                  :disabled="allowDelete == 'delete' ? false : true"
+                  @click="deleteFirm(slotProps.text?.id)"
+                  size="large">
+                confirm and delete
+              </el-button>
+            </div>
+
+          </template>
+
+        </el-popover>
+
       </template>
     </template>
   </BaseDataTable>
