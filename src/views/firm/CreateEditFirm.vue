@@ -6,6 +6,7 @@
     </template>
 
     <template #content>
+      {{form}}
       <el-form
           ref="ruleFormRef"
           :model="form"
@@ -74,14 +75,16 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import {ElNotification, FormInstance, FormRules} from "element-plus";
 import store from "@/store";
 import router from "@/router"
 import {House, Location} from "@element-plus/icons-vue";
 import BaseDialog from "@/components/base/BaseDialog.vue";
+import {useRoute} from "vue-router"
 const loading = ref(false);
-const form = reactive({
+const route = useRoute()
+let form = reactive({
 });
 
 
@@ -90,25 +93,45 @@ const registerLoading = ref(false);
 const ruleFormRef = ref<FormInstance>();
 const rules = reactive<FormRules>({
 });
+
 const submitForm = async (formEl: FormInstance | undefined) => {
   registerLoading.value = true;
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     console.log(fields,'fields')
     if (valid) {
-      store
-          .dispatch("postData", {
-            url: "register-firm",
-            data: form
-          })
-          .then((resp) => {
-            registerLoading.value = false;
-            router.go(-1)
-          })
-          .catch((err)=>{
-            registerLoading.value = false;
-          })
-      ;
+      if (route.name == 'create-firm')
+      {
+        store
+            .dispatch("postData", {
+              url: "register-firm",
+              data: form
+            })
+            .then((resp) => {
+              registerLoading.value = false;
+              router.go(-1)
+            })
+            .catch((err)=>{
+              registerLoading.value = false;
+            })
+      }
+
+      if (route.name == 'edit-firm')
+      {
+        store
+            .dispatch("putData", {
+              url: "update-firm",
+              id: route?.params?.id,
+              data: form
+            })
+            .then((resp) => {
+              registerLoading.value = false;
+              // router.go(-1)
+            })
+            .catch((err)=>{
+              registerLoading.value = false;
+            })
+      }
     } else {
       registerLoading.value = false;
       ElNotification({
@@ -121,6 +144,24 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     loading.value = false;
   });
 };
+
+const getFirmData = () => {
+  if (route.name == 'edit-firm')
+  {
+    store.dispatch("fetchSingleItem", {url: 'list-firms', id: route?.params?.id}).then(
+        (res)=>{
+          Object.assign(form, {
+            name: res.data?.name,
+            location: res.data?.location
+          });
+        }
+    )
+  }
+}
+
+onMounted(()=>{
+  getFirmData()
+})
 
 </script>
 

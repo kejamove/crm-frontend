@@ -70,7 +70,9 @@ const downloadFirmData =  (id)=> {
           </template>
         </ElButton>
 
-        <ElButton type="primary" size="default" plain>
+        <ElButton type="primary"
+                  @click="goTo('edit-firm', slotProps.text?.id)"
+                  size="default" plain>
           <template #icon>
             <EditPen class="h-fit"/>
           </template>

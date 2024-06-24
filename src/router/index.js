@@ -126,6 +126,16 @@ const routes = [
               slug: 'Register Firm',
             },
           },
+          {
+            name:'edit-firm',
+            path:'edit-firm/:id',
+            component: CreateEditFirms,
+            requiresAuth: true,
+            roles: ['admin'],
+            meta: {
+              slug: 'Register Firm',
+            },
+          },
         ]
       },
       {
