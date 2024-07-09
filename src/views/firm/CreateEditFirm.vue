@@ -51,7 +51,7 @@
         <!--            <el-input-->
         <div class="flex w-full ">
           <el-button
-              :loading="registerLoading"
+              :loading="submitLoading"
               class="w-fit "
               size="large"
               style="border-radius: 4px"
@@ -74,63 +74,40 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref, onMounted, inject } from "vue";
 import {ElNotification, FormInstance, FormRules} from "element-plus";
 import store from "@/store";
-import router from "@/router"
 import {House, Location} from "@element-plus/icons-vue";
 import BaseDialog from "@/components/base/BaseDialog.vue";
 import {useRoute} from "vue-router"
 const loading = ref(false);
 const route = useRoute()
-let form = reactive({
+let form = ref({
 });
 
-
-const pushDataToDatabase = (dispatchAction, dispatchUrl, dispatchId=null )=>{
-  let postObject = {
-    url: dispatchUrl,
-    data: form
-  }
-
-  if (dispatchId !== null) {
-    postObject['id'] = dispatchId
-  }
-
-  store
-      .dispatch(dispatchAction,postObject)
-      .then((resp) => {
-        registerLoading.value = false;
-        router.go(-1)
-      })
-      .catch((err)=>{
-        registerLoading.value = false;
-      })
-}
-
-const registerLoading = ref(false);
+const { pushDataToDatabase, submitLoading } = inject('useLifecycle');
 
 const ruleFormRef = ref<FormInstance>();
 const rules = reactive<FormRules>({
 });
 
 const submitForm = async (formEl: FormInstance | undefined) => {
-  registerLoading.value = true;
+  submitLoading.value = true;
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     console.log(fields,'fields')
     if (valid) {
       if (route.name == 'create-firm')
       {
-        pushDataToDatabase('postData', 'register-firm')
+        pushDataToDatabase('postData', 'register-firm', form)
       }
 
       if (route.name == 'edit-firm')
       {
-        pushDataToDatabase('postData', 'register-firm', route?.params?.id)
+        pushDataToDatabase('putData', 'update-firm',form, route?.params?.id)
       }
     } else {
-      registerLoading.value = false;
+      submitLoading.value = false;
       ElNotification({
         title: 'Error',
         type: "error",
@@ -145,9 +122,10 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 const getFirmData = () => {
   if (route.name == 'edit-firm')
   {
+    console.log('rer')
     store.dispatch("fetchSingleItem", {url: 'list-firms', id: route?.params?.id}).then(
         (res)=>{
-          Object.assign(form, {
+          Object.assign(form.value, {
             name: res.data?.name,
             location: res.data?.location
           });
