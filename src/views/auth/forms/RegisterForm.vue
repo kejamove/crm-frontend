@@ -26,15 +26,7 @@
               type="text"
           />
         </el-form-item>
-        <el-form-item label="Username" prop="username">
-          <el-input
-              v-model="form.username"
-              :prefix-icon="UserIcon"
-              placeholder="username"
-              size="large"
-              type="text"
-          />
-        </el-form-item>
+
         <el-form-item label="Email" prop="email">
           <el-input
               v-model="form.email"
@@ -44,7 +36,7 @@
               type="email"
           />
         </el-form-item>
-        <el-form-item label="Password" prop="password">
+        <el-form-item v-if="route.name !== 'edit-user'" label="Password" prop="password">
           <el-input
               v-model="form.password"
               :prefix-icon="LockClosedIcon"
@@ -54,7 +46,7 @@
               type="password"
           />
         </el-form-item>
-        <el-form-item label="Password Confirmation" prop="password_confirmation"
+        <el-form-item v-if="route.name !== 'edit-user'" label="Password Confirmation" prop="password_confirmation"
             :rules="[
               {
                 required: true,
@@ -123,6 +115,7 @@
               v-model="form.firm"
               clearable
               @focus="fetchStores"
+              @change="clearBranch"
               :loading="storeLoading"
               placeholder="Firm To Which a user belongs"
               size="large"
@@ -163,7 +156,7 @@
 
       <div class="flex w-full ">
         <el-button
-          :loading="registerUserLoading"
+          :loading="submitLoading"
           class="w-fit "
           size="large"
           style="border-radius: 4px"
@@ -183,19 +176,21 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref,onMounted } from "vue";
+import { reactive, ref,onMounted , inject} from "vue";
 import { LockClosedIcon, UserIcon } from "@heroicons/vue/24/solid";
 import { FormInstance, FormRules } from "element-plus";
 import store from "@/store";
 import router from "@/router";
 import { FolderOpened } from '@element-plus/icons-vue'
 import BaseLoader from "@/components/base/BaseLoader.vue";
+import {useRoute} from "vue-router"
 
+const route = useRoute()
 
+const { pushDataToDatabase, submitLoading } = inject('useLifecycle');
 const loading = ref(false);
+
 const form = ref({
-  username: "",
-  password: "",
   first_name: '',
   last_name: '',
   email:''
@@ -216,34 +211,28 @@ const rules = reactive<FormRules>({
     message: "Please enter password",
   },
 });
-const registerUserLoading = ref(false)
+
+const clearBranch = ()=>{
+  if(form.value.hasOwnProperty('branch')) {
+    delete form.value.branch
+  }
+}
+
 const submitForm = async (formEl: FormInstance | undefined) => {
-  registerUserLoading.value = true;
+  submitLoading.value = true;
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     console.log(fields,'fields')
     if (valid) {
-      store
-          .dispatch("postData", {
-            url: "register-user",
-            data: form.value
-          })
-          .then((resp) => {
-            registerUserLoading.value = false;
-            router.go(-1)
-          })
-          .catch((err)=>{
-            registerUserLoading.value = false;
-          })
-      ;
+      if (route.name == 'register-user') {
+        pushDataToDatabase('postData','register-user', form)
+      }
+
+      if (route.name == 'edit-user') {
+        pushDataToDatabase('putData','edit-user', form, route?.params?.id)
+      }
     } else {
-      registerUserLoading.value = false;
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        html: '<p class="text-red-400">Fill All required Fields</p>',
-        timer: 4000,
-      });
+      submitLoading.value = false;
     }
     loading.value = false;
   });
@@ -338,8 +327,31 @@ const fetchBranches = ()=>{
       })
 }
 
+const fetchOnMount = ()=>{
+  if (route.name == 'edit-user') {
+    store.dispatch('fetchSingleItem', {url:`user`, id:route?.params?.id}).then((res)=>{
+      // fill firm Data
+      if (res.data?.firm) {
+        store.dispatch('fetchSingleItem', {url:`list-firms`, id: res?.data.firm}).then((resp)=>{
+          form.value.firm = {value: resp.data.id, label:resp.data?.name}
+        })
+      }
+
+      // fill branch data
+      if (res.data?.branch) {
+        store.dispatch('fetchSingleItem', {url:`list-branches`, id: res?.data.branch}).then((resp)=>{
+          form.value.branch = {value: resp.data.id, label:resp.data?.name}
+        })
+      }
+      form.value = res?.data
+      console.log(res.data.user)
+    })
+  }
+}
+
 onMounted(()=>{
   // fetchStores()
+  fetchOnMount()
 })
 
 </script>

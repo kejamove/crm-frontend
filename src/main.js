@@ -7,7 +7,7 @@ import {deleteLocalStorageInformation} from "@/utility/functions.js";
 import api from "@/utility/api.js";
 import 'element-plus/dist/index.css'
 import 'ant-design-vue/dist/reset.css';
-// import 'styles/element/index.scss'
+import useLifecycle from '@/composables/useLIfecycle.js';
 
 api.interceptors.request.use((config) => {
     const authData = JSON.parse(localStorage.getItem("authData"));
@@ -49,6 +49,7 @@ api.interceptors.response.use(undefined, function (err) {
 
 const app = createApp(App);
 app.use(router)
+app.use(useLifecycle);
 app.use(store)
 app.mount('#app')
 

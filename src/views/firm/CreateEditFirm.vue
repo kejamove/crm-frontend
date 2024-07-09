@@ -6,7 +6,6 @@
     </template>
 
     <template #content>
-      {{form}}
       <el-form
           ref="ruleFormRef"
           :model="form"
@@ -88,6 +87,27 @@ let form = reactive({
 });
 
 
+const pushDataToDatabase = (dispatchAction, dispatchUrl, dispatchId=null )=>{
+  let postObject = {
+    url: dispatchUrl,
+    data: form
+  }
+
+  if (dispatchId !== null) {
+    postObject['id'] = dispatchId
+  }
+
+  store
+      .dispatch(dispatchAction,postObject)
+      .then((resp) => {
+        registerLoading.value = false;
+        router.go(-1)
+      })
+      .catch((err)=>{
+        registerLoading.value = false;
+      })
+}
+
 const registerLoading = ref(false);
 
 const ruleFormRef = ref<FormInstance>();
@@ -102,35 +122,12 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       if (route.name == 'create-firm')
       {
-        store
-            .dispatch("postData", {
-              url: "register-firm",
-              data: form
-            })
-            .then((resp) => {
-              registerLoading.value = false;
-              router.go(-1)
-            })
-            .catch((err)=>{
-              registerLoading.value = false;
-            })
+        pushDataToDatabase('postData', 'register-firm')
       }
 
       if (route.name == 'edit-firm')
       {
-        store
-            .dispatch("putData", {
-              url: "update-firm",
-              id: route?.params?.id,
-              data: form
-            })
-            .then((resp) => {
-              registerLoading.value = false;
-              // router.go(-1)
-            })
-            .catch((err)=>{
-              registerLoading.value = false;
-            })
+        pushDataToDatabase('postData', 'register-firm', route?.params?.id)
       }
     } else {
       registerLoading.value = false;

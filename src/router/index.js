@@ -18,6 +18,7 @@ import Employees from "@/views/branch/components/Employees.vue";
 import MoveList from "@/views/moves/MoveList.vue";
 import MoveView from "@/views/moves/MoveView.vue";
 import CreateEditMove from "@/views/moves/CreateEditMove.vue";
+import FirmSetup from "@/views/firm/FirmSetup.vue";
 
 const routes = [
   {
@@ -203,6 +204,16 @@ const routes = [
               slug: 'System Users',
             },
           },
+          {
+            name:'edit-user',
+            path:'edit-user/:id',
+            component: UserCreateEdit,
+            requiresAuth: true,
+            roles: ['admin'],
+            meta: {
+              slug: 'Edit Users',
+            },
+          },
         ]
       },
       {
@@ -231,6 +242,14 @@ const routes = [
           }
         ]
       },
+      {
+        name: 'firm-setup',
+        path: 'firm-setup',
+        component: FirmSetup,
+        meta: {
+          slug: 'Firm Setup',
+        },
+      }
     ]
   },
 

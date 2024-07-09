@@ -51,6 +51,10 @@ const deleteUser =  (id)=> {
   allowDelete.value = ''
 }
 
+
+const activateUser =  (id)=> {
+  store.dispatch('putData',{id: id, url: 'activate-user', data:null});
+}
 const allowDelete = ref('');
 
 </script>
@@ -80,17 +84,8 @@ const allowDelete = ref('');
       <template v-if="slotProps.column.key === 'actions'">
         <!--                      {{ slotProps.text }}-->
 
-        <ElButton type="info"
-                  @click="goTo('partial-firm-view', slotProps.text?.id)"
-                  size="default" plain>
-          <template #icon>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-            </svg>
-          </template>
-        </ElButton>
-
         <ElButton type="primary"
+                  @click="goTo('edit-user', slotProps.text?.id)"
                   size="default" plain>
           <template #icon>
             <EditPen class="h-fit"/>
@@ -105,8 +100,9 @@ const allowDelete = ref('');
         >
           <template #reference>
             <ElButton type="danger"
+
                       title="Fire User"
-                      v-if="userType === 'super_admin' || userType === 'firm_owner'"
+                      v-if="(userType === 'super_admin' || userType === 'firm_owner') && slotProps.text?.is_active === true"
                       size="default" plain>
               <template #icon>
                 <Delete class="h-fit"/>
@@ -139,6 +135,18 @@ const allowDelete = ref('');
           </template>
 
         </el-popover>
+
+                <ElButton
+                    type="success"
+                    v-if="slotProps.text?.is_active === false"
+                    @click="activateUser(slotProps.text?.id)"
+                    size="default" plain>
+                  <template #icon>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                    </svg>
+                  </template>
+                </ElButton>
       </template>
     </template>
   </BaseDataTable>
