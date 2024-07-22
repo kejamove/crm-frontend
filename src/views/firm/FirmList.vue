@@ -41,8 +41,11 @@ const deleteFirm =  (id)=> {
 }
 
 const downloadFirmData =  (id)=> {
-  store.dispatch('downloadFirmData',{id: id, url: 'export-firm-data'})
+  downloadDataLoading.value = true;
+  store.dispatch('downloadFirmData',{id: id, url: 'export-firm-data'}).then((res)=> downloadDataLoading.value = false)
 }
+
+const downloadDataLoading = ref(false)
 
 </script>
 
@@ -118,13 +121,13 @@ const downloadFirmData =  (id)=> {
                 confirm and delete
               </el-button>
             </div>
-
           </template>
 
         </el-popover>
 
         <ElButton
                   @click="downloadFirmData(slotProps.text?.id)"
+                  :loading="downloadDataLoading"
                   title="Download Data About Firm"
                   size="default" plain>
           <template #icon>
