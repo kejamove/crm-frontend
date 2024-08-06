@@ -1,9 +1,9 @@
 import axios from "axios"
 // import { baseUrl } from "constants";
 // export const baseUrl = "https://16.16.127.250/api/"
-// export const baseUrl = "http://localhost:8000/api/"
+export const baseUrl = "http://localhost:8000/api/"
 // export const baseUrl = "https://test.kejadigital.com/api/"
-export const baseUrl = "https://kejacrm-api-0d785412ff3f.herokuapp.com/api/"
+// export const baseUrl = "https://kejacrm-api-0d785412ff3f.herokuapp.com/api/"
 
 
 export default axios.create({
