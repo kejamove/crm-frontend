@@ -17,6 +17,7 @@
     "@vueuse/core": "^10.9.0",
     "ant-design-vue": "^4.2.1",
     "axios": "^1.6.8",
+    "chart.js": "^4.4.3",
     "element-plus": "^2.6.3",
     "notivue": "^2.4.4",
     "path": "^0.12.7",
