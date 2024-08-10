@@ -11,7 +11,7 @@ const authData = JSON.parse(localStorage.getItem("authData"));
 const loggedInUserFirm = ref(authData?.user?.firm)
 const userType = authData?.user?.user_type
 
-const fetchUrl = firmUrl ? `list-firms/${firmUrl}/branches` : `list-firms/${loggedInUserFirm}/branches`
+const fetchUrl = firmUrl ? `firms/${firmUrl}/branches` : `firms/${loggedInUserFirm}/branches`
 
 // return by firm if we are not on branch-list url , else check if user is super admin else just fetch by id
 const newFetchUrl = routeName === 'branch-list' ? (userType === 'super_admin' ? `list-branches` : fetchUrl) : fetchUrl
@@ -51,7 +51,7 @@ const goTo = (name, id) => {
   <router-view/>
   <BaseDataTable
       :columns="columns"
-      fetch-url="list-branches"
+      fetch-url="branches"
       createRouteName="create-branch"
       title="Branches">
 
