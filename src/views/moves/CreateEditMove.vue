@@ -171,7 +171,7 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="Branch" prop="branch"
+          <el-form-item label="Branch" prop="branch_id"
                         :rules="[
             {
               required: true,
@@ -181,7 +181,7 @@
          ]"
           >
             <el-select
-                v-model="form.branch"
+                v-model="form.branch_id"
                 placeholder="branch"
                 @focus="fetchBranches"
                 @change="fetchSalesRep"
@@ -281,7 +281,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       store
           .dispatch("postData", {
-            url: "register-move",
+            url: "moves",
             data: form
           })
           .then((resp) => {
@@ -316,7 +316,7 @@ const fetchBranches = ()=>{
     delete form.sales_representative;
   }
 
-  store.dispatch('fetchList', {url:'list-branches'})
+  store.dispatch('fetchList', {url:'branches'})
       .then((resp)=>{
         resp.data.map((store)=>{
           registeredBranches.value.push({
@@ -355,7 +355,7 @@ const fetchSalesRep = ()=>{
   salesRepLoading.value= true
   registeredSalesReps.value = []
 
-  store.dispatch('fetchSingleItem', {url:'list-user-by-branch', id: form.branch})
+  store.dispatch('fetchSingleItem', {url:'users/branch', id: form.branch_id})
       .then((resp)=>{
         console.log(resp)
         resp.data.map((user)=>{
