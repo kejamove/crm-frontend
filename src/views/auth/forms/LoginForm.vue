@@ -101,7 +101,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       store
         .dispatch("postData", {
-          url: "login",
+          url: "users/login",
           data: form
         })
         .then((resp) => {
