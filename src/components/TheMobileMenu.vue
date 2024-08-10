@@ -15,7 +15,7 @@ const store = useStore()
       v-model="store.state.ShowMobileMenu"
       title="Menu"
       :direction="direction"
-      size="40%"
+      size="90%"
   >
     <slot></slot>
   </el-drawer>
