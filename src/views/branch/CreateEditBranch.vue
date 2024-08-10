@@ -117,7 +117,7 @@ const fetchFirms = ()=>{
   storeLoading.value = true;
 
   if (userType === 'super_admin' || userType === 'firm_owner') {
-    store.dispatch('fetchList', { url:'list-firms'}).then(res=>{
+    store.dispatch('fetchList', { url:'firms'}).then(res=>{
       firmData.value = res.data;
       branches.value = res.data?.branches;
       storeLoading.value = false;
@@ -141,7 +141,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       store
           .dispatch("postData", {
-            url: "register-branch",
+            url: "branches",
             data: form
           })
           .then((resp) => {

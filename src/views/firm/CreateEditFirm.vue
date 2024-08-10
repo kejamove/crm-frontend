@@ -99,12 +99,12 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       if (route.name == 'create-firm')
       {
-        pushDataToDatabase('postData', 'register-firm', form)
+        pushDataToDatabase('postData', 'firms', form)
       }
 
       if (route.name == 'edit-firm')
       {
-        pushDataToDatabase('putData', 'update-firm',form, route?.params?.id)
+        pushDataToDatabase('putData', 'firms',form, route?.params?.id)
       }
     } else {
       submitLoading.value = false;
@@ -123,7 +123,7 @@ const getFirmData = () => {
   if (route.name == 'edit-firm')
   {
     console.log('rer')
-    store.dispatch("fetchSingleItem", {url: 'list-firms', id: route?.params?.id}).then(
+    store.dispatch("fetchSingleItem", {url: 'firms', id: route?.params?.id}).then(
         (res)=>{
           Object.assign(form.value, {
             name: res.data?.name,

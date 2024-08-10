@@ -225,11 +225,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     console.log(fields,'fields')
     if (valid) {
       if (route.name == 'register-user') {
-        pushDataToDatabase('postData','register-user', form)
+        pushDataToDatabase('postData','users', form)
       }
 
       if (route.name == 'edit-user') {
-        pushDataToDatabase('putData','edit-user', form, route?.params?.id)
+        pushDataToDatabase('putData','users', form, route?.params?.id)
       }
     } else {
       submitLoading.value = false;
@@ -295,7 +295,7 @@ const fetchStores = ()=>{
   storeLoading.value= true
   registeredStores.value = []
 
-  store.dispatch('fetchList', {url:'list-firms'})
+  store.dispatch('fetchList', {url:'firms'})
       .then((resp)=>{
         resp.data.map((store)=>{
           registeredStores.value.push({
@@ -317,7 +317,7 @@ const fetchBranches = ()=>{
   branchLoading.value= true
   registeredBranches.value = []
 
-  store.dispatch('fetchList', {url:`list-firms/${form.value?.firm}/branches`})
+  store.dispatch('fetchList', {url:`firms/${form.value?.firm}/branches`})
       .then((resp)=>{
         registeredBranches.value = resp.data
         branchLoading.value= false
@@ -329,17 +329,17 @@ const fetchBranches = ()=>{
 
 const fetchOnMount = ()=>{
   if (route.name == 'edit-user') {
-    store.dispatch('fetchSingleItem', {url:`user`, id:route?.params?.id}).then((res)=>{
+    store.dispatch('fetchSingleItem', {url:`users`, id:route?.params?.id}).then((res)=>{
       // fill firm Data
       if (res.data?.firm) {
-        store.dispatch('fetchSingleItem', {url:`list-firms`, id: res?.data.firm}).then((resp)=>{
+        store.dispatch('fetchSingleItem', {url:`firms`, id: res?.data.firm}).then((resp)=>{
           form.value.firm = {value: resp.data.id, label:resp.data?.name}
         })
       }
 
       // fill branch data
       if (res.data?.branch) {
-        store.dispatch('fetchSingleItem', {url:`list-branches`, id: res?.data.branch}).then((resp)=>{
+        store.dispatch('fetchSingleItem', {url:`branches`, id: res?.data.branch}).then((resp)=>{
           form.value.branch = {value: resp.data.id, label:resp.data?.name}
         })
       }
