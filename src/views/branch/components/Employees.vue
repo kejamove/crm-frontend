@@ -10,7 +10,7 @@ const props = defineProps(
     {
       newUrl : {
         type: String,
-      default : 'list-users'
+      default : 'users'
       },
 })
 
@@ -47,13 +47,13 @@ const goTo = (name, id)=>{
 }
 
 const deleteUser =  (id)=> {
-  store.dispatch('deleteData',{id: id, url: 'delete-user'});
+  store.dispatch('deleteData',{id: id, url: 'users'});
   allowDelete.value = ''
 }
 
 
 const activateUser =  (id)=> {
-  store.dispatch('putData',{id: id, url: 'activate-user', data:null});
+  store.dispatch('putData',{id: id, url: 'users', data:null});
 }
 const allowDelete = ref('');
 
