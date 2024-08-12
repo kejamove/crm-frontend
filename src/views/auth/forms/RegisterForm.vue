@@ -313,7 +313,12 @@ const fetchBranches = ()=>{
   branchLoading.value= true
   registeredBranches.value = []
 
-  store.dispatch('fetchList', {url:`firms/${form.value?.firm_id}/branches`})
+  let newUrl = 'firms/${form.value?.firm_id}/branches'
+  if (route.name == 'edit-user') {
+    newUrl = `firms/${form.value?.firm_id?.value}/branches`
+  }
+
+  store.dispatch('fetchList', {url:newUrl})
       .then((resp)=>{
         registeredBranches.value = resp.data
         branchLoading.value= false
