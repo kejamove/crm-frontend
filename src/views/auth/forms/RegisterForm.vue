@@ -152,7 +152,6 @@
           </el-select>
         </el-form-item>
       </div>
-      {{form}}
 
 
       <div class="flex w-full ">
