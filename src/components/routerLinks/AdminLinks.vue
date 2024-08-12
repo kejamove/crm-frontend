@@ -113,19 +113,19 @@ const branchUrl = 'branch-view'
     <template #title>Moves</template>
   </el-menu-item>
 
-  <el-menu-item index="firm-setup">
-    <el-icon>
-      <Setting/>
-    </el-icon>
-    <template #title>Firm Setup</template>
-  </el-menu-item>
+<!--  <el-menu-item index="firm-setup">-->
+<!--    <el-icon>-->
+<!--      <Setting/>-->
+<!--    </el-icon>-->
+<!--    <template #title>Firm Setup</template>-->
+<!--  </el-menu-item>-->
 
-  <el-menu-item index="4">
-    <el-icon>
-      <UserFilled/>
-    </el-icon>
-    <template #title>Profile</template>
-  </el-menu-item>
+<!--  <el-menu-item index="4">-->
+<!--    <el-icon>-->
+<!--      <UserFilled/>-->
+<!--    </el-icon>-->
+<!--    <template #title>Profile</template>-->
+<!--  </el-menu-item>-->
 
 </template>
 
