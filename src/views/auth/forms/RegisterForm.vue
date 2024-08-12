@@ -213,8 +213,8 @@ const rules = reactive<FormRules>({
 });
 
 const clearBranch = ()=>{
-  if(form.value.hasOwnProperty('branch')) {
-    delete form.value.branch
+  if(form.value.hasOwnProperty('branch_id')) {
+    delete form.value.branch_id
   }
 }
 
@@ -229,7 +229,16 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       }
 
       if (route.name == 'edit-user') {
-        pushDataToDatabase('putData','users', form, route?.params?.id)
+        // console.log(form.value.firm_id.value, 'form')
+        let payload = {...form, branch_id:form.value.branch_id}
+        console.log(form.value.branch_id, 'payload')
+
+
+        // pushDataToDatabase('putData','users', payload, route?.params?.id)
+        store.dispatch("putData", {url: 'users', data:payload, id:route?.params.id}).then((response) => {
+              submitLoading.value = false
+
+        })
       }
     } else {
       submitLoading.value = false;
@@ -313,14 +322,18 @@ const fetchBranches = ()=>{
   branchLoading.value= true
   registeredBranches.value = []
 
-  let newUrl = 'firms/${form.value?.firm_id}/branches'
+  let newUrl = `firms/${form.value?.firm_id}/branches`
+
   if (route.name == 'edit-user') {
-    newUrl = `firms/${form.value?.firm_id?.value}/branches`
+    // console.log(form.value?.firm_id?.value)
+    newUrl = `firms/${form.value?.firm_id}/branches`
   }
 
   store.dispatch('fetchList', {url:newUrl})
       .then((resp)=>{
-        registeredBranches.value = resp.data
+        registeredBranches.value = resp?.data
+
+        // registeredBranches.value = resp.data
         branchLoading.value= false
       })
       .catch(err=>{
@@ -339,8 +352,8 @@ const fetchOnMount = ()=>{
       }
 
       // fill branch data
-      if (res.data?.branch) {
-        store.dispatch('fetchSingleItem', {url:`branches`, id: res?.data.branch}).then((resp)=>{
+      if (res.data?.branch_id) {
+        store.dispatch('fetchSingleItem', {url:`branches`, id: res?.data.branch_id}).then((resp)=>{
           form.value.branch_id = {value: resp.data.id, label:resp.data?.name}
         })
       }
