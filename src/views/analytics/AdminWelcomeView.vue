@@ -20,9 +20,10 @@ const fetchStoreData = ()=>{
   storeLoading.value= true
   registeredFirms.value = null
 
-  store.dispatch('fetchList', {url:'firm-count'})
+  store.dispatch('fetchList', {url:'firms/count'})
       .then((resp)=>{
-        registeredFirms.value = resp.data
+        console.log(resp.data?.firmCount)
+        registeredFirms.value = resp.data?.firmCount
         storeLoading.value= false
       })
       .catch(err=>{
@@ -53,9 +54,9 @@ const fetchMoveData = ()=>{
   moveLoading.value= true
   registeredMoves.value = null
 
-  store.dispatch('fetchList', {url:'move-data'})
+  store.dispatch('fetchList', {url:'moves/count'})
       .then((resp)=>{
-        registeredMoves.value = resp.data
+        registeredMoves.value = resp.data?.moveCount
         moveLoading.value= false
       })
       .catch(err=>{
@@ -112,9 +113,9 @@ const fetchUserData = ()=>{
   userLoading.value= true
   registeredUsers.value = null
 
-  store.dispatch('fetchList', {url:'user-data'})
+  store.dispatch('fetchList', {url:'users/count'})
       .then((resp)=>{
-        registeredUsers.value = resp.data
+        registeredUsers.value = resp.data?.userCount
         userLoading.value= false
       })
       .catch(err=>{
@@ -130,7 +131,7 @@ const fetchOnMount = ()=>{
   fetchStoreData()
   fetchMoveData()
   fetchUserData()
-  fetchLeadData()
+  // fetchLeadData()
 }
 
 watch(() => router.currentRoute, () => {
@@ -158,7 +159,7 @@ watch(() => router.currentRoute, () => {
 
       <!--      firm   -->
       <DisplayCard
-          :count="registeredFirms?.data"
+          :count="registeredFirms"
           content="firms registered"
           :action-routes="[
                        {value: 'register-firm', roles:['super_admin'], label:'Register Firm'},
@@ -175,7 +176,7 @@ watch(() => router.currentRoute, () => {
 
       <!--      moves   -->
       <DisplayCard
-          :count="registeredMoves?.count"
+          :count="registeredMoves"
           content="moves made"
           text-color="text-yellow-500" bg-color="bg-yellow-200">
         <template #icon>
@@ -198,6 +199,7 @@ watch(() => router.currentRoute, () => {
       <!--      leads   -->
       <DisplayCard
           :count="registeredLeads?.data"
+          class="hidden"
           content="possible Leads"
           text-color="text-blue-500" bg-color="bg-blue-200">
         <template #icon>
@@ -220,7 +222,7 @@ watch(() => router.currentRoute, () => {
       <!--      users   -->
       <DisplayCard text-color="text-purple-500"
                    content="system users"
-                   :count="registeredUsers?.count"
+                   :count="registeredUsers"
                    :loading="storeLoading"
                    :action-routes="[
                        {value: 'partial-user-registration', roles:['super_admin', 'firm_owner'], label:'Register User'},
