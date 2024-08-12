@@ -34,9 +34,11 @@ const goTo = (name, id)=>{
 const allowDelete = ref('');
 
 const deleteFirm =  (id)=> {
-  store.dispatch('downloadFirmData',{id: id, url: 'export-firm-data'}).then((res)=>{
-    store.dispatch('deleteData',{id: id, url: 'delete-firm'});
-  })
+  store.dispatch('deleteData',{id: id, url: 'firms'});
+
+  // store.dispatch('downloadFirmData',{id: id, url: 'firms'}).then((res)=>{
+  //   store.dispatch('deleteData',{id: id, url: 'delete-firm'});
+  // })
   allowDelete.value = ''
 }
 
