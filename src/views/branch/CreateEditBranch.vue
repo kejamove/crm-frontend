@@ -2,7 +2,7 @@
 
   <BaseDialog>
     <template #title>
-      Create Firm
+      Create Branch
     </template>
 
     <template #content>
@@ -31,6 +31,23 @@
           />
         </el-form-item>
 
+        <el-form-item label="Branch Registration Number" prop="registration_number"
+                      :rules="[
+            {
+              required: true,
+              message: 'Please input the branch registration',
+              trigger: 'blur',
+            }
+         ]"
+        >
+          <el-input
+              v-model="form.registration_number"
+              :prefix-icon="Location"
+              placeholder="Branch Location eg Kitisuru Nairobi"
+              size="large"
+          />
+        </el-form-item>
+
         <el-form-item label="Branch Location" prop="location"
                       :rules="[
             {
@@ -48,9 +65,9 @@
           />
         </el-form-item>
 
-        <el-form-item label="Firm" prop="firm" class="w-full">
+        <el-form-item label="Firm" prop="firm_id" class="w-full">
           <el-select
-              v-model="form.firm"
+              v-model="form.firm_id"
               clearable
               @focus="fetchFirms"
               :loading="storeLoading"
