@@ -131,9 +131,9 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="Branch **Optional" prop="branch" class="w-full" v-if="form.firm">
+        <el-form-item label="Branch **Optional" prop="branch" class="w-full" v-if="form.firm_id">
           <el-select
-              v-model="form.branch"
+              v-model="form.branch_id"
               clearable
               @focus="fetchBranches"
               :loading="branchLoading"
@@ -152,6 +152,7 @@
           </el-select>
         </el-form-item>
       </div>
+      {{form}}
 
 
       <div class="flex w-full ">
@@ -313,7 +314,7 @@ const fetchBranches = ()=>{
   branchLoading.value= true
   registeredBranches.value = []
 
-  store.dispatch('fetchList', {url:`firms/${form.value?.firm}/branches`})
+  store.dispatch('fetchList', {url:`firms/${form.value?.firm_id}/branches`})
       .then((resp)=>{
         registeredBranches.value = resp.data
         branchLoading.value= false
@@ -336,7 +337,7 @@ const fetchOnMount = ()=>{
       // fill branch data
       if (res.data?.branch) {
         store.dispatch('fetchSingleItem', {url:`branches`, id: res?.data.branch}).then((resp)=>{
-          form.value.branch = {value: resp.data.id, label:resp.data?.name}
+          form.value.branch_id = {value: resp.data.id, label:resp.data?.name}
         })
       }
       form.value = res?.data
