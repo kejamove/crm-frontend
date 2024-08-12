@@ -4,7 +4,7 @@ import Employees from "@/views/branch/components/Employees.vue";
 import router from "@/router/index.js";
 
 const branchId = router?.currentRoute?._value?.params?.id
-const employeeUrl = `list-users?branch=${branchId}`
+const employeeUrl = `users/branch/${branchId}`
 </script>
 
 <template>

@@ -270,7 +270,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 };
 
 onMounted(()=>{
-  getMailData()
+  // getMailData()
 })
 
 </script>

@@ -3,15 +3,18 @@ import {Delete, EditPen} from "@element-plus/icons-vue";
 import BaseDataTable from "@/components/base/BaseDataTable.vue";
 import {ref} from "vue"
 import router from "@/router/index.js";
+import {useRoute} from "vue-router"
 
-const firmUrl = router?.currentRoute?._value?.params?.id
+const myRoute = useRoute()
+const firmUrl = myRoute.params?.id
+console.log(firmUrl, router.currentRoute, 'firm url')
 const routeName = router?.currentRoute?._value?.name
 const authData = JSON.parse(localStorage.getItem("authData"));
 
 const loggedInUserFirm = ref(authData?.user?.firm)
 const userType = authData?.user?.user_type
 
-const fetchUrl = `list-firms/${firmUrl}/branches`
+const fetchUrl = `firms/${firmUrl}/branches`
 
 
 
