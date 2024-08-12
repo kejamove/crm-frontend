@@ -110,9 +110,9 @@
             </template>
           </el-input>
         </el-form-item>
-        <el-form-item label="Firm" prop="firm" class="w-full">
+        <el-form-item label="Firm" prop="firm_id" class="w-full">
           <el-select
-              v-model="form.firm"
+              v-model="form.firm_id"
               clearable
               @focus="fetchStores"
               @change="clearBranch"
@@ -251,15 +251,11 @@ const user_types = [
     label: 'Firm Owner',
   },
   {
-    value: 'project_manager',
-    label: 'Project Manager',
-  },
-  {
-    value: 'sales',
+    value: 'sales_person',
     label: 'Sales Person',
   },
   {
-    value: 'marketing',
+    value: 'marketing_person',
     label: 'Marketing Person',
   }
 ]
@@ -331,9 +327,9 @@ const fetchOnMount = ()=>{
   if (route.name == 'edit-user') {
     store.dispatch('fetchSingleItem', {url:`users`, id:route?.params?.id}).then((res)=>{
       // fill firm Data
-      if (res.data?.firm) {
-        store.dispatch('fetchSingleItem', {url:`firms`, id: res?.data.firm}).then((resp)=>{
-          form.value.firm = {value: resp.data.id, label:resp.data?.name}
+      if (res.data?.firm_id) {
+        store.dispatch('fetchSingleItem', {url:`firms`, id: res?.data.firm_id}).then((resp)=>{
+          form.value.firm_id = {value: resp.data.id, label:resp.data?.name}
         })
       }
 
