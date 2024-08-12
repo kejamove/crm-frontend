@@ -10,8 +10,8 @@ const moveData = ref({})
 const getMoveById = () => {
   let id = router?.currentRoute?._value?.params?.id;
   console.log(id, 'iddd')
-  store.dispatch('fetchSingleItem', {id: id, url:'list-moves-show'}).then(res=>{
-    moveData.value = res.data;
+  store.dispatch('fetchSingleItem', {id: id, url:'moves'}).then(res=>{
+    moveData.value.data = res.data;
   }).catch((err)=>{
     console.log(err.message)
     router.go(-1)
