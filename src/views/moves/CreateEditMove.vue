@@ -335,7 +335,7 @@ const move_stages = ref([
   {label: 'new lead', value :'new_lead' },
   {label: 'contacted', value : 'contacted'},
   {label: 'proposal', value :'proposal' },
-  {label: 'negotions started', value : 'negotions_started'},
+  {label: 'negotiations started', value : 'negotiations_started'},
   {label: 'won', value : 'won'},
   {label: 'lost', value : 'lost'},
 ])
