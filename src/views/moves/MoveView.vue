@@ -53,10 +53,10 @@ onMounted(()=>{
 
         <div class="w-fit text-2xl font-bold"> Sales Representative</div>
         <div class="w-fit flex items-center gap-2 flex-wrap ">
-          {{moveData?.sales_representative_object?.first_name}} {{moveData?.sales_representative_object?.last_name}}
+          {{moveData?.data?.sales_representative?.first_name}} {{moveData?.data?.sales_representative?.last_name}}
 
           <span class="text-orange-500" v-if="userType === 'super_admin' || userType === 'firm_owner'">
-            {{moveData?.sales_representative_object?.user_type}}
+            {{moveData?.data?.sales_representative_object?.user_type}}
           </span>
         </div>
 
