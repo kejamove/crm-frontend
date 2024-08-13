@@ -66,7 +66,7 @@ const goTo = (name, id) => {
 }
 
 const deleteMove =  (id)=> {
-  store.dispatch('deleteData',{id: id, url: 'delete-move'});
+  store.dispatch('deleteData',{id: id, url: 'moves'});
 }
 
 </script>
