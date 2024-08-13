@@ -115,9 +115,9 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           const user = resp.data?.user;
 
 
-          if (user.user_type == 'sales_person' || user.user_type == 'marketing_person' || user.user_type == 'project_manager' && user.branch !== null) {
+          if (user.user_type == 'sales_person' || user.user_type == 'marketing_person' || user.user_type == 'project_manager' && user.branch_id !== null) {
             router.push({name: 'moves'});
-          }else if (user.user_type == 'sales_person' || user.user_type == 'marketing_person' || user.user_type == 'project_manager' && user.branch == null) {
+          }else if (user.user_type == 'sales_person' || user.user_type == 'marketing_person' || user.user_type == 'project_manager' && user.branch_id == null) {
 
             ElNotification({
               title: 'Error',
@@ -128,7 +128,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           }
 
           if (user.user_type == 'super_admin' || user.user_type == 'firm_owner') {
-            if (user.user_type == 'firm_owner' && user.firm == null) {
+            if (user.user_type == 'firm_owner' && user.firm_id == null) {
               ElNotification({
                 title: 'Error',
                 type: "error",
@@ -142,11 +142,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             router.push({name: 'welcome'});
           }
 
-          if (user.user_type == 'branch_manager' && user.branch !== null) {
+          if (user.user_type == 'branch_manager' && user.branch_id !== null) {
             router.push({name: 'branch-view', params: {
-              id: user?.branch}});
+              id: user?.branch_id}});
           }
-          else if (user.user_type == 'branch_manager' && user.branch == null){
+          else if (user.user_type == 'branch_manager' && user.branch_id == null){
             ElNotification({
               title: 'Error',
               type: "error",
