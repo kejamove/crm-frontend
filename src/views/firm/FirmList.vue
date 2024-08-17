@@ -54,6 +54,7 @@ const downloadFirmData =  (id)=> {
     { id: id, url: 'users' },
     { id: id, url: 'moves' },
     { id: id, url: 'branches' },
+    { id: id, url: 'firms' },
   ])
       .then(res => {
         downloadDataLoading.value = false;
