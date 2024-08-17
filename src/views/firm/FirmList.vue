@@ -33,18 +33,33 @@ const goTo = (name, id)=>{
 }
 const allowDelete = ref('');
 
-const deleteFirm =  (id)=> {
-  store.dispatch('deleteData',{id: id, url: 'firms'});
+const deleteFirm = async (id) => {
+  try {
+    // Start by downloading all relevant data for the firm
+    await downloadFirmData(id);
 
-  // store.dispatch('downloadFirmData',{id: id, url: 'firms'}).then((res)=>{
-  //   store.dispatch('deleteData',{id: id, url: 'delete-firm'});
-  // })
-  allowDelete.value = ''
-}
+    // Once the data is downloaded, proceed with deleting the firm
+    await store.dispatch('deleteData', { id: id, url: 'firms' });
+
+    // Reset any UI-related states if needed
+    allowDelete.value = '';
+  } catch (error) {
+    console.error('Error during firm deletion:', error);
+  }
+};
 
 const downloadFirmData =  (id)=> {
   downloadDataLoading.value = true;
-  store.dispatch('downloadFirmData',{id: id, url: 'export-firm-data'}).then((res)=> downloadDataLoading.value = false)
+  store.dispatch('downloadExcelByUrl', [
+    { id: id, url: 'users' },
+    { id: id, url: 'moves' },
+    { id: id, url: 'branches' },
+  ])
+      .then(res => {
+        downloadDataLoading.value = false;
+      })
+  ;
+  // store.dispatch('downloadFirmData',{id: id, url: 'export-firm-data'}).then((res)=> downloadDataLoading.value = false)
 }
 
 const downloadDataLoading = ref(false)

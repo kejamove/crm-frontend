@@ -2,6 +2,7 @@ import { createStore } from "vuex";
 import api, {baseUrl} from "@/utility/api.js";
 import {headers} from "@/utility/constants.js";
 import {raiseServerError, showSuccess} from "@/utility/functions.js";
+import JSZip from 'jszip';
 
 export default createStore({
   state: {
@@ -160,21 +161,26 @@ export default createStore({
       },
       // import axios from 'axios';
 
-      async downloadUsersByFirm({ state, commit }, payload) {
+
+      async downloadExcelByUrl({ state, commit }, payloads) {
           try {
-              const response = await api.get(`${baseUrl}users/firm/export/${payload.id}/excel`, {
-                  responseType: 'blob',
-              });
+              const zip = new JSZip();
 
-              // Create a new Blob object using the response data
-              const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+              for (const payload of payloads) {
+                  const response = await api.get(`${baseUrl}${payload.url}/firm/export/${payload.id}/excel`, {
+                      responseType: 'blob',
+                  });
 
-              // Create a link element
+                  const fileName = `${payload.url}_${payload.id}.xlsx`;
+                  zip.file(fileName, response.data);
+              }
+
+              const zipBlob = await zip.generateAsync({ type: 'blob' });
+
+              // Create a link element for the zipped file
               const link = document.createElement('a');
-
-              // Set the download attribute with a filename
-              link.href = URL.createObjectURL(blob);
-              link.download = `users_${payload.id}.xlsx`;
+              link.href = URL.createObjectURL(zipBlob);
+              link.download = `exported_files.zip`;
 
               // Append the link to the body
               document.body.appendChild(link);
@@ -185,9 +191,10 @@ export default createStore({
               // Remove the link from the document
               document.body.removeChild(link);
           } catch (error) {
-              console.error('Error downloading the file:', error);
+              console.error('Error downloading the files:', error);
           }
       },
+
 
 },
   mutations:{
