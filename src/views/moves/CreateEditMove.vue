@@ -229,7 +229,6 @@
           </el-form-item>
 
         </div>
-
         <!--            <el-input-->
         <div class="flex w-full ">
           <el-button
@@ -256,13 +255,14 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, watch } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import {ElNotification, FormInstance, FormRules} from "element-plus";
 import store from "@/store";
 import router from "@/router"
 import {House, Location} from "@element-plus/icons-vue";
 import BaseDialog from "@/components/base/BaseDialog.vue";
 import BaseLoader from "@/components/base/BaseLoader.vue";
+import { useRoute } from "vue-router";
 const loading = ref(false);
 const form = reactive({
   });
@@ -279,19 +279,37 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, fields) => {
     console.log(fields,'fields')
     if (valid) {
-      store
-          .dispatch("postData", {
-            url: "moves",
-            data: form
-          })
-          .then((resp) => {
-            registerLoading.value = false;
-            router.go(-1)
-          })
-          .catch((err)=>{
-            registerLoading.value = false;
-          })
-      ;
+      if (route.name !== 'edit-move'){
+        store
+            .dispatch("postData", {
+              url: "moves",
+              data: form
+            })
+            .then((resp) => {
+              registerLoading.value = false;
+              router.go(-1)
+            })
+            .catch((err)=>{
+              registerLoading.value = false;
+            })
+        ;
+      }else {
+        store
+            .dispatch("putData", {
+              url: "moves",
+              data: form,
+              id:route.params.id
+            })
+            .then((resp) => {
+              registerLoading.value = false;
+              router.go(-1)
+            })
+            .catch((err)=>{
+              registerLoading.value = false;
+            })
+        ;
+      }
+
     } else {
       registerLoading.value = false;
       ElNotification({
@@ -371,8 +389,23 @@ const fetchSalesRep = ()=>{
       })
 }
 
-// watch(form.value?.branch, fetchSalesRep, { immediate: true });
+const route = useRoute()
 
+const getMoves = () => {
+  fetchBranches()
+  if (route.name === 'edit-move') {
+    store.dispatch('fetchSingleItem', { url: 'moves', id: route.params.id }).then((res) => {
+      Object.assign(form, res.data);
+      delete form.sales_representative.sales_representative;
+      form.sales_representative = res.data.sales_representative.id;
+    });
+  }
+}
+
+// watch(form.value?.branch, fetchSalesRep, { immediate: true });
+onMounted(()=>{
+  getMoves()
+})
 
 </script>
 

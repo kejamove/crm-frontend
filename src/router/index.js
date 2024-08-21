@@ -239,7 +239,15 @@ const routes = [
             meta: {
               slug: 'Register Moves',
             }
-          }
+          },
+          {
+            name:'edit-move',
+            path:'edit-move/:id',
+            component: CreateEditMove,
+            meta: {
+              slug: 'Edit Moves',
+            }
+          },
         ]
       },
       {

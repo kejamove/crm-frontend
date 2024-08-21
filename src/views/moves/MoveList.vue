@@ -17,6 +17,10 @@ const fetchUrl = firmUrl ? `firms/${firmUrl}/branches` : `firms/${loggedInUserFi
 // return by firm if we are not on branch-list url , else check if user is super admin else just fetch by id
 const newFetchUrl = routeName === 'branches' ? (userType === 'super_admin' ? `branches` : fetchUrl) : fetchUrl
 
+const editMove  = (id)=>{
+  router.push({name:'edit-moves',params:{id:id}})
+}
+
 
 const columns = ref([
   {
@@ -94,7 +98,9 @@ const deleteMove =  (id)=> {
             </template>
           </ElButton>
 
-          <ElButton type="primary" size="default" plain>
+          <ElButton type="primary"
+                    @click="goTo('edit-move', slotProps.text?.id)"
+                    size="default" plain>
             <template #icon>
               <EditPen class="h-fit"/>
             </template>
