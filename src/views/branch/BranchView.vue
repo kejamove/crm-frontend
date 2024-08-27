@@ -59,10 +59,9 @@ watch(activeTab, (newVal, oldVal) => {
 
 
 const openAprropriateTabOnMount = ()=>{
-  console.log('sss')
   if (userType === 'super_admin' || userType === 'firm_owner' || userType === 'branch_manager' ) {
     activeTab.value = 'branch-employees';
-    router.push({name:'branch-employees'})
+    router.push({name:'branch-employees'});
   }
 }
 
