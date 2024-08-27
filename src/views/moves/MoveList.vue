@@ -34,11 +34,6 @@ const columns = ref([
     key: "corporate_name",
   },
   {
-    title: "Corporate Name",
-    dataIndex: "corporate_name",
-    key: "corporate_name",
-  },
-  {
     title: "Moving From",
     dataIndex: "moving_from",
     key: "moving_from",
