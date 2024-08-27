@@ -7,7 +7,7 @@
     label-position="top"
   >
     <div class="flex gap-2 items-center">
-      <h1 class="font-bold text-2xl text-blue-500">Keja Move</h1>
+      <h1 class="font-bold text-2xl text-[#fc7c04]">Keja Move</h1>
     </div>
 
     <h2 class="font-bold text-gray-400">Sign In</h2>

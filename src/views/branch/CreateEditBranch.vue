@@ -122,6 +122,7 @@ import BaseDialog from "@/components/base/BaseDialog.vue";
 import BaseLoader from "@/components/base/BaseLoader.vue";
 const loading = ref(false);
 const form = reactive({
+  is_active:true
 });
 
 /**

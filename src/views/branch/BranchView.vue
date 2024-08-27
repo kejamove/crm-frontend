@@ -32,16 +32,16 @@ const activeTab = ref('first')
 const branchRoutes = ref([
     {
       id: 1,
-      name: 'branch-analytics',
-      label:'Analytics',
-      roles: ['super_admin', 'firm_owner', 'branch_manager']
-    },
-    {
-      id: 2,
       name: 'branch-employees',
       label:'Employees',
       roles: [ 'firm_owner', 'branch_manager','super_admin']
     },
+   {
+    id: 2,
+    name: 'branch-analytics',
+    label:'Analytics',
+    roles: ['super_admin', 'firm_owner', 'branch_manager']
+  },
 ])
 
 const filteredRoutes = computed(() => {
@@ -61,8 +61,8 @@ watch(activeTab, (newVal, oldVal) => {
 const openAprropriateTabOnMount = ()=>{
   console.log('sss')
   if (userType === 'super_admin' || userType === 'firm_owner' || userType === 'branch_manager' ) {
-    activeTab.value = 'branch-analytics';
-    router.push({name:'branch-analytics'})
+    activeTab.value = 'branch-employees';
+    router.push({name:'branch-employees'})
   }
 }
 
