@@ -116,10 +116,10 @@
             />
           </el-form-item>
 
-          <el-form-item label="Move Notes" prop="notes"
+          <el-form-item label="Move Notes/ Important Advice" prop="notes"
                         :rules="[
             {
-              required: false,
+              required: true,
               message: 'Please input the destination location',
               trigger: 'blur',
               help: 'dddd'
