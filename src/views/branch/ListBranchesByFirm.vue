@@ -14,7 +14,7 @@ const authData = JSON.parse(localStorage.getItem("authData"));
 const loggedInUserFirm = ref(authData?.user?.firm)
 const userType = authData?.user?.user_type
 
-const fetchUrl = `firms/${firmUrl}/branches`
+const fetchUrl = `branches?organization=${firmUrl}`
 
 
 
@@ -28,11 +28,6 @@ const columns = ref([
     title: "Location",
     dataIndex: "location",
     key: "location",
-  },
-  {
-    title: "Registration Number",
-    dataIndex: "registration_number",
-    key: "registration_number",
   },
   {
     title: "Actions",

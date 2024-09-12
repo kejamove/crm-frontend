@@ -31,23 +31,6 @@
           />
         </el-form-item>
 
-        <el-form-item label="Branch Registration Number" prop="registration_number"
-                      :rules="[
-            {
-              required: true,
-              message: 'Please input the branch registration',
-              trigger: 'blur',
-            }
-         ]"
-        >
-          <el-input
-              v-model="form.registration_number"
-              :prefix-icon="Location"
-              placeholder="Branch Location eg Kitisuru Nairobi"
-              size="large"
-          />
-        </el-form-item>
-
         <el-form-item label="Branch Location" prop="location"
                       :rules="[
             {
@@ -65,9 +48,9 @@
           />
         </el-form-item>
 
-        <el-form-item label="Firm" prop="firm_id" class="w-full">
+        <el-form-item label="Firm" prop="organization" class="w-full">
           <el-select
-              v-model="form.firm_id"
+              v-model="form.organization"
               clearable
               @focus="fetchFirms"
               :loading="storeLoading"
@@ -128,14 +111,14 @@ const form = reactive({
 /**
  * To register a branch you need to be a superuser or firm owner
  */
-const userType = JSON.parse(localStorage.getItem("authData"))?.user?.user_type;
+const userType = JSON.parse(localStorage.getItem("authData"))?.user?.role;
 const firmData = ref([]);
 const storeLoading = ref(false);
 const fetchFirms = ()=>{
   storeLoading.value = true;
 
-  if (userType === 'super_admin' || userType === 'firm_owner') {
-    store.dispatch('fetchList', { url:'firms'}).then(res=>{
+  if (userType === 'admin' || userType === 'organization_manager') {
+    store.dispatch('fetchList', { url:'organizations'}).then(res=>{
       firmData.value = res.data;
       branches.value = res.data?.branches;
       storeLoading.value = false;

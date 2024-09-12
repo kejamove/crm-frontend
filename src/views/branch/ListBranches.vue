@@ -29,11 +29,6 @@ const columns = ref([
     key: "location",
   },
   {
-    title: "Registration Number",
-    dataIndex: "registration_number",
-    key: "registration_number",
-  },
-  {
     title: "Actions",
     dataIndex: "",
     key: "actions",

@@ -20,10 +20,9 @@ const fetchStoreData = ()=>{
   storeLoading.value= true
   registeredFirms.value = null
 
-  store.dispatch('fetchList', {url:'firms/count'})
+  store.dispatch('fetchList', {url:'organizations/statistics'})
       .then((resp)=>{
-        console.log(resp.data?.firmCount)
-        registeredFirms.value = resp.data?.firmCount
+        registeredFirms.value = resp.data
         storeLoading.value= false
       })
       .catch(err=>{
@@ -109,29 +108,12 @@ const movesData = ref( [
 const userLoading = ref(false)
 const registeredUsers = ref(null)
 
-const fetchUserData = ()=>{
-  userLoading.value= true
-  registeredUsers.value = null
-
-  store.dispatch('fetchList', {url:'users/count'})
-      .then((resp)=>{
-        registeredUsers.value = resp.data?.userCount
-        userLoading.value= false
-      })
-      .catch(err=>{
-        userLoading.value= false
-      })
-}
-
 onMounted(()=>{
   fetchOnMount()
 })
 
 const fetchOnMount = ()=>{
   fetchStoreData()
-  fetchMoveData()
-  fetchUserData()
-  // fetchLeadData()
 }
 
 watch(() => router.currentRoute, () => {
@@ -141,7 +123,7 @@ watch(() => router.currentRoute, () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-8 h-full w-full pb-4 overflow-y-auto">
+  <div class="flex flex-col gap-4 h-full w-full pb-4 overflow-y-auto">
 <!--    <BaseDialog/>-->
 
     <router-view/>
@@ -154,16 +136,17 @@ watch(() => router.currentRoute, () => {
       <el-button size="large" type="primary" :icon="Plus">Invoice(s)</el-button>
     </div>
 
+
 <!--    Cards-->
-    <div class="flex flex-wrap gap-x-4 gap-y-4 items-start w-full md:w-full md:mx-auto p-2 md:p-4 rounded-md">
+    <div class="flex flex-wrap gap-x-4 gap-y-4 items-start w-full md:w-full md:mx-auto rounded-md">
 
       <!--      firm   -->
       <DisplayCard
-          :count="registeredFirms"
+          :count="registeredFirms?.organization_count"
           content="firms registered"
           :action-routes="[
-                       {value: 'register-firm', roles:['super_admin'], label:'Register Firm'},
-                       {value: 'partial-list-firm', roles:['super_admin', 'firm_owner'], label:'View Firms'},
+                       {value: 'register-firm', roles:['admin'], label:'Register Firm'},
+                       {value: 'partial-list-firm', roles:['admin', 'organization_owner'], label:'View Firms'},
                        ]"
           text-color="text-green-500"
           bg-color="bg-green-200"
@@ -174,59 +157,14 @@ watch(() => router.currentRoute, () => {
         </template>
       </DisplayCard>
 
-      <!--      moves   -->
-      <DisplayCard
-          :count="registeredMoves"
-          content="moves made"
-          text-color="text-yellow-500" bg-color="bg-yellow-200">
-        <template #icon>
-          <BaseLoader v-if="moveLoading" hide-text/>
-
-          <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-12 w-12">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
-          </svg>
-        </template>
-
-        <template #actions>
-
-          <router-link :to="{name: 'register-firm'}">
-            <el-button :icon="Plus"/>
-          </router-link>
-
-        </template>
-      </DisplayCard>
-
-      <!--      leads   -->
-      <DisplayCard
-          :count="registeredLeads?.data"
-          class="hidden"
-          content="possible Leads"
-          text-color="text-blue-500" bg-color="bg-blue-200">
-        <template #icon>
-          <BaseLoader v-if="leadLoading" hide-text/>
-
-          <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-12 w-12">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75" />
-          </svg>
-        </template>
-
-        <template #actions>
-
-          <router-link :to="{name: 'register-firm'}">
-            <el-button :icon="Plus"/>
-          </router-link>
-
-        </template>
-      </DisplayCard>
-
       <!--      users   -->
       <DisplayCard text-color="text-purple-500"
                    content="system users"
-                   :count="registeredUsers"
+                   :count="registeredFirms?.user_count"
                    :loading="storeLoading"
                    :action-routes="[
-                       {value: 'partial-user-registration', roles:['super_admin', 'firm_owner'], label:'Register User'},
-                       {value: 'employees', roles:['super_admin', 'firm_owner'], label:'View Users'}
+                       {value: 'partial-user-registration', roles:['admin', 'organization_manager'], label:'Register User'},
+                       {value: 'employees', roles:['admin', 'organization_manager'], label:'View Users'}
                        ]"
                    bg-color="bg-purple-200" show-actions>
         <template #icon>

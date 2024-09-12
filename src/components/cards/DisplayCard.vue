@@ -40,7 +40,7 @@ const props = defineProps({
   },
 })
 
-const userType = JSON.parse(localStorage.getItem("authData"))?.user?.user_type;
+const userType = JSON.parse(localStorage.getItem("authData"))?.user?.role;
 
 // Compute the allowed roles based on userType and props.allowedRoles
 const computedAllowedRoles = computed(() => {
