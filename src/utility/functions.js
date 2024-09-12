@@ -22,87 +22,49 @@ export function raiseError (text)
 export function raiseServerError(err) {
     if (err && err.response && err.response.data) {
         if (err.response.data.errors) {
-            // ValidationException
+            // Handle the specific error structure you provided
             const errors = err.response.data.errors;
-            let errorMessages = [];
             if (Array.isArray(errors)) {
-                // errors is an array
-                errors.forEach((fieldErrors, index) => {
-                    fieldErrors.forEach((message, errorIndex) => {
-                        setTimeout(()=>{
-                            ElNotification({
-                                title: 'Error',
-                                type: "error",
-                                position: "top-right",
-                                message: message,
-                            })
-                        },1000)
-
-
-                    });
-                });
-            } else if (typeof errors === 'object') {
-                // errors is an object
-                Object.keys(errors).forEach((field, index) => {
-                    errors[field].forEach((message, errorIndex) => {
-                        setTimeout(()=>{
-                            ElNotification({
-                                title: 'Error',
-                                type: "error",
-                                position: "top-right",
-                                message: message,
-                            })
-                        },1000)
-
-                        // errorMessages.push(`${index + 1}.${errorIndex + 1}: ${message}`);
-                    });
+                errors.forEach((error, index) => {
+                    setTimeout(() => {
+                        ElNotification({
+                            title: 'Error',
+                            type: "error",
+                            position: "top-right",
+                            message: error.detail || 'An unexpected error occurred',
+                        });
+                    }, index * 100); // Stagger notifications slightly
                 });
             } else {
-                // errors is neither an array nor an object
                 ElNotification({
                     title: 'Error',
                     type: "error",
                     position: "top-right",
-                    message: 'An Unexpected error occurred',
-                })
+                    message: 'An unexpected error occurred',
+                });
             }
-
-
-        } else if (err.response.data.message && err.response.data.error) {
+        } else if (err.response.data.message) {
             ElNotification({
                 title: 'Error',
-                type: "error",
-                position: "top-right",
-                message: err.response.data.error,
-            })
-        }  else if (err.response.data.message ) {
-
-            ElNotification({
-                title: err.response.data.message,
                 type: "error",
                 position: "top-right",
                 message: err.response.data.message,
-            })
-        }
-        else {
-
+            });
+        } else {
             ElNotification({
                 title: 'Error',
                 type: "error",
                 position: "top-right",
-                message: 'An Unexpected error occurred',
-            })
-
+                message: 'An unexpected error occurred',
+            });
         }
     } else {
-
         ElNotification({
             title: 'Error',
             type: "error",
             position: "top-right",
-            message: err
-        })
-
+            message: err.message || 'An unexpected error occurred',
+        });
     }
 }
 

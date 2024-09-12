@@ -282,15 +282,18 @@ const validatePassword = (rule: any, value: any, callback: any) => {
 const validatePhoneNumber = (rule, value, callback) => {
   const phoneNumberPattern = /^[0-9]+$/; // Regular expression to match only digits
 
-  if (value.length < 7) {
-    callback(new Error('Phone number must be at least 7 characters'));
-  } else if (value.length > 11) {
-    callback(new Error('Phone number must be no more than 11 characters'));
-  } else if (!phoneNumberPattern.test(value)) {
-    callback(new Error('Phone number must contain only digits'));
-  } else {
-    callback();
+  if (value){
+    if (value.length < 7) {
+      callback(new Error('Phone number must be at least 7 characters'));
+    } else if (value.length > 11) {
+      callback(new Error('Phone number must be no more than 11 characters'));
+    } else if (!phoneNumberPattern.test(value)) {
+      callback(new Error('Phone number must contain only digits'));
+    } else {
+      callback();
+    }
   }
+
 };
 
 const registeredStores = ref([])

@@ -2,7 +2,7 @@
 
 import {DataAnalysis, HomeFilled, Setting, UserFilled} from "@element-plus/icons-vue";
 
-const userType = JSON.parse(localStorage.getItem("authData"))?.user?.user_type;
+const userType = JSON.parse(localStorage.getItem("authData"))?.user?.role;
 const user = JSON.parse(localStorage.getItem("authData"))?.user;
 // const branch = JSON.parse(localStorage.getItem("authData"))?.user?.branch;
 const branch = user?.branch;
@@ -12,7 +12,7 @@ const branchUrl = 'branch-view'
 
 <template>
   <el-menu-item
-      v-if="userType ==='super_admin' || userType === 'firm_owner'"
+      v-if="userType ==='admin' || userType === 'organization_manager'"
       index="welcome">
     <el-icon>
       <data-analysis/>
@@ -21,7 +21,7 @@ const branchUrl = 'branch-view'
   </el-menu-item>
 
   <el-sub-menu
-      v-if="userType ==='super_admin' || userType === 'firm_owner'"
+      v-if="userType ==='admin' || userType === 'organization_manager'"
       index="sub-1">
     <template #title>
       <el-icon>
@@ -33,7 +33,7 @@ const branchUrl = 'branch-view'
     </template>
 
     <el-menu-item-group
-        v-if="userType !== 'firm_owner'"
+        v-if="userType !== 'organization_manager'"
         title="Firms">
       <el-menu-item index="firm-list">
         <el-icon>
@@ -88,7 +88,7 @@ const branchUrl = 'branch-view'
   </el-menu-item>
 
   <el-menu-item
-      v-if="userType === 'firm_owner' || userType === 'super_admin' || userType === 'branch_manager'"
+      v-if="userType === 'organization_manager' || userType === 'admin' || userType === 'branch_manager'"
       index="employees" >
     <el-icon>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -96,7 +96,7 @@ const branchUrl = 'branch-view'
       </svg>
     </el-icon>
     <template #title>
-      <span v-if="userType === 'super_admin'">
+      <span v-if="userType === 'admin'">
         System Users
       </span>
       <span v-else> Employees</span>

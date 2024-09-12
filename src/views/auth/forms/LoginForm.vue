@@ -83,10 +83,11 @@ const loginLoading = ref(false);
 
 const ruleFormRef = ref<FormInstance>();
 const rules = reactive<FormRules>({
-  username:{
+  email:{
     required: true,
     trigger: "blur",
-    message: "Please enter username",
+    message: "Please enter email",
+    type:"email"
   },
   password: {
     required: true,
@@ -101,7 +102,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       store
         .dispatch("postData", {
-          url: "users/login",
+          url: "users/token",
           data: form
         })
         .then((resp) => {
@@ -115,9 +116,12 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           const user = resp.data?.user;
 
 
-          if (user.user_type == 'sales_person' || user.user_type == 'marketing_person' || user.user_type == 'project_manager' && user.branch_id !== null) {
-            router.push({name: 'moves'});
-          }else if (user.user_type == 'sales_person' || user.user_type == 'marketing_person' || user.user_type == 'project_manager' && user.branch_id == null) {
+          if (user.role == 'sales_person' ||
+              user.role == 'marketing_person'  && user.branch_id !== null) {
+                console.log("user", user)
+                router.push({name: 'moves'});
+          }else if (user.role == 'sales_person' ||
+              user.role == 'marketing_person' && user.branch_id == null) {
 
             ElNotification({
               title: 'Error',
@@ -127,8 +131,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             })
           }
 
-          if (user.user_type == 'super_admin' || user.user_type == 'firm_owner') {
-            if (user.user_type == 'firm_owner' && user.firm_id == null) {
+          if (user.role == 'admin' || user.user_type == 'organization_manager') {
+            if (user.role == 'organization_manager' && user.organization == null) {
               ElNotification({
                 title: 'Error',
                 type: "error",
@@ -142,11 +146,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             router.push({name: 'welcome'});
           }
 
-          if (user.user_type == 'branch_manager' && user.branch_id !== null) {
+          if (user.role == 'branch_manager' && user.branch_id !== null) {
             router.push({name: 'branch-view', params: {
               id: user?.branch_id}});
           }
-          else if (user.user_type == 'branch_manager' && user.branch_id == null){
+          else if (user.role == 'branch_manager' && user.branch_id == null){
             ElNotification({
               title: 'Error',
               type: "error",

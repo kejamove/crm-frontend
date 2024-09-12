@@ -1,4 +1,3 @@
-// export const baseUrl = "http://localhost:8000/api/"
 export const baseUrl = "https://kejacrm-api-0d785412ff3f.herokuapp.com/api/"
 
 export const headers = {

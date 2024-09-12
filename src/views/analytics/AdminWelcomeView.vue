@@ -147,7 +147,7 @@ watch(() => router.currentRoute, () => {
     <router-view/>
 
     <h1 class="font-bold text-2xl my-2">
-      Hello, {{activeUser.first_name}}
+      Hello, {{activeUser?.first_name}}
     </h1>
 
     <div class="flex flex-wrap gap-4 hidden">
