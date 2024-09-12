@@ -67,10 +67,10 @@
               type="password"
           />
         </el-form-item>
-        <el-form-item label="User Type" prop="user_type" class="w-full">
+        <el-form-item label="User Type" prop="role" class="w-full">
           <el-select
               clearable
-              v-model="form.user_type"
+              v-model="form.role"
               placeholder="Select"
               size="large"
           >
@@ -82,7 +82,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="Phone Number" prop="phone_local_number" class="w-full"
+        <el-form-item label="Phone Number" prop="phone_number" class="w-full"
                       :rules="[
               {
                 required: true,
@@ -95,14 +95,14 @@
           ]"
         >
           <el-input
-              v-model="form.phone_local_number"
+              v-model="form.phone_number"
               style="max-width: 600px"
               placeholder="Please input phone number"
               class="input-with-select"
               type="number"
           >
             <template #prepend>
-              <el-select v-model="form.phone_country_code"
+              <el-select v-model="form.country_code"
                          placeholder="Country Code" style="width: 60px">
                 <el-option label="+254" value="+254" />
                 <el-option label="+255" value="+255" />
@@ -110,14 +110,14 @@
             </template>
           </el-input>
         </el-form-item>
-        <el-form-item label="Firm" prop="firm_id" class="w-full">
+        <el-form-item label="Organization" prop="organization" class="w-full">
           <el-select
-              v-model="form.firm_id"
+              v-model="form.organization"
               clearable
               @focus="fetchStores"
               @change="clearBranch"
               :loading="storeLoading"
-              placeholder="Firm To Which a user belongs"
+              placeholder="Organization To Which a user belongs"
               size="large"
           >
             <template #loading>
@@ -230,7 +230,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
       if (route.name == 'edit-user') {
         // console.log(form.value.firm_id.value, 'form')
-        let payload = {...form, branch_id:form.value.branch_id}
+        let payload = {...form.value, branch_id:form.value.branch_id}
         console.log(form.value.branch_id, 'payload')
 
 
@@ -249,15 +249,15 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
 const user_types = [
   {
-    value: 'super_admin',
+    value: 'admin',
     label: 'Super Admin',
   },
   {
     value: 'branch_manager',
     label: 'Branch Manager',
   },{
-    value: 'firm_owner',
-    label: 'Firm Owner',
+    value: 'organization_manager',
+    label: 'Organization Owner',
   },
   {
     value: 'sales_person',
@@ -303,8 +303,9 @@ const fetchStores = ()=>{
   storeLoading.value= true
   registeredStores.value = []
 
-  store.dispatch('fetchList', {url:'firms'})
+  store.dispatch('fetchList', {url:'organizations'})
       .then((resp)=>{
+        console.log("resp", resp.data)
         resp.data.map((store)=>{
           registeredStores.value.push({
             'label': store.name,
@@ -325,7 +326,7 @@ const fetchBranches = ()=>{
   branchLoading.value= true
   registeredBranches.value = []
 
-  let newUrl = `firms/${form.value?.firm_id}/branches`
+  let newUrl = `firms/${form.value?.organization}/branches`
 
   if (route.name == 'edit-user') {
     // console.log(form.value?.firm_id?.value)
@@ -346,11 +347,12 @@ const fetchBranches = ()=>{
 
 const fetchOnMount = ()=>{
   if (route.name == 'edit-user') {
+    fetchStores()
     store.dispatch('fetchSingleItem', {url:`users`, id:route?.params?.id}).then((res)=>{
       // fill firm Data
       if (res.data?.firm_id) {
-        store.dispatch('fetchSingleItem', {url:`firms`, id: res?.data.firm_id}).then((resp)=>{
-          form.value.firm_id = {value: resp.data.id, label:resp.data?.name}
+        store.dispatch('fetchSingleItem', {url:`firms`, id: res?.data.organization}).then((resp)=>{
+          form.value.organization = {value: resp.data.id, label:resp.data?.name}
         })
       }
 
