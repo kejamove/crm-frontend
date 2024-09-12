@@ -24,6 +24,11 @@ const fetchStoreData = ()=>{
       .then((resp)=>{
         registeredFirms.value = resp.data
         storeLoading.value= false
+
+        movesData.value = resp.data.move_trend.map(item => ({
+          month: parseInt(item.month.split('-')[1], 10),
+          count: item.total_moves
+        }));
       })
       .catch(err=>{
         storeLoading.value= false
@@ -90,18 +95,6 @@ const fetchLeadData = ()=>{
 }
 
 const movesData = ref( [
-  { "month": 1, "count": 15 },
-  { "month": 2, "count": 20 },
-  { "month": 3, "count": 25 },
-  { "month": 4, "count": 0 },
-  { "month": 5, "count": 10 },
-  { "month": 6, "count": 5 },
-  { "month": 7, "count": 30 },
-  { "month": 8, "count": 0 },
-  { "month": 9, "count": 12 },
-  { "month": 10, "count": 18 },
-  { "month": 11, "count": 22 },
-  { "month": 12, "count": 30 }
 ])
 
 // USERS
@@ -175,7 +168,9 @@ watch(() => router.currentRoute, () => {
 
     </div>
 
-    <h1 class="text-lg font-semibold hidden">Moves Per Month</h1>
+    <div class="w-full h-fit">
+      <GrowthChart :chartData="movesData" class="md-w-[400px] h-fit"/>
+    </div>
 
     <div class="flex flex-col gap-4 h-full w-full pr-4">
 

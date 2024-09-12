@@ -1,89 +1,101 @@
 <template>
-  <div>
-    <canvas ref="chart" class="h-[400px] chart"></canvas>
+  <div class="chart-container">
+    <canvas ref="chartCanvas"></canvas>
   </div>
 </template>
 
-<script>
-import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
-import { Chart, registerables } from 'chart.js';
+<script setup>
+import {ref, onMounted, watch} from 'vue';
+import {Chart, BarController, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend} from 'chart.js';
 
-export default {
-  props: ['chartData'],
-  setup(props) {
-    const chart = ref(null);
+// Register the necessary components and scales for a bar chart
+Chart.register(BarController, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
 
-    const renderChart = () => {
-      const ctx = chart.value.getContext('2d');
-      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-      const chartData = {
-        labels: props.chartData.map(data => monthNames[data.month - 1]),
-        datasets: [{
-          label: 'Moves Per Month',
-          data: props.chartData.map(data => data.count),
-          borderColor: 'rgb(75, 192, 192)',
+const props = defineProps({
+  chartData: Array
+});
+
+const chartCanvas = ref(null);
+let chartInstance = null;
+
+const setupChart = () => {
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
+
+  const labels = props.chartData.map(item => `Month ${item.month}`);
+  const data = props.chartData.map(item => item.count);
+
+  chartInstance = new Chart(chartCanvas.value, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Total Moves',
+          data: data,
           backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          tension: 0.5,
-          fill: true,
-        }],
-      };
-      const options = {
-        scales: {
-          y: {
-            type: 'linear', // Ensure the scale type is set to 'linear'
-            beginAtZero: true
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Moves Trend'
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return `Moves: ${context.raw}`;
+            }
           }
         }
-      };
-
-      if (chart.value && chart.value.chart) {
-        chart.value.chart.destroy();
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Month'
+          },
+          ticks: {
+            maxRotation: 45, // Rotate labels for better fit
+            minRotation: 45
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'Total Moves'
+          },
+          beginAtZero: true
+        }
       }
-
-      Chart.register(...registerables);
-
-      chart.value = new Chart(ctx, {
-        type: 'line',
-        data: chartData,
-        options: options,
-        plugins: registerables
-      });
-    };
-
-    onMounted(() => {
-      renderChart();
-    });
-
-    onBeforeUnmount(() => {
-      if (chart.value && chart.value.chart) {
-        chart.value.chart.destroy();
-      }
-    });
-
-    watch(() => props.chartData, () => {
-      renderChart();
-    });
-
-    return { chart };
-  }
+    }
+  });
 };
+
+onMounted(() => {
+  setupChart();
+});
+
+watch(() => props.chartData, () => {
+  setupChart();
+});
 </script>
 
 <style scoped>
-/* Add your styles here if needed */
-/* Default styling for the canvas */
-.chart {
-  width: 100%;
-  height: 100%;
+.chart-container {
+  position: relative;
+  height: 510px; /* Adjust height as needed */
+  width: 100%; /* Adjust width as needed */
 }
 
-/* Media query for large screens */
-@media only screen and (min-width: 800px) {
-  .chart {
-    display: block;
-    width: 80%;
-    height: 80%;
-  }
+canvas {
+  width: 100% !important; /* Ensure canvas width fits container */
+  height: 100% !important; /* Ensure canvas height fits container */
 }
-
 </style>
