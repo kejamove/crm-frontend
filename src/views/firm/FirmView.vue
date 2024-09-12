@@ -11,7 +11,7 @@ import ListBranchesByFirm from "@/views/branch/ListBranchesByFirm.vue";
 
 const getFirmById = () => {
   let id = router?.currentRoute?._value?.params?.id;
-  store.dispatch('fetchSingleItem', {id: id, url:'firms'}).then(res=>{
+  store.dispatch('fetchSingleItem', {id: id, url:'organizations'}).then(res=>{
     firmData.value = res.data;
     branches.value = res.data?.branches;
   })

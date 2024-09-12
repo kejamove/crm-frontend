@@ -72,7 +72,7 @@ const downloadDataLoading = ref(false)
 
   <BaseDataTable
       :columns="columns"
-      fetch-url="firms"
+      fetch-url="organizations"
       createRouteName="create-firm"
       title="Firms">
 
