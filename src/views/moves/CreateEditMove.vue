@@ -62,6 +62,21 @@
                 type="email"
             />
           </el-form-item>
+          <el-form-item label="Client Phone Number" prop="client_phone_number"
+                        :rules="[
+            {
+              required: true,
+              message: 'Please input a valid phone number',
+              trigger: 'blur',
+            }
+         ]"
+          >
+            <el-input
+                v-model="form.client_phone_number"
+                placeholder="client email"
+                size="large"
+            />
+          </el-form-item>
 
           <el-form-item label="Relocating From" prop="moving_from"
                         :rules="[
@@ -120,7 +135,7 @@
                         :rules="[
             {
               required: true,
-              message: 'Please input the destination location',
+              message: 'Please input the notes',
               trigger: 'blur',
               help: 'dddd'
             }
@@ -128,6 +143,23 @@
           >
             <el-input
                 v-model="form.notes"
+                placeholder="Move notes"
+                type="textarea"
+                size="large"
+            />
+          </el-form-item>
+          <el-form-item label="Move Remarks" prop="remarks"
+                        :rules="[
+            {
+              required: true,
+              message: 'Please input your remarks',
+              trigger: 'blur',
+              help: 'dddd'
+            }
+         ]"
+          >
+            <el-input
+                v-model="form.remarks"
                 placeholder="Move notes"
                 type="textarea"
                 size="large"
@@ -171,37 +203,37 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="Branch" prop="branch_id"
-                        :rules="[
-            {
-              required: true,
-              message: 'Please input the Branch',
-              trigger: 'blur',
-            }
-         ]"
-          >
-            <el-select
-                v-model="form.branch_id"
-                placeholder="branch"
-                @focus="fetchBranches"
-                @change="fetchSalesRep"
-                :loading="branchLoading"
-                size="large"
-            >
-              <template #loading>
-                <BaseLoader/>
-              </template>
-              <el-option
-                  v-for="item in registeredBranches"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-              />
-            </el-select>
-          </el-form-item>
+<!--          <el-form-item label="Branch" prop="branch"-->
+<!--                        :rules="[-->
+<!--            {-->
+<!--              required: true,-->
+<!--              message: 'Please input the Branch',-->
+<!--              trigger: 'blur',-->
+<!--            }-->
+<!--         ]"-->
+<!--          >-->
+<!--            <el-select-->
+<!--                v-model="form.branch"-->
+<!--                placeholder="branch"-->
+<!--                @focus="fetchBranches"-->
+<!--                @change="fetchSalesRep"-->
+<!--                :loading="branchLoading"-->
+<!--                size="large"-->
+<!--            >-->
+<!--              <template #loading>-->
+<!--                <BaseLoader/>-->
+<!--              </template>-->
+<!--              <el-option-->
+<!--                  v-for="item in registeredBranches"-->
+<!--                  :key="item.value"-->
+<!--                  :label="item.label"-->
+<!--                  :value="item.value"-->
+<!--              />-->
+<!--            </el-select>-->
+<!--          </el-form-item>-->
 
           <el-form-item label="Sales Representative" prop="sales_representative"
-                        v-if="registeredSalesReps.length > 0"
+                        v-if="userType === 'admin' || userType === 'branch_manager'"
                         :rules="[
                           {
                             required: true,
@@ -212,6 +244,7 @@
           >
             <el-select
                 v-model="form.sales_representative"
+                @focus="fetchSalesRep"
                 :loading="salesRepLoading"
                 placeholder="contacted"
                 size="large"
@@ -264,6 +297,7 @@ import BaseDialog from "@/components/base/BaseDialog.vue";
 import BaseLoader from "@/components/base/BaseLoader.vue";
 import { useRoute } from "vue-router";
 const loading = ref(false);
+const userType = JSON.parse(localStorage.getItem("authData"))?.user?.role;
 const form = reactive({
   });
 
@@ -373,9 +407,8 @@ const fetchSalesRep = ()=>{
   salesRepLoading.value= true
   registeredSalesReps.value = []
 
-  store.dispatch('fetchSingleItem', {url:'users/branch', id: form.branch_id})
+  store.dispatch('fetchList', {url:`users?branch=${form.branch}`})
       .then((resp)=>{
-        console.log(resp)
         resp.data.map((user)=>{
           registeredSalesReps.value.push({
             'label': `${user.first_name} ${user.last_name}`,

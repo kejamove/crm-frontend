@@ -70,6 +70,11 @@ onMounted(()=>{
           {{moveData?.data?.remarks}}
         </div>
 
+        <div class="w-fit text-2xl font-bold"> Commission Amount </div>
+          <div class="w-fit flex items-center gap-2 flex-wrap ">
+            {{moveData?.data?.commission_amount}}
+          </div>
+
 <!--        {{moveData}}-->
       </div>
 
