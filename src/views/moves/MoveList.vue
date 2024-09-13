@@ -45,8 +45,13 @@ const columns = ref([
   },
   {
     title: "Move Stage",
-    dataIndex: "move_stage",
+    dataIndex: "",
     key: "move_stage",
+  },
+  {
+    title: "Customer Phone Number",
+    dataIndex: "client_phone_number",
+    key: "customer_phone_number",
   },
   {
     title: "Invoiced Amount",
@@ -64,6 +69,23 @@ const goTo = (name, id) => {
   router.push({name: name, params: {id: id}});
 }
 
+const selectedMove = ref('')
+
+const updateMove = (id, value)=>{
+  console.log('called')
+  store.dispatch('patchData', { id: id, url: 'moves', data: {"move_stage":value}});
+}
+
+const move_stages = ref([
+  {label: 'New Lead', value :'new_lead' },
+  {label: 'Contacted', value : 'contacted'},
+  {label: 'Survey Scheduled/ Online Quote Given', value : 'survey_scheduled'},
+  {label: 'Proposal Sent/ Manual Quote Sent', value :'proposal_sent' },
+  {label: 'Negotiations Started', value : 'negotiations_started'},
+  {label: 'Won', value : 'won'},
+  {label: 'Lost', value : 'lost'},
+])
+
 const deleteMove =  (id)=> {
   store.dispatch('deleteData',{id: id, url: 'moves'});
 }
@@ -79,6 +101,24 @@ const deleteMove =  (id)=> {
       createRouteName="create-move"
       title="Moves">
     <template v-slot:bodyCell="slotProps">
+
+      <template v-if="slotProps.column.key === 'move_stage'">
+        <el-select
+            v-model="slotProps.text.move_stage"
+            @change="updateMove(slotProps?.text?.id, slotProps.text.move_stage)"
+            placeholder="contacted"
+            size="large"
+        >
+          <el-option
+              v-for="move in move_stages"
+              :label="move.label" :value="move.value"
+          ></el-option>
+
+        </el-select>
+
+      </template>
+
+
       <template v-if="slotProps.column.key === 'actions'">
         <!--                      {{ slotProps.text }}-->
         <div class="flex">
