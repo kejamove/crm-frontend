@@ -4,6 +4,7 @@ import BaseDataTable from "@/components/base/BaseDataTable.vue";
 import {ref} from "vue"
 import router from "@/router/index.js";
 import store from "@/store/index.js";
+import {formatDate} from "../../utility/functions.js";
 
 const firmUrl = router?.currentRoute?._value?.params?.id
 const routeName = router?.currentRoute?._value?.name
@@ -34,29 +35,14 @@ const columns = ref([
     key: "corporate_name",
   },
   {
-    title: "Moving From",
-    dataIndex: "moving_from",
-    key: "moving_from",
-  },
-  {
-    title: "Moving To",
-    dataIndex: "moving_to",
-    key: "moving_to",
-  },
-  {
     title: "Move Stage",
     dataIndex: "",
     key: "move_stage",
   },
   {
-    title: "Customer Phone Number",
-    dataIndex: "client_phone_number",
-    key: "customer_phone_number",
-  },
-  {
-    title: "Invoiced Amount",
-    dataIndex: "invoiced_amount",
-    key: "invoiced_amount",
+    title: "Expected Move Date",
+    dataIndex: "expected_move_date",
+    key: "expected_move_date",
   },
   {
     title: "Actions",
@@ -69,7 +55,6 @@ const goTo = (name, id) => {
   router.push({name: name, params: {id: id}});
 }
 
-const selectedMove = ref('')
 
 const updateMove = (id, value)=>{
   console.log('called')
@@ -102,9 +87,18 @@ const deleteMove =  (id)=> {
       title="Moves">
     <template v-slot:bodyCell="slotProps">
 
+      <template v-if="slotProps.column.key === 'expected_move_date'">
+        {{formatDate(slotProps.text)}}
+      </template>
+
+      <template v-if="slotProps.column.key === 'confirmed_move_date'">
+        {{formatDate(slotProps.text)}}
+      </template>
+
       <template v-if="slotProps.column.key === 'move_stage'">
         <el-select
             v-model="slotProps.text.move_stage"
+            class="w-[40px]"
             @change="updateMove(slotProps?.text?.id, slotProps.text.move_stage)"
             placeholder="contacted"
             size="large"
@@ -123,6 +117,7 @@ const deleteMove =  (id)=> {
         <!--                      {{ slotProps.text }}-->
         <div class="flex">
           <ElButton type="info"
+                    link
                     @click="goTo('move-view', slotProps.text?.id)"
                     size="default" plain>
             <template #icon>
@@ -134,6 +129,7 @@ const deleteMove =  (id)=> {
           </ElButton>
 
           <ElButton type="primary"
+                    link
                     @click="goTo('edit-move', slotProps.text?.id)"
                     size="default" plain>
             <template #icon>
@@ -151,6 +147,7 @@ const deleteMove =  (id)=> {
           >
             <template #reference>
               <ElButton type="danger"
+                        link
                         size="default" plain>
                 <template #icon>
                   <Delete class="h-fit"/>

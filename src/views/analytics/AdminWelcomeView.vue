@@ -116,7 +116,7 @@ watch(() => router.currentRoute, () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 h-full w-full pb-4 overflow-y-auto">
+  <div class="flex flex-col gap-4 w-full pb-4">
 <!--    <BaseDialog/>-->
 
     <router-view/>

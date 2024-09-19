@@ -68,6 +68,22 @@ export function raiseServerError(err) {
     }
 }
 
+export function formatDate(dateString) {
+    if (!dateString) return '';
+
+    // Convert the date string to a Date object
+    const date = new Date(dateString);
+
+    // Check if the date conversion is valid
+    if (isNaN(date)) return '';
+
+    // Options for formatting the date
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+
+    // Return the formatted date
+    return date.toLocaleDateString(undefined, options);
+}
+
 export function deleteLocalStorageInformation(){
     localStorage.removeItem("authData")
     localStorage.removeItem("userDetails")
