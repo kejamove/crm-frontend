@@ -17,9 +17,9 @@ const columns = ref([
     key: "location",
   },
   {
-    title: "Registration Number",
-    dataIndex: "registration_number",
-    key: "registration_number",
+    title: "Is Active",
+    dataIndex: "is_active",
+    key: "is_active",
   },
   {
     title: "Actions",
@@ -39,7 +39,7 @@ const deleteFirm = async (id) => {
     await downloadFirmData(id);
 
     // Once the data is downloaded, proceed with deleting the firm
-    await store.dispatch('deleteData', { id: id, url: 'firms' });
+    await store.dispatch('deleteData', { id: id, url: 'organizations' });
 
     // Reset any UI-related states if needed
     allowDelete.value = '';
@@ -78,6 +78,20 @@ const downloadDataLoading = ref(false)
 
 
     <template v-slot:bodyCell="slotProps">
+      <template v-if="slotProps.column.key === 'is_active'">
+        <span v-if="slotProps?.text === true" class="text-green-500">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+        </span>
+
+        <span v-if="slotProps?.text === false" class="text-red-500">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+        </span>
+      </template>
+
       <template v-if="slotProps.column.key === 'actions'">
 <!--                      {{ slotProps.text }}-->
 

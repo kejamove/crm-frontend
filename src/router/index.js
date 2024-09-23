@@ -115,7 +115,6 @@ const routes = [
             meta: {
               slug: 'View Firm',
             },
-
           },
           {
             name:'create-firm',

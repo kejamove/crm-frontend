@@ -225,7 +225,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     console.log(fields,'fields')
     if (valid) {
       if (route.name == 'register-user') {
-        pushDataToDatabase('postData','users', form)
+        pushDataToDatabase('postData','users', form.value)
       }
 
       if (route.name == 'edit-user') {

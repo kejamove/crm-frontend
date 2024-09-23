@@ -77,7 +77,7 @@ const performAction = ()=>{
 </script>
 
 <template>
-  <div class="w-full md:w-[340px] px-4 py-4 rounded-lg flex gap-2 items-center bg-white">
+  <div class="w-full md:w-[340px] px-4 py-4 rounded-lg flex gap-2 items-center bg-white shadow-md">
     <div class="h-18 w-18 flex items-center justify-center bg-yellow-50 rounded-full p-2"
          :class="[bgColor ? bgColor : 'bg-gray-100'] , [textColor ? textColor : 'text-gray-100']">
 

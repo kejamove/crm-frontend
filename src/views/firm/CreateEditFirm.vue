@@ -30,6 +30,22 @@
               size="large"
           />
         </el-form-item>
+        <el-form-item label="Firm Website" prop="website"
+                      :rules="[
+            {
+              required: true,
+              message: 'Please input your website link',
+              trigger: 'blur',
+            }
+         ]"
+        >
+          <el-input
+              v-model="form.website"
+              :prefix-icon="Place"
+              placeholder="website"
+              size="large"
+          />
+        </el-form-item>
 
         <el-form-item label="Firm Location" prop="location"
                       :rules="[
@@ -48,7 +64,102 @@
           />
         </el-form-item>
 
-        <!--            <el-input-->
+        <el-button v-if="!showMailConfiguration"
+                   @click="showMailConfiguration = true"
+                   plain
+                   size="large"
+                   class="bg-gray-200">
+          <span class="mr-2">Show Mail Configuration</span>
+
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor" class="size-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
+          </svg>
+        </el-button>
+
+        <el-button v-if="showMailConfiguration"
+                   @click="showMailConfiguration = false"
+                   plain size="large" class="el-icon--right bg-gray-200">
+          <span class="mr-2">Hide Mail Configuration</span>
+
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor" class="size-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+          </svg>
+        </el-button>
+
+        <div v-if="showMailConfiguration" class="grid grid-cols-1 md:grid-cols-2 gap-2 items-center">
+          <el-form-item label="Smtp Server" prop="smtp_server" show-message message="message"
+                        :rules="[]"
+
+          >
+            <el-input
+                v-model="form.smtp_server"
+                :prefix-icon="UserIcon"
+                placeholder="mail.keja.com || gmail.com"
+                size="large"
+                help='Please input your smtp server'
+
+            />
+          </el-form-item>
+          <el-form-item label="Smtp Port" prop="smtp_port"
+                        :rules="[]"
+          >
+            <el-input
+                v-model="form.smtp_port"
+                :prefix-icon="UserIcon"
+                placeholder="465"
+                size="large"
+            />
+          </el-form-item>
+          <el-form-item label="Email" prop="email" show-message message="message"
+                        :rules="[
+            {
+              type: 'email',
+              message: 'input a valid email'
+            }
+         ]"
+
+          >
+            <el-input
+                v-model="form.email"
+                :prefix-icon="UserIcon"
+                placeholder="smtp"
+                size="large"
+
+            />
+          </el-form-item>
+          <el-form-item label="Smtp Username" prop="smtp_username"
+                        :rules="[]"
+          >
+            <el-input
+                v-model="form.smtp_username"
+                :prefix-icon="UserIcon"
+                placeholder="email@keja.com"
+                size="large"
+            />
+          </el-form-item>
+          <el-form-item label="Tls Encryption"  prop="tls"
+                        :rules="[]"
+          >
+            <el-switch @change="validateEncryptionTls" v-model="form.use_tls"></el-switch>
+          </el-form-item>
+          <el-form-item label="Ssl Encryption"  prop="ssl"
+                        :rules="[]"
+          >
+            <el-switch @change="validateEncryptionSSl" v-model="form.use_ssl"></el-switch>
+          </el-form-item>
+          <el-form-item label="Smtp Password" prop="smtp_password"
+                                                 :rules="[]"
+        >
+          <el-input
+              v-model="form.smtp_password"
+              :prefix-icon="UserIcon"
+              placeholder="password"
+              size="large"
+          />
+        </el-form-item>
+        </div>
         <div class="flex w-full ">
           <el-button
               :loading="submitLoading"
@@ -64,8 +175,6 @@
           </el-button>
         </div>
 
-
-
       </el-form>
 
     </template>
@@ -77,7 +186,7 @@
 import { reactive, ref, onMounted, inject } from "vue";
 import {ElNotification, FormInstance, FormRules} from "element-plus";
 import store from "@/store";
-import {House, Location} from "@element-plus/icons-vue";
+import {House, Location, Place} from "@element-plus/icons-vue";
 import BaseDialog from "@/components/base/BaseDialog.vue";
 import {useRoute} from "vue-router"
 const loading = ref(false);
@@ -88,6 +197,26 @@ let form = ref({
 const { pushDataToDatabase, submitLoading } = inject('useLifecycle');
 
 const ruleFormRef = ref<FormInstance>();
+
+const validateEncryptionSSl = () => {
+  if (form.value.use_ssl === true) {
+    form.value.use_tls = false;
+  }if (form.value.use_ssl === false) {
+    form.value.use_tls = true;
+  }
+};
+
+const validateEncryptionTls = () => {
+  if (form.value.use_tls === true) {
+    form.value.use_ssl = false;
+  }if (form.value.use_tls === false) {
+    form.value.use_ssl = true;
+  }
+};
+
+
+
+const showMailConfiguration = ref(false);
 const rules = reactive<FormRules>({
 });
 
@@ -99,12 +228,12 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       if (route.name == 'create-firm')
       {
-        pushDataToDatabase('postData', 'firms', form)
+        pushDataToDatabase('postData', 'organizations', form)
       }
 
       if (route.name == 'edit-firm')
       {
-        pushDataToDatabase('putData', 'firms',form, route?.params?.id)
+        pushDataToDatabase('putData', 'organizations',form, route?.params?.id)
       }
     } else {
       submitLoading.value = false;
@@ -123,12 +252,14 @@ const getFirmData = () => {
   if (route.name == 'edit-firm')
   {
     console.log('rer')
-    store.dispatch("fetchSingleItem", {url: 'firms', id: route?.params?.id}).then(
+    store.dispatch("fetchSingleItem", {url: 'organizations', id: route?.params?.id}).then(
         (res)=>{
-          Object.assign(form.value, {
-            name: res.data?.name,
-            location: res.data?.location
-          });
+
+          if (res.data?.smtp_server){
+            showMailConfiguration.value = true;
+          }
+
+          Object.assign(form.value, {...res.data});
         }
     )
   }

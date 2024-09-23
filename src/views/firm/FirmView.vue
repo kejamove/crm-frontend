@@ -39,11 +39,13 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
   <BaseDialog style="width: 80%">
     <template #content>
       <div class="flex flex-col gap-4">
-        <h1 class="font-bold text-xl">{{firmData?.name}} : <span class="font-light text-gray-500">{{firmData?.location}}</span> </h1>
+        <h1 class="font-bold text-xl">{{firmData?.name}}
+<!--          : <span class="font-light text-gray-500">{{firmData?.location}}</span>-->
+        </h1>
 
 
         <div class="flex items-center gap-2 flex-wrap">
-          <el-tag type="info" size="large" class="w-fit"> {{firmData?.registration_number}}</el-tag>
+          <el-tag type="info" size="large" class="w-fit"> {{firmData?.location}}</el-tag>
         </div>
 
         <el-tabs
@@ -52,9 +54,6 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
             class="demo-tabs"
             @tab-click="handleClick"
         >
-          <el-tab-pane label="Mail Configuration" name="first">
-            <MailSetup/>
-          </el-tab-pane>
           <el-tab-pane label="Branches" name="second">
             <ListBranchesByFirm/>
           </el-tab-pane>

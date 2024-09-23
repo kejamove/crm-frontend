@@ -1,18 +1,21 @@
 <template>
-  <el-form
-      ref="ruleFormRef"
-      :model="form"
-      :rules="rules"
-      class="w-full flex flex-col gap-4 h-full"
-      label-position="top"
-  >
-    <div class="flex gap-2 items-center">
-      <h1 class="font-bold text-2xl text-blue-500">Setup Firm Email</h1>
-    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 items-center">
-      <el-form-item label="Email Host" prop="host" show-message message="message"
-                    :rules="[
+  <el-dialog>
+    <template #default>
+      <el-form
+          ref="ruleFormRef"
+          :model="form"
+          :rules="rules"
+          class="w-full flex flex-col gap-4 h-full"
+          label-position="top"
+      >
+        <div class="flex gap-2 items-center">
+          <h1 class="font-bold text-2xl text-blue-500">Setup Firm Email</h1>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 items-center">
+          <el-form-item label="Email Host" prop="host" show-message message="message"
+                        :rules="[
             {
               required: true,
               message: 'Please input host address',
@@ -20,18 +23,18 @@
             }
          ]"
 
-      >
-        <el-input
-            v-model="form.host"
-            :prefix-icon="UserIcon"
-            placeholder="mail.keja.com"
-            size="large"
-            help='Please enter a valid email address'
+          >
+            <el-input
+                v-model="form.host"
+                :prefix-icon="UserIcon"
+                placeholder="mail.keja.com"
+                size="large"
+                help='Please enter a valid email address'
 
-        />
-      </el-form-item>
-      <el-form-item label="Mailer" prop="mailer" show-message message="message"
-                    :rules="[
+            />
+          </el-form-item>
+          <el-form-item label="Mailer" prop="mailer" show-message message="message"
+                        :rules="[
             {
               required: true,
               message: 'Please input your mailer',
@@ -39,81 +42,81 @@
             }
          ]"
 
-      >
-        <el-input
-            v-model="form.mailer"
-            :prefix-icon="UserIcon"
-            placeholder="smtp"
-            size="large"
+          >
+            <el-input
+                v-model="form.mailer"
+                :prefix-icon="UserIcon"
+                placeholder="smtp"
+                size="large"
 
-        />
-      </el-form-item>
-      <el-form-item label="Port" prop="port"
-                    :rules="[
+            />
+          </el-form-item>
+          <el-form-item label="Port" prop="port"
+                        :rules="[
             {
               required: true,
               message: 'Please input port',
               trigger: 'blur',
             }
          ]"
-      >
-        <el-input
-            v-model="form.port"
-            :prefix-icon="UserIcon"
-            placeholder="465"
-            size="large"
-        />
-      </el-form-item>
-      <el-form-item label="Username" prop="username"
-                    :rules="[
+          >
+            <el-input
+                v-model="form.port"
+                :prefix-icon="UserIcon"
+                placeholder="465"
+                size="large"
+            />
+          </el-form-item>
+          <el-form-item label="Username" prop="username"
+                        :rules="[
             {
               required: true,
               message: 'Please input username',
               trigger: 'blur',
             }
          ]"
-      >
-        <el-input
-            v-model="form.username"
-            :prefix-icon="UserIcon"
-            placeholder="email@keja.com"
-            size="large"
-        />
-      </el-form-item>
-      <el-form-item label="Password" prop="password"
-                    :rules="[
+          >
+            <el-input
+                v-model="form.username"
+                :prefix-icon="UserIcon"
+                placeholder="email@keja.com"
+                size="large"
+            />
+          </el-form-item>
+          <el-form-item label="Password" prop="password"
+                        :rules="[
             {
               required: true,
               message: 'Please input password',
               trigger: 'blur',
             }
          ]"
-      >
-        <el-input
-            v-model="form.password"
-            :prefix-icon="UserIcon"
-            placeholder="password"
-            size="large"
-        />
-      </el-form-item>
-      <el-form-item label="Encryption" prop="encryption"
-                    :rules="[
+          >
+            <el-input
+                v-model="form.password"
+                :prefix-icon="UserIcon"
+                placeholder="password"
+                size="large"
+            />
+          </el-form-item>
+          <el-form-item label="Encryption" prop="encryption"
+                        :rules="[
             {
               required: true,
               message: 'Please input encryption',
               trigger: 'blur',
             }
          ]"
-      >
-        <el-input
-            v-model="form.encryption"
-            :prefix-icon="UserIcon"
-            placeholder="ssl"
-            size="large"
-        />
-      </el-form-item>
-      <el-form-item label="Email" prop="from_address"
-                    :rules="[
+          >
+            <el-input
+                v-model="form.encryption"
+                :prefix-icon="UserIcon"
+                placeholder="ssl"
+                size="large"
+            />
+          </el-form-item>
+          <el-form-item label="Email" prop="from_address"
+                        :rules="[
             {
               required: true,
               message: 'Please input email address',
@@ -125,52 +128,55 @@
               trigger: 'blur',
             },
          ]"
-      >
-        <el-input
-            v-model="form.from_address"
-            :prefix-icon="UserIcon"
-            placeholder="email"
-            size="large"
-        />
-      </el-form-item>
-      <el-form-item label="From Name" prop="from_name"
-                    :rules="[
+          >
+            <el-input
+                v-model="form.from_address"
+                :prefix-icon="UserIcon"
+                placeholder="email"
+                size="large"
+            />
+          </el-form-item>
+          <el-form-item label="From Name" prop="from_name"
+                        :rules="[
             {
               required: true,
               message: 'Please input from name',
               trigger: 'blur',
             },
          ]"
-      >
-        <el-input
-            v-model="form.from_name"
-            :prefix-icon="UserIcon"
-            placeholder="KEJA CRM"
-            size="large"
-        />
-      </el-form-item>
-    </div>
+          >
+            <el-input
+                v-model="form.from_name"
+                :prefix-icon="UserIcon"
+                placeholder="KEJA CRM"
+                size="large"
+            />
+          </el-form-item>
+        </div>
 
-    <div class="flex w-full ">
-      <el-button
-          :loading="loginLoading"
-          class="w-fit "
-          size="large"
-          style="border-radius: 4px"
-          type="primary"
-          @click="submitForm(ruleFormRef)"
-      >
-        <!--                @click="submitForm(loginFormRef)"-->
+        <div class="flex w-full ">
+          <el-button
+              :loading="loginLoading"
+              class="w-fit "
+              size="large"
+              style="border-radius: 4px"
+              type="primary"
+              @click="submitForm(ruleFormRef)"
+          >
+            <!--                @click="submitForm(loginFormRef)"-->
 
-        Submit
-      </el-button>
-    </div>
-    <div class="text-sm hidden">
-      <span class="text-gray-400"> Don't have an Account ? </span>
-      <router-link :to="{name:'register'}" class="text-blue-400 hover:text-blue-500 hover:font-bold"> Register </router-link>
-    </div>
+            Submit
+          </el-button>
+        </div>
+        <div class="text-sm hidden">
+          <span class="text-gray-400"> Don't have an Account ? </span>
+          <router-link :to="{name:'register'}" class="text-blue-400 hover:text-blue-500 hover:font-bold"> Register </router-link>
+        </div>
 
-  </el-form>
+      </el-form>
+    </template>
+  </el-dialog>
+
 
 </template>
 
@@ -209,9 +215,9 @@ const rules = reactive<FormRules>({
  */
 const getMailData = ()=>{
   let id = router?.currentRoute?._value?.params?.id;
-  store.dispatch('fetchList', {url: `list-email-setup?firm=${id}`}).then(res=>{
-    Object.assign(form, res.data[0][0]);
-    if (res.data[0].length > 0) {
+  store.dispatch('fetchSingleItem', {url: 'organizations',id:id}).then(res=>{
+    Object.assign(form, res.data);
+    if (res.data) {
       isEdit.value = true
     }
   })
@@ -270,7 +276,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 };
 
 onMounted(()=>{
-  // getMailData()
+  getMailData()
 })
 
 </script>
