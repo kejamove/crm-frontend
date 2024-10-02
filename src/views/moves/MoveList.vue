@@ -56,9 +56,9 @@ const goTo = (name, id) => {
 }
 
 
-const updateMove = (id, value)=>{
+const updateMove = (id, move_stage, sales_representative)=>{
   console.log('called')
-  store.dispatch('patchData', { id: id, url: 'moves', data: {"move_stage":value}});
+  store.dispatch('patchData', { id: id, url: 'moves', data: {"move_stage":move_stage, 'sales_representative':sales_representative}});
 }
 
 const move_stages = ref([
@@ -99,7 +99,8 @@ const deleteMove =  (id)=> {
         <el-select
             v-model="slotProps.text.move_stage"
             class="w-[40px]"
-            @change="updateMove(slotProps?.text?.id, slotProps.text.move_stage)"
+            @change="updateMove(slotProps?.text?.id, slotProps.text.move_stage,
+            slotProps?.text?.sales_representative)"
             placeholder="contacted"
             size="large"
         >

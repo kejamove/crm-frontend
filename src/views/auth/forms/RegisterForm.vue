@@ -224,8 +224,15 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, fields) => {
     console.log(fields,'fields')
     if (valid) {
-      if (route.name == 'register-user') {
-        pushDataToDatabase('postData','users', form.value)
+      if (route.name == 'register-user' || route.name == 'partial-user-registration') {
+        store.dispatch('postData', {data: form.value,
+            url: 'users'})
+            .then((resp)=>{
+              loading.value = false
+            })
+            .catch((err)=>{
+              loading.value = false
+            })
       }
 
       if (route.name == 'edit-user') {

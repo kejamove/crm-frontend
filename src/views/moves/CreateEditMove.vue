@@ -112,15 +112,32 @@
             />
           </el-form-item>
 
+          <el-form-item label="Expected Move Date" prop="expected_move_date"
+                        :rules="[
+              {
+                  required: true,
+                  message: 'Please select the expected move date',
+                  trigger: 'change',
+              }
+          ]">
+            <el-date-picker
+                v-model="form.expected_move_date"
+                type="date"
+                placeholder="Select date"
+                size="large"
+            ></el-date-picker>
+          </el-form-item>
+
+
           <el-form-item label="Invoiced Amount" prop="invoiced_amount"
                         :rules="[
-            {
-              required: true,
-              message: 'Please input the invoiced amount',
-              trigger: 'blur',
-            }
-         ]"
-          >
+                {
+                  required: true,
+                  message: 'Please input the invoiced amount',
+                  trigger: 'blur',
+                }
+             ]"
+              >
             <el-input-number
                 v-model="form.invoiced_amount"
                 :prefix-icon="Location"
@@ -203,7 +220,9 @@
             </el-select>
           </el-form-item>
 
-<!--          <el-form-item label="Branch" prop="branch"-->
+
+
+          <!--          <el-form-item label="Branch" prop="branch"-->
 <!--                        :rules="[-->
 <!--            {-->
 <!--              required: true,-->
@@ -384,17 +403,17 @@ const fetchBranches = ()=>{
 }
 
 const move_stages = ref([
-  {label: 'new lead', value :'new_lead' },
-  {label: 'contacted', value : 'contacted'},
-  {label: 'proposal', value :'proposal' },
-  {label: 'negotiations started', value : 'negotiations_started'},
-  {label: 'won', value : 'won'},
-  {label: 'lost', value : 'lost'},
+  {label: 'New Lead', value :'new_lead' },
+  {label: 'Contacted', value : 'contacted'},
+  {label: 'Survey Scheduled/ Online Quote Given', value : 'survey_scheduled'},
+  {label: 'Proposal Sent/ Manual Quote Sent', value :'proposal_sent' },
+  {label: 'Negotiations Started', value : 'negotiations_started'},
+  {label: 'Won', value : 'won'},
+  {label: 'Lost', value : 'lost'},
 ])
 
 const lead_sources = ref([
-  {label: 'referral', value :'referral' },
-  {label: 'web', value : 'offline_marketing'},
+  {label: 'website', value : 'website'},
   {label: 'offline marketing', value :'offline_marketing' },
   {label: 'social media', value : 'social_media'},
   {label: 'repeat client', value : 'repeat_client'},
@@ -431,6 +450,7 @@ const getMoves = () => {
       Object.assign(form, res.data);
       delete form.sales_representative.sales_representative;
       form.sales_representative = res.data.sales_representative.id;
+      form.expected_move_date = res.data.expected_move_date;
     });
   }
 }
