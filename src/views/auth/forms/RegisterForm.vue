@@ -131,9 +131,9 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="Branch **Optional" prop="branch" class="w-full" v-if="form.firm_id">
+        <el-form-item label="Branch **Optional" prop="branch" class="w-full" v-if="form.organization">
           <el-select
-              v-model="form.branch_id"
+              v-model="form.branch"
               clearable
               @focus="fetchBranches"
               :loading="branchLoading"
@@ -229,9 +229,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             url: 'users'})
             .then((resp)=>{
               loading.value = false
+              submitLoading.value = false
             })
             .catch((err)=>{
               loading.value = false
+              submitLoading.value = false
             })
       }
 
@@ -333,7 +335,7 @@ const fetchBranches = ()=>{
   branchLoading.value= true
   registeredBranches.value = []
 
-  let newUrl = `firms/${form.value?.organization}/branches`
+  let newUrl = `branches`
 
   if (route.name == 'edit-user') {
     // console.log(form.value?.firm_id?.value)
