@@ -46,7 +46,7 @@ const routes = [
     requiresAuth: true,
     roles: ['admin', 'store_owner'],
     meta: {
-      slug: 'Dashboard',
+      slug: '.',
     },
 
     children : [
