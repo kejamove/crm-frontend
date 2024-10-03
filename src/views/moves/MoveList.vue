@@ -161,7 +161,6 @@ const deleteMove =  (id)=> {
         <!--                      {{ slotProps.text }}-->
         <div class="flex">
           <ElButton type="info"
-                    link
                     @click="goTo('move-view', slotProps.text?.id)"
                     size="default" plain>
             <template #icon>
@@ -173,7 +172,7 @@ const deleteMove =  (id)=> {
           </ElButton>
 
           <ElButton type="info"
-                    link
+
                     @click="sendEmail('invoice', slotProps.text?.id)"
                     size="default" plain>
             <template #icon>
@@ -183,7 +182,7 @@ const deleteMove =  (id)=> {
             </template>
           </ElButton>
           <ElButton type="info"
-                    link
+
                     @click="downloadInvoice('invoice', slotProps.text?.id)"
                     size="default" plain>
             <template #icon>
@@ -194,7 +193,7 @@ const deleteMove =  (id)=> {
           </ElButton>
 
           <ElButton type="primary"
-                    link
+
                     @click="goTo('edit-move', slotProps.text?.id)"
                     size="default" plain>
             <template #icon>
@@ -212,7 +211,7 @@ const deleteMove =  (id)=> {
           >
             <template #reference>
               <ElButton type="danger"
-                        link
+
                         size="default" plain>
                 <template #icon>
                   <Delete class="h-fit"/>
