@@ -70,6 +70,33 @@ const sendEmail = (name, id) => {
   });
   // router.push({name: name, params: {id: id}});
 }
+const downloadInvoice = (name, id) => {
+  store.dispatch('fetchList', {
+    url: `moves/${id}/invoice/download`,
+    data: {},
+    responseType: 'blob'  // Ensure the response is treated as a Blob
+  })
+      .then((response) => {
+        // Create a Blob from the PDF stream response
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+
+        // Create a download link
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `Invoice_${id}.pdf`;  // Set a name for the downloaded PDF
+
+        // Append link to body and trigger download
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up and remove the link
+        document.body.removeChild(link);
+      })
+      .catch((error) => {
+        console.error("Error downloading the invoice:", error);
+      });
+};
+
 
 
 const updateMove = (id, move_stage, sales_representative)=>{
@@ -152,6 +179,16 @@ const deleteMove =  (id)=> {
             <template #icon>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+              </svg>
+            </template>
+          </ElButton>
+          <ElButton type="info"
+                    link
+                    @click="downloadInvoice('invoice', slotProps.text?.id)"
+                    size="default" plain>
+            <template #icon>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
               </svg>
             </template>
           </ElButton>
