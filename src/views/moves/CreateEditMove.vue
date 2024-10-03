@@ -222,37 +222,37 @@
 
 
 
-          <!--          <el-form-item label="Branch" prop="branch"-->
-<!--                        :rules="[-->
-<!--            {-->
-<!--              required: true,-->
-<!--              message: 'Please input the Branch',-->
-<!--              trigger: 'blur',-->
-<!--            }-->
-<!--         ]"-->
-<!--          >-->
-<!--            <el-select-->
-<!--                v-model="form.branch"-->
-<!--                placeholder="branch"-->
-<!--                @focus="fetchBranches"-->
-<!--                @change="fetchSalesRep"-->
-<!--                :loading="branchLoading"-->
-<!--                size="large"-->
-<!--            >-->
-<!--              <template #loading>-->
-<!--                <BaseLoader/>-->
-<!--              </template>-->
-<!--              <el-option-->
-<!--                  v-for="item in registeredBranches"-->
-<!--                  :key="item.value"-->
-<!--                  :label="item.label"-->
-<!--                  :value="item.value"-->
-<!--              />-->
-<!--            </el-select>-->
-<!--          </el-form-item>-->
+          <el-form-item label="Branch" prop="branch"
+              :rules="[
+            {
+              required: true,
+              message: 'Please input the Branch',
+              trigger: 'blur',
+            }
+         ]"
+          >
+            <el-select
+                v-model="form.branch"
+                placeholder="branch"
+                @focus="fetchBranches"
+                @change="fetchSalesRep"
+                :loading="branchLoading"
+                size="large"
+            >
+              <template #loading>
+                <BaseLoader/>
+              </template>
+              <el-option
+                  v-for="item in registeredBranches"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
 
           <el-form-item label="Sales Representative" prop="sales_representative"
-                        v-if="userType === 'admin' || userType === 'branch_manager'"
+                        v-if="userType === 'admin' || userType === 'branch_manager' || userType === 'organization_manager'"
                         :rules="[
                           {
                             required: true,

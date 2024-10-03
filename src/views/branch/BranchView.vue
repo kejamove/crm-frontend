@@ -1,17 +1,9 @@
 <template>
-  <el-tabs
-      v-model="activeTab"
-      type="card"
-      class="demo-tabs"
-      @tab-click="handleClick"
-  >
-    <el-tab-pane v-for="item in filteredRoutes"
-                 :key="item?.id"
-                 :label="item?.label"
-                 :name="item?.name">
-    </el-tab-pane>
-  </el-tabs>
-  <router-view/>
+  <div class="w-full h-full text-4xl flex items-center justify-center">
+    Analytics Coming Soon
+  </div>
+  Analytics
+<!--  <router-view/>-->
 
 </template>
 

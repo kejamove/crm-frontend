@@ -117,11 +117,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
 
           if (user.role == 'sales_person' ||
-              user.role == 'marketing_person'  && user.branch_id !== null) {
+              user.role == 'marketing_person'  && user.branch !== null) {
                 console.log("user", user)
                 router.push({name: 'moves'});
           }else if (user.role == 'sales_person' ||
-              user.role == 'marketing_person' && user.branch_id == null) {
+              user.role == 'marketing_person' && user.branch == null) {
 
             ElNotification({
               title: 'Error',
@@ -131,13 +131,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             })
           }
 
-          if (user.role == 'admin' || user.user_type == 'organization_manager') {
+          if (user.role == 'admin' || user.role == 'organization_manager') {
             if (user.role == 'organization_manager' && user.organization == null) {
               ElNotification({
                 title: 'Error',
                 type: "error",
                 position: "top-right",
-                message: 'No Firm Associated'
+                message: 'No Organization Associated'
               })
 
               return;
@@ -146,11 +146,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             router.push({name: 'welcome'});
           }
 
-          if (user.role == 'branch_manager' && user.branch_id !== null) {
+          if (user.role == 'branch_manager' && user.branch !== null) {
             router.push({name: 'branch-view', params: {
-              id: user?.branch_id}});
+              id: user?.branch}});
           }
-          else if (user.role == 'branch_manager' && user.branch_id == null){
+          else if (user.role == 'branch_manager' && user.branch == null){
             ElNotification({
               title: 'Error',
               type: "error",
