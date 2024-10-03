@@ -5,6 +5,8 @@ import {ref} from "vue"
 import router from "@/router/index.js";
 import store from "@/store/index.js";
 import {formatDate} from "../../utility/functions.js";
+import {ElNotification} from "element-plus";
+
 
 const firmUrl = router?.currentRoute?._value?.params?.id
 const routeName = router?.currentRoute?._value?.name
@@ -53,6 +55,20 @@ const columns = ref([
 
 const goTo = (name, id) => {
   router.push({name: name, params: {id: id}});
+}
+const sendEmail = (name, id) => {
+  store.dispatch('postData', {url:`moves/${id}/send_invoice`, data:{}}).then((res)=>{
+    if (res.data?.success){
+      ElNotification({
+        title: 'Success',
+        type: "success",
+        position: "top-right",
+        message: 'Email Sent Successfully',
+      })
+    }
+
+  });
+  // router.push({name: name, params: {id: id}});
 }
 
 
@@ -125,6 +141,17 @@ const deleteMove =  (id)=> {
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                    stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"/>
+              </svg>
+            </template>
+          </ElButton>
+
+          <ElButton type="info"
+                    link
+                    @click="sendEmail('invoice', slotProps.text?.id)"
+                    size="default" plain>
+            <template #icon>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
               </svg>
             </template>
           </ElButton>
