@@ -13,12 +13,21 @@
           class="w-full flex flex-col gap-4"
           label-position="top"
       >
+        <el-switch
+            v-model="clientType"
+            class="mb-2"
+            active-text="Client"
+            inactive-text="Corporate"
+        />
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-2 items-center">
-          <el-form-item label="Customer Name" prop="consumer_name"
+          <el-form-item
+              v-if="clientType"
+              label="Client Name" prop="consumer_name"
                         :rules="[
             {
               required: true,
-              message: 'Please input a customer name',
+              message: 'Please input a client name',
               trigger: 'blur',
             }
          ]"
@@ -30,7 +39,10 @@
             />
           </el-form-item>
 
-          <el-form-item label="Corporate Name" prop="corporate_name"
+          <el-form-item
+              v-if="!clientType"
+
+              label="Corporate Name" prop="corporate_name"
                         :rules="[
             {
               required: true,
@@ -182,6 +194,22 @@
                 size="large"
             />
           </el-form-item>
+          <el-form-item label="Move Cbm" prop="move_cbm"
+                        :rules="[
+            {
+              required: true,
+              message: 'Please input the move cbm',
+              trigger: 'blur',
+              help: 'dddd'
+            }
+         ]"
+          >
+            <el-input
+                v-model="form.move_cbm"
+                placeholder="Move cbm"
+                size="large"
+            />
+          </el-form-item>
 
           <el-form-item label="Move Stage" prop="move_stage"
                         :rules="[
@@ -320,6 +348,7 @@ const userType = JSON.parse(localStorage.getItem("authData"))?.user?.role;
 const form = reactive({
   });
 
+const clientType = ref(true)
 
 const registerLoading = ref(false);
 
