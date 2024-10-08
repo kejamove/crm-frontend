@@ -167,7 +167,7 @@ export default createStore({
               const zip = new JSZip();
 
               for (const payload of payloads) {
-                  const response = await api.get(`${baseUrl}${payload.url}/firm/export/${payload.id}/excel`, {
+                  const response = await api.get(`${baseUrl}organizations/${payload.id}/download-excel/`, {
                       responseType: 'blob',
                   });
 
