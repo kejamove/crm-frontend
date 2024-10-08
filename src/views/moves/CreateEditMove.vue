@@ -446,6 +446,8 @@ const lead_sources = ref([
   {label: 'offline marketing', value :'offline_marketing' },
   {label: 'social media', value : 'social_media'},
   {label: 'repeat client', value : 'repeat_client'},
+  {label: 'Inbound Call', value : 'inbound_call'},
+  {label: 'Inbound Email', value : 'inbound_email'},
 ])
 
 const registeredSalesReps = ref([])
