@@ -31,14 +31,14 @@
                 </ElButton>
               </router-link>
               <div class="flex items-start gap-4 justify-between font-bold text-gray-800">
-                <ElButton size="large" @click="toggleFilters">
-                  <template #icon v-if="!showFilters">
-                    <FilterOutlined class="h-fit"/>
-                  </template>
-                  <template #icon v-if="showFilters">
-                    <FilterFilled class="h-fit"/>
-                  </template>
-                </ElButton>
+<!--                <ElButton class="hidden" size="large" @click="toggleFilters">-->
+<!--                  <template #icon v-if="!showFilters">-->
+<!--                    <FilterOutlined class="h-fit"/>-->
+<!--                  </template>-->
+<!--                  <template #icon v-if="showFilters">-->
+<!--                    <FilterFilled class="h-fit"/>-->
+<!--                  </template>-->
+<!--                </ElButton>-->
                 <ElButton size="large" @click="refresh">
                   <template #icon>
                     <ReloadOutlined></ReloadOutlined>
