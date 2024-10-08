@@ -7,6 +7,7 @@ import {onMounted, ref, watch} from "vue";
 import BaseLoader from "@/components/base/BaseLoader.vue";
 import {useRouter} from "vue-router";
 import GrowthChart from "@/views/analytics/components/GrowthChart.vue";
+import {userType} from "@/utility/constants.js";
 // import {activeUser, userType} from "@/utility/constants.js"
 
 const activeUser =  JSON.parse(localStorage.getItem("authData"))?.user;
@@ -136,6 +137,7 @@ watch(() => router.currentRoute, () => {
       <!--      firm   -->
       <DisplayCard
           :count="registeredFirms?.organization_count"
+          v-if="userType === 'admin' && userType !== 'organization_manager'"
           content="firms registered"
           :action-routes="[
                        {value: 'register-firm', roles:['admin'], label:'Register Firm'},
