@@ -131,34 +131,6 @@ export default createStore({
           raiseServerError(err);
         }
       },
-      async downloadFirmData({ state, commit }, payload) {
-          try {
-              const response = await api.get(`${baseUrl}${payload.url}/${payload.id}`, {
-                  responseType: 'blob',
-              });
-
-              // Create a new Blob object using the response data
-              const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-
-              // Create a link element
-              const link = document.createElement('a');
-
-              // Set the download attribute with a filename
-              link.href = URL.createObjectURL(blob);
-              link.download = 'firm_data.xlsx';
-
-              // Append the link to the body
-              document.body.appendChild(link);
-
-              // Programmatically click the link to trigger the download
-              link.click();
-
-              // Remove the link from the document
-              document.body.removeChild(link);
-          } catch (error) {
-              console.error('Error downloading the file:', error);
-          }
-      },
       // import axios from 'axios';
 
 
@@ -166,37 +138,28 @@ export default createStore({
           try {
               const zip = new JSZip();
 
-              for (const payload of payloads) {
-                  const response = await api.get(`${baseUrl}organizations/${payload.id}/download-excel/`, {
-                      responseType: 'blob',
-                  });
+              // Iterate over the payloads and download each Excel file
+              // Single Excel file download (no need to zip)
+              const response = await api.get(`${baseUrl}organizations/${payloads[0].id}/download-excel/`, {
+                  responseType: 'blob',
+              });
 
-                  const fileName = `${payload.url}_${payload.id}.xlsx`;
-                  zip.file(fileName, response.data);
-              }
+              const fileName = `organization_${payloads[0].id}.xlsx`;
 
-              const zipBlob = await zip.generateAsync({ type: 'blob' });
-
-              // Create a link element for the zipped file
+              // Create a link for the single file download
               const link = document.createElement('a');
-              link.href = URL.createObjectURL(zipBlob);
-              link.download = `exported_files.zip`;
+              link.href = URL.createObjectURL(response.data);
+              link.download = fileName;
 
-              // Append the link to the body
+              // Append, trigger download, and remove the link element
               document.body.appendChild(link);
-
-              // Programmatically click the link to trigger the download
               link.click();
-
-              // Remove the link from the document
               document.body.removeChild(link);
           } catch (error) {
               console.error('Error downloading the files:', error);
           }
       },
-
-
-},
+  },
   mutations:{
     setSideBarCollapse(state) {
       state.sideBarCollapse = !state.sideBarCollapse
