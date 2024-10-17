@@ -118,6 +118,12 @@ const deleteMove =  (id)=> {
 <template>
   <router-view/>
 
+  <div class="w-[300px] h-[200px] border rounded flex flex-col gap-4 hidden">
+    <div class="py-4 flex justify-between items-center gap-4">
+<!--      todo:: create card-->
+    </div>
+  </div>
+
   <BaseDataTable
       :columns="columns"
       fetch-url="moves"
