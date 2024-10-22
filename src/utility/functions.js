@@ -21,46 +21,65 @@ export function raiseError (text)
 }
 export function raiseServerError(err) {
     if (err && err.response && err.response.data) {
-        if (err.response.data.errors) {
-            // Handle the specific error structure you provided
-            const errors = err.response.data.errors;
-            if (Array.isArray(errors)) {
-                errors.forEach((error, index) => {
+        const data = err.response.data;
+
+        // If the response comes as a stringified error list
+        if (Array.isArray(data) && data.length > 0) {
+            data.forEach((errorStr, index) => {
+                let errorMessage = errorStr;
+
+                try {
+                    const parsedError = errorStr.replace(/'/g, '"');
+                    const errorObj = JSON.parse(parsedError);
+
+                    // Extract the title and message separately
+                    const title = errorObj.error || 'Error';  // Use 'error' as the title
+                    const message = errorObj.detail || 'An unexpected error occurred'; // Use 'detail' for the message
+
                     setTimeout(() => {
                         ElNotification({
-                            title: 'Error',
+                            title: title,
                             type: "error",
                             position: "top-right",
-                            message: error.detail || 'An unexpected error occurred',
+                            message: message.replace(/'/g, ''),
                         });
                     }, index * 100); // Stagger notifications slightly
-                });
-            } else {
-                ElNotification({
-                    title: 'Error',
-                    type: "error",
-                    position: "top-right",
-                    message: 'An unexpected error occurred',
-                });
-            }
-        } else if (err.response.data.message) {
+                } catch (e) {
+                    console.error('Error parsing the server error response:', e);
+
+                    // Fallback in case parsing fails, remove surrounding curly braces and quotes
+                    errorMessage = errorMessage.replace(/[{}']/g, ''); // Removes both curly braces and quotes
+
+                    setTimeout(() => {
+                        ElNotification({
+                            title: 'Error',  // Set 'Error' as title without quotes
+                            type: "error",
+                            position: "top-right",
+                            message: errorMessage || 'An unexpected error occurred',  // Display the error message without quotes
+                        });
+                    }, index * 100);
+                }
+            });
+        } else if (data.message) {
             ElNotification({
-                title: 'Error',
+                title: 'Error',  // Set 'Error' as title without quotes
                 type: "error",
                 position: "top-right",
-                message: err.response.data.message,
+                message: data.message.replace(/'/g, '') || 'An unexpected error occurred',  // Display the error message without quotes
             });
         } else {
+            // Catch any unhandled or unexpected errors
             ElNotification({
-                title: 'Error',
+                title: 'Error',  // Set 'Error' as title without quotes
                 type: "error",
                 position: "top-right",
                 message: 'An unexpected error occurred',
             });
         }
     } else {
+        // Fallback for network errors or other issues not directly related to the response data
         ElNotification({
-            title: 'Error',
+            title: 'Error',  // Set 'Error' as title without quotes
             type: "error",
             position: "top-right",
             message: err.message || 'An unexpected error occurred',
@@ -89,7 +108,12 @@ export function deleteLocalStorageInformation(){
     localStorage.removeItem("userDetails")
 }
 
-
+ export function formatCurrency(amount, currency = 'KES', locale = 'en-KE') {
+     return new Intl.NumberFormat(locale, {
+         style: 'currency',
+         currency: currency,
+     }).format(amount);
+ }
 
 
 

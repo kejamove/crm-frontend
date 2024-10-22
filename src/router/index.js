@@ -19,6 +19,7 @@ import MoveList from "@/views/moves/MoveList.vue";
 import MoveView from "@/views/moves/MoveView.vue";
 import CreateEditMove from "@/views/moves/CreateEditMove.vue";
 import FirmSetup from "@/views/firm/FirmSetup.vue";
+import EditCost from "@/views/costs/EditCost.vue";
 
 const routes = [
   {
@@ -229,7 +230,17 @@ const routes = [
             component: MoveView,
             meta: {
               slug: 'View Move',
-            }
+            },
+            children: [
+              {
+                name:'edit-cost',
+                path:'edit-cost/:costId',
+                component: EditCost,
+                meta: {
+                  slug: 'Edit Cost',
+                },
+              }
+            ]
           },
           {
             name:'create-move',

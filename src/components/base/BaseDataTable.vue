@@ -154,9 +154,16 @@ export default {
     }
   },
   watch: {
-    fetchUrl: function (newVal, oldVal) {
-      this.queryData(this.fetchUrl);
-    }
+    fetchUrl(newVal) {
+      this.queryData(newVal);
+    },
+    '$route': {
+      immediate: true,
+      handler() {
+        this.queryData(this.fetchUrl);
+        this.trailingReload()
+      }
+    },
   },
   mounted() {
     this.queryData(this.fetchUrl);
