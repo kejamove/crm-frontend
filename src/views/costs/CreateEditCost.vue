@@ -21,8 +21,6 @@
           :prefix-icon="LockClosedIcon"
           placeholder="rate eg 12 0r 20"
           style="width: 100%"
-          min="0"
-          max="50"
           size="large"
       />
     </el-form-item>
