@@ -7,7 +7,6 @@ import {userType} from "@/utility/constants.js";
 import type { TabsPaneContext } from 'element-plus'
 import CostList from "@/views/costs/CostList.vue";
 import CreateEditCommission from "@/views/commissions/CreateEditCommission.vue";
-import CommissionHistory from "@/views/commissions/CommissionHistory.vue";
 
 const activeName = ref('details')
 
@@ -106,9 +105,7 @@ onMounted(()=>{
         <el-tab-pane label="Commission" name="Commission">
           <CreateEditCommission :move_id="move_id"/>
         </el-tab-pane>
-        <el-tab-pane v-if="store?.state?.commissionData?.id" label="Commission History" name="CommissionHistory">
-          <CommissionHistory/>
-        </el-tab-pane>
+
       </el-tabs>
 
     </template>

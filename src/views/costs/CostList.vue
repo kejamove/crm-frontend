@@ -107,7 +107,7 @@ const fetchUrl = `move-costs/?move=${props.move_id}`;
 
   <el-dialog
       v-model="dialogVisible"
-      title="New Coat"
+      title="New Cost"
       width="500"
       :before-close="()=>{
         dialogVisible = false
