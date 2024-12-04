@@ -97,7 +97,7 @@ watch(() => props.chartData, () => {
 
 <style scoped>
 .chart-container {
-  @apply md:w-[600px] relative w-full;
+  @apply md:w-[700px] relative w-full;
 }
 
 canvas {

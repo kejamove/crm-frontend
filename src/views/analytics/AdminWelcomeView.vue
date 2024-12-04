@@ -170,10 +170,6 @@ watch(() => router.currentRoute, () => {
 
     </div>
 
-    <div class="w-full h-fit">
-      <GrowthChart :chartData="movesData" class="md-w-[450px] h-fit"/>
-    </div>
-
     <div class="flex flex-col gap-4 h-full w-full pr-4">
 
 
@@ -251,6 +247,10 @@ watch(() => router.currentRoute, () => {
         </div>
       </div>
 
+    </div>
+
+    <div class="w-full h-fit">
+      <GrowthChart :chartData="movesData" class="md-w-[450px] h-fit"/>
     </div>
 
   </div>
