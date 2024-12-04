@@ -1,5 +1,5 @@
 <template>
-  <div class="chart-container border shadow-md rounded-lg flex flex-col gap-4 p-2">
+  <div class="chart-container border shadow-md rounded-lg flex flex-col gap-4 p-2 w-full">
 
     <div class="font-semibold text-green-500 flex gap-4 items-center">
       <div class="h-18 w-18 flex items-center justify-center bg-yellow-50 rounded-full p-2">
@@ -20,7 +20,6 @@
 import { ref, onMounted, watch } from 'vue';
 import { Chart, LineController, LineElement, PointElement, CategoryScale, LinearScale, Tooltip } from 'chart.js';
 
-// Register the necessary components and scales for a line chart
 Chart.register(LineController, LineElement, PointElement, CategoryScale, LinearScale, Tooltip);
 
 const props = defineProps({
@@ -47,7 +46,6 @@ const setupChart = () => {
     chartInstance.destroy();
   }
 
-  // Normalize chartData to ensure all 12 months are present
   const normalizedData = normalizeChartData(props.chartData);
   const data = normalizedData.map(item => item.count);
 
@@ -99,7 +97,7 @@ watch(() => props.chartData, () => {
 
 <style scoped>
 .chart-container {
-  @apply md:w-[340px] relative w-full;
+  @apply md:w-[600px] relative w-full;
 }
 
 canvas {

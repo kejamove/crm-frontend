@@ -171,7 +171,7 @@ watch(() => router.currentRoute, () => {
     </div>
 
     <div class="w-full h-fit">
-      <GrowthChart :chartData="movesData" class="md-w-[400px] h-fit"/>
+      <GrowthChart :chartData="movesData" class="md-w-[450px] h-fit"/>
     </div>
 
     <div class="flex flex-col gap-4 h-full w-full pr-4">
@@ -180,6 +180,77 @@ watch(() => router.currentRoute, () => {
       <div class="pb-4 w-full rounded-md border hidden">
         <GrowthChart :chartData="movesData" class="md-w-[400px]"/>
       </div>
+    </div>
+
+    <div class="text-2xl font-bold text-gray-500">
+      Move Stats
+    </div>
+
+    <div class="w-full flex gap-2 flex-wrap">
+
+      <div class="min-w-[150px] w-full md:w-fit border rounded p-4 flex flex-col items-center justify-center">
+        <div class="text-xl text-purple-500">
+          New Lead
+        </div>
+        <div class="text-2xl font-bold text-orange-600">
+          {{registeredFirms?.new_lead_moves}}
+        </div>
+      </div>
+
+      <div class="min-w-[150px] w-full md:w-fit border rounded p-4 flex flex-col items-center justify-center">
+        <div class="text-xl text-purple-500">
+          Contated
+        </div>
+        <div class="text-2xl font-bold text-orange-600">
+          {{registeredFirms?.contacted_moves}}
+        </div>
+      </div>
+
+      <div class="min-w-[150px] w-full md:w-fit border rounded p-4 flex flex-col items-center justify-center">
+        <div class="text-xl text-purple-500">
+          Survey Scheduled
+        </div>
+        <div class="text-2xl font-bold text-orange-600">
+          {{registeredFirms?.survey_scheduled_moves}}
+        </div>
+      </div>
+
+      <div class="min-w-[150px] w-full md:w-fit border rounded p-4 flex flex-col items-center justify-center">
+        <div class="text-xl text-purple-500">
+          Proposal Sent
+        </div>
+        <div class="text-2xl font-bold text-orange-600">
+          {{registeredFirms?.proposal_sent_moves}}
+        </div>
+      </div>
+
+      <div class="min-w-[150px] w-full md:w-fit border rounded p-4 flex flex-col items-center justify-center">
+        <div class="text-xl text-purple-500">
+          Negotiations Started
+        </div>
+        <div class="text-2xl font-bold text-orange-600">
+          {{registeredFirms?.negotiations_started_moves}}
+        </div>
+      </div>
+
+      <div class="min-w-[150px] w-full md:w-fit border rounded p-4 flex flex-col items-center justify-center">
+        <div class="text-xl text-purple-500">
+          Won
+        </div>
+        <div class="text-2xl font-bold text-orange-600">
+          {{registeredFirms?.won_moves}}
+        </div>
+      </div>
+
+      <div class="min-w-[150px] w-full md:w-fit border rounded p-4 flex flex-col items-center justify-center">
+        <div class="text-xl text-purple-500">
+          Lost
+        </div>
+        <div class="text-2xl font-bold text-orange-600">
+          {{registeredFirms?.lost_moves}}
+        </div>
+      </div>
+
     </div>
 
   </div>
