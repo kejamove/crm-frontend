@@ -90,17 +90,28 @@ export function raiseServerError(err) {
 export function formatDate(dateString) {
     if (!dateString) return '';
 
-    // Convert the date string to a Date object
-    const date = new Date(dateString);
+    try {
+        // Convert the date string to a Date object
+        const date = new Date(dateString);
 
-    // Check if the date conversion is valid
-    if (isNaN(date)) return '';
+        // Check if the date is valid
+        if (isNaN(date.getTime())) return '';
 
-    // Options for formatting the date
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        // Options for formatting the date
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            // Uncomment the following line if you want to include time
+            // hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+        };
 
-    // Return the formatted date
-    return date.toLocaleDateString(undefined, options);
+        // Format the date and return
+        return date.toLocaleDateString('en-US', options); // Specify locale if needed
+    } catch (error) {
+        console.error("Error formatting date:", error);
+        return '';
+    }
 }
 
 export function deleteLocalStorageInformation(){

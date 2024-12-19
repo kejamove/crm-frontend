@@ -105,12 +105,16 @@ const toggleActions = ()=>{
   openActions.value = !openActions.value
 }
 
-const getMoves = ()=>{
-  store.dispatch('fetchList', {'url': 'moves'})
-      .then((res)=>{
-        dataSource.value = res?.data;
+const getMoves = () => {
+  store.dispatch('fetchList', { 'url': 'moves' })
+      .then((res) => {
+        dataSource.value = res?.data.filter(move => !move.is_deleted);
       })
-}
+      .catch((error) => {
+        console.error("Error fetching moves:", error);
+      });
+};
+
 
 const move_stages = ref([
   {label: 'New Lead', value :'new_lead' },

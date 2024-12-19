@@ -133,14 +133,20 @@ export default {
       this.loading = true;
 
       store
-          .dispatch("fetchList", {url})
+          .dispatch("fetchList", { url })
           .then((resp) => {
-            this.dataSource = resp.data;
+            if (this.$route?.name === 'moves') {
+              // Filter out items with is_deleted as true
+              this.dataSource = resp.data.filter(item => !item.is_deleted);
+            } else {
+              this.dataSource = resp.data;
+            }
             this.loading = false;
           })
           .catch(() => {
             this.loading = false;
           });
+
     },
     toggleFilters() {
       this.showFilters = !this.showFilters
