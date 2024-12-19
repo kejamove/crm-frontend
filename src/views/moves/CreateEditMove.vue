@@ -453,9 +453,15 @@ const lead_sources = ref([
 const registeredSalesReps = ref([])
 const salesRepLoading = ref(false)
 
-const fetchSalesRep = ()=>{
+const fetchSalesRep = (branch)=>{
   salesRepLoading.value= true
   registeredSalesReps.value = []
+
+  store.dispatch('fetchSingleItem', {url:`branches`, id:branch}).
+      then((resp) => {
+    form.organization = resp?.data?.organization
+  })
+
 
   store.dispatch('fetchList', {url:`users?branch=${form.branch}`})
       .then((resp)=>{
