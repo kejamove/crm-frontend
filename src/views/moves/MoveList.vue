@@ -1,7 +1,7 @@
 <script setup>
 import {Delete, EditPen} from "@element-plus/icons-vue";
 import BaseDataTable from "@/components/base/BaseDataTable.vue";
-import {ref} from "vue"
+import {ref,onMounted} from "vue"
 import router from "@/router/index.js";
 import store from "@/store/index.js";
 import {formatDate} from "../../utility/functions.js";
@@ -99,6 +99,19 @@ const updateMove = (id, move_stage, sales_representative)=>{
   store.dispatch('patchData', { id: id, url: 'moves', data: {"move_stage":move_stage, 'sales_representative':sales_representative}});
 }
 
+const dataSource = ref([])
+const openActions = ref(false)
+const toggleActions = ()=>{
+  openActions.value = !openActions.value
+}
+
+const getMoves = ()=>{
+  store.dispatch('fetchList', {'url': 'moves'})
+      .then((res)=>{
+        dataSource.value = res?.data;
+      })
+}
+
 const move_stages = ref([
   {label: 'New Lead', value :'new_lead' },
   {label: 'Contacted', value : 'contacted'},
@@ -110,8 +123,12 @@ const move_stages = ref([
 ])
 
 const deleteMove =  (id)=> {
-  store.dispatch('deleteData',{id: id, url: 'moves'});
+  store.dispatch('deleteData',{id: id, url: 'moves'})
 }
+
+onMounted(()=>{
+  getMoves();
+})
 
 </script>
 
@@ -125,6 +142,7 @@ const deleteMove =  (id)=> {
   </div>
 
   <BaseDataTable
+      class="hidden md:block"
       :columns="columns"
       fetch-url="moves"
       createRouteName="create-move"
@@ -243,6 +261,152 @@ const deleteMove =  (id)=> {
       </template>
     </template>
   </BaseDataTable>
+
+
+  <div class="flex flex-col gap-4 md:hidden">
+
+    <div class="text-lg font-bold">Moves</div>
+
+    <el-button @click="()=>{router.push({name:'create-move'})}"
+        class="flext items-center gap-2" size="large" type="primary">
+      <span class="mx-2 h-6 flex items-center">Move</span>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      </svg>
+    </el-button>
+
+    <div class="flex flex-col gap-4 w-full h-full">
+      <div v-for="item in dataSource" :key="item.id" class="border w-full flex flex-col gap-4 p-4 rounded">
+
+        <div class="flex border-b justify-between items-center">
+        <span class="flex gap-2 items-center" v-if="item?.consumer_name">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="size-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+            </svg>
+            {{item?.consumer_name}}
+        </span>
+
+          <span class="flex gap-2 items-center" v-else>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="size-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
+            </svg>
+            {{item?.corporate_name}}
+        </span>
+
+          <div class="cursor-pointer p-1" @click="toggleActions">
+            <span title="open" v-if="!openActions">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+            </span>
+
+            <span title="close" v-else>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+              </svg>
+            </span>
+          </div>
+
+        </div>
+
+        <div class="flex gap-4 w-full">
+          Moving
+          From
+          <span class="font-semibold">{{item?.moving_from}}</span>
+          To
+          <span class="font-semibold">{{item?.moving_to}}</span>
+        </div>
+
+        <el-select
+            v-model="item.move_stage"
+            class="w-[40px]"
+            @change="updateMove(item?.id, item.move_stage,
+            item?.sales_representative)"
+            placeholder="contacted"
+            size="large"
+        >
+          <el-option
+              v-for="move in move_stages"
+              :label="move.label" :value="move.value"
+          ></el-option>
+
+        </el-select>
+
+        <div  v-if="openActions">
+          <!--                      {{ slotProps.text }}-->
+          <div class="flex">
+            <ElButton type="info"
+                      @click="goTo('move-view', item?.id)"
+                      size="default" plain>
+              <template #icon>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"/>
+                </svg>
+              </template>
+            </ElButton>
+
+            <ElButton type="info"
+
+                      @click="sendEmail('invoice', item?.id)"
+                      size="default" plain>
+              <template #icon>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                </svg>
+              </template>
+            </ElButton>
+            <ElButton type="info"
+
+                      @click="downloadInvoice('invoice', item?.id)"
+                      size="default" plain>
+              <template #icon>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+              </template>
+            </ElButton>
+
+            <ElButton type="primary"
+
+                      @click="goTo('edit-move', item?.id)"
+                      size="default" plain>
+              <template #icon>
+                <EditPen class="h-fit"/>
+              </template>
+            </ElButton>
+
+            <el-popconfirm
+                confirm-button-text="Yes"
+                cancel-button-text="No"
+                :icon="InfoFilled"
+                icon-color="#626AEF"
+                title="Are you sure to delete this?"
+                @confirm="deleteMove(item?.id)"
+            >
+              <template #reference>
+                <ElButton type="danger"
+
+                          size="default" plain>
+                  <template #icon>
+                    <Delete class="h-fit"/>
+                  </template>
+                </ElButton>
+              </template>
+            </el-popconfirm>
+
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
 </template>
 
 <style scoped>
